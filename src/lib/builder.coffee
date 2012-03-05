@@ -11,7 +11,9 @@ exports.BuildError = (file, error) ->
 
 exports.Builder = class Builder
 
-  constructor: (@srcDir, @buildDir)
+  constructor: (srcDir, buildDir) ->
+    @srcDir   = path.resolve srcDir
+    @buildDir = path.resolve buildDir
 
   # dependcy hashs
   deps: {}
@@ -24,8 +26,9 @@ exports.Builder = class Builder
 
   # if new, write code in file
   write: (newCode, file, cb) ->
+    cb null, file, "Compilation succeeded"
     fs.readFile file, 'utf8', (err, oldCode) =>
-      return cb null, file, "identical" if newCode is oldCode
+      return cb null, file, "identical #{file}" if newCode is oldCode
       mkdirp path.dirname(file), 0755, (err) =>
         return cb new BuildError file, err if err
         fs.writeFile file, newCode, (err) =>
@@ -49,6 +52,7 @@ exports.Builder = class Builder
     @getImports(file, code).forEach (importFile) =>
       @deps[file].imports.push importFile
       @deps[importFile] ?= {imports: [], refreshs: []}
+      # console.log "add #{file} to @deps[#{importFile}].refreshs condition #{~@deps[importFile].refreshs.indexOf file}"
       @deps[importFile].refreshs.push(file) unless ~@deps[importFile].refreshs.indexOf file
 
   # update imports and refreshs reference
@@ -60,6 +64,7 @@ exports.Builder = class Builder
 
   # build file
   build: (file, refresh, cb) ->
+    # logger.debug "build #{file}"
     fs.readFile file, 'utf8', (err, code) =>
       return cb new BuildError file, err if err
       @scan file, code

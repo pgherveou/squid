@@ -6,7 +6,7 @@ path      = require 'path'
 {spawn}   = require 'child_process'
 moment    = require 'moment'
 
-builder   = require "./builder"
+builder   = require "./projectBuilder"
 {Monitor} = require "./finder"
 
 serverScript  = argv._[0] or 'index.js'
@@ -15,7 +15,7 @@ startTime     = null
 buildReady    = no
 
 ###
-add an horizontal line after each log to make the log easier to read
+add an horizontal line after each log to make it easier to read
 ###
 
 hrLogId = null
@@ -46,12 +46,12 @@ srvArgs.push '--debug' if argv.debug
 srvArgs.push serverScript
 
 start = (msg = 'Starting') ->
-  return unless buildReady and debuggerReady
   notifier.info msg, title: 'Server'
   startTime = moment()
-  spawn 'node', srvArgs
+  logger.info "starting node process with #{srvArgs}"
+  server = spawn 'node', srvArgs
 
-  server 'exit', (err) ->
+  server.on 'exit', (err) ->
     return unless err
     notifierror 'Server down', title: 'Server'
     restart()
@@ -60,52 +60,55 @@ start = (msg = 'Starting') ->
   server.stderr.on 'data', writeStderr
 
 restart = ->
+  return unless server
   server.kill('SIGHUP')
-  start('Restarting') unless moment().diff(startTime, 'seconds') < 2
+  start 'Restarting' unless moment().diff(startTime, 'seconds') < 2
 
 ###
 builder stuffs
 ###
 
-srcMonitor = new Monitor 'src Monitor', 'src'
-libMonitor = new Monitor 'lib Monitor', 'lib'
+srcMonitor = new Monitor 'src Monitor', path.resolve 'src'
+libMonitor = new Monitor 'lib Monitor', path.resolve 'lib'
 
 # display file relatively to the project root
 relativeName = (file) -> file?.substring __dirname.length
 
-# configure and start srcMonitor
-srcMonitor.once 'started', (files) ->
-  notifier.debug "Watching #{srcMonitor.name}", title: srcMonitor.name
-  builder.buildAll files, (errors) ->
-    if errors.length
-      notifier.error(e.message, title: relativeName(e.file)) for e in errors
-    else
-      notifier.debug 'Build done.', title: srcMonitor.name
-      if srcMonitor is serversrcMonitor
-        buildReady = yes
-        start()
-
-# handle codechange
+# handle code change
 codeChange = (err, file, message) ->
   return notifier.error(err.message, title: relativeName err.file) if err
-  notifier.info message, title: relativeName file
+  notifier.info message, title: relativeName(file) or srcMonitor.name
 
+# configure and start srcMonitor
 srcMonitor.on 'created', (f) -> builder.build f, codeChange
 srcMonitor.on 'changed', (f) -> builder.build f, codeChange
 srcMonitor.on 'removed', (f) -> builder.destroy f, codeChange
 srcMonitor.once 'stopped',   -> notifier.info 'Stop monitor', title: srcMonitor.name
+
+srcMonitor.once 'started', (files) ->
+  notifier.debug "Watching", title: srcMonitor.name
+  builder.buildAll files, (errors) ->
+    if errors
+      notifier.error(e.message, title: relativeName(e.file)) for e in errors
+    else
+      notifier.debug 'Build done.', title: srcMonitor.name
+      buildReady = yes
+      start()
+
 srcMonitor.start()
 
 # configure and start libMonitor
-libMonitor.on 'changed', restart
+libMonitor.once 'started', (files) ->
+  notifier.debug "Watching", title: libMonitor.name
+
+libMonitor.on 'changed', -> restart() if buildReady
+libMonitor.on 'created', -> restart() if buildReady
 libMonitor.once 'stopped', -> notifier.info 'Stop monitor', title: libMonitor.name
 libMonitor.start()
 
 ###
 process stuff
 ###
-
-start()
 
 killApp = (code = 0) ->
   notifier.error 'Killing server...' if code
@@ -119,9 +122,3 @@ process.on 'SIGINT',  killApp
 process.on 'uncaughtException', (err) ->
   notifier.error "Caught exception: #{err}", err
   killApp(1)
-
-
-
-
-
-

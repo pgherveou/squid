@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+var path = require('path')
+  , fs = require('fs')
+  , lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib')
+
+require(lib + '/loggers')
+
+var walk  = require(lib + '/finder').walk
+  , builder = require(lib + '/projectBuilder');
+
+walk('src', function(err, files) {
+  builder.buildAll(files, function(errors) {
+    if (errors) {
+      errors.forEach(function(e) {
+        console.error('file: ' + e.file + ':\n ' + e.message)
+      });
+    } else {
+      console.log('Build done.');
+    }
+  });
+});
+
+

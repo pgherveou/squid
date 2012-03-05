@@ -8,7 +8,8 @@
     "url": "git://github.com/pgherveou/sq_tooling.git"
   },
   "bin": {
-    "sq": "./bin/sq"
+    "sq": "./bin/runner",
+    "sb": "./bin/builder"
   },
   "dependencies": {
     "coffee-script": "1.2.x",
