@@ -1,3 +1,4 @@
+fs                    = require 'fs'
 _                     = require 'nimble'
 cs                    = require 'coffee-script'
 {Builder, BuildError} = require './Builder'

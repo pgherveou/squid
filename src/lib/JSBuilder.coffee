@@ -1,3 +1,4 @@
+fs                    = require 'fs'
 _                     = require 'nimble'
 {Builder, BuildError} = require './Builder'
 
