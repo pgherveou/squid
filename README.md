@@ -22,7 +22,7 @@ sq_tooling provide two executable script,
 installation
 ------------
 
-from the root project type
+from the root folder of this project type
 
 ```
 cake build
