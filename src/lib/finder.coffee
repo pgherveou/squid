@@ -5,7 +5,6 @@ _      = require 'underscore'
 {q}    = require  'sink'
 
 defaultFilter = (f, stat) ->
-  return false if f[0] is '.'
   return true if stat.isDirectory()
   return /\.(coffee|js|styl)$/.test(f)
 

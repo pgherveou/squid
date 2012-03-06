@@ -1,5 +1,3 @@
-require "./loggers"
-
 fs        = require 'fs'
 path      = require 'path'
 {argv}    = require('optimist').alias 'd', 'debug'
@@ -8,6 +6,10 @@ moment    = require 'moment'
 
 builder   = require "./projectBuilder"
 {Monitor} = require "./finder"
+
+logger    = require('./loggers').get 'util'
+notifier  = require('./loggers').get 'notifier'
+
 
 serverScript  = argv._[0] or 'index.js'
 server        = null
@@ -80,14 +82,14 @@ codeChange = (err, file, message) ->
   notifier.info message, title: relativeName(file) or srcMonitor.name
 
 # configure and start srcMonitor
-srcMonitor.on 'created', (f) -> builder.build f, codeChange
-srcMonitor.on 'changed', (f) -> builder.build f, codeChange
-srcMonitor.on 'removed', (f) -> builder.destroy f, codeChange
+srcMonitor.on 'created', (f) -> builder.liveBuild f, codeChange
+srcMonitor.on 'changed', (f) -> builder.liveBuild f, codeChange
+srcMonitor.on 'removed', (f) -> builder.removeBuild f, codeChange
 srcMonitor.once 'stopped',   -> notifier.info 'Stop monitor', title: srcMonitor.name
 
 srcMonitor.once 'started', (files) ->
   notifier.debug "Watching", title: srcMonitor.name
-  builder.buildAll files, (errors) ->
+  builder.liveBuildAll files, (errors) ->
     if errors
       notifier.error(e.message, title: relativeName(e.file)) for e in errors
     else

@@ -59,12 +59,12 @@ winston.loggers.add 'proxy',
   file:
     filename: '../../data/log/proxy.log'
 
-winston.loggers.add 'tooling',
+winston.loggers.add 'util',
   console:
     colorize:  true
     padLevels: true
   file:
-    filename: '../../data/log/tooling.log'
+    filename: '../../data/log/util.log'
 
 winston.loggers.add 'notifier', growl: {}
 

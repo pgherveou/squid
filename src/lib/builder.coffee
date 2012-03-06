@@ -2,6 +2,7 @@ path     = require 'path'
 fs       = require 'fs'
 mkdirp   = require 'mkdirp'
 _        = require 'nimble'
+logger   = require('./loggers').get 'util'
 
 exports.BuildError = (file, error) ->
   Error.call @

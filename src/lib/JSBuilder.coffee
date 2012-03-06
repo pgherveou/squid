@@ -1,7 +1,7 @@
 fs                    = require 'fs'
 _                     = require 'nimble'
 {Builder, BuildError} = require './Builder'
-
+logger                = require('./loggers').get 'util'
 
 module.exports = class JSBuilder extends Builder
 

@@ -3,7 +3,7 @@ _                     = require 'nimble'
 stylus                = require 'stylus'
 nib                   = require 'nib'
 {Builder, BuildError} = require './Builder'
-
+logger                = require('./loggers').get 'util'
 
 module.exports = class StylusBuilder extends Builder
 

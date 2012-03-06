@@ -2,6 +2,7 @@ fs                    = require 'fs'
 _                     = require 'nimble'
 cs                    = require 'coffee-script'
 {Builder, BuildError} = require './Builder'
+logger                = require('./loggers').get 'util'
 
 module.exports = class CoffeeBuilder extends Builder
 
