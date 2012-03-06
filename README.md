@@ -57,8 +57,8 @@ Dependencies
 ------------
 
 
-sq_tooling manage your file dependencies and only copy the necessary files
-here how you define dependencies for each supported file format
+sq_tooling manage your file dependencies and only copy the necessary files.
+here is how you define dependencies for each supported file format
 
 <table>
   <tr>
