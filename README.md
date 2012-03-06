@@ -5,7 +5,7 @@ sq_util
 files
 -----
 
-sq_tooling provide two executable script,
+sq_util provide two executable scripts,
 
 <table>
   <tr>
