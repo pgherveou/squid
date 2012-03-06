@@ -30,7 +30,7 @@ sq_tooling can work with the following files
     <th>file</th><th>operation</th>
   </tr>
   <tr>
-    <td>*.js</td><td>simply copy the file</td>
+    <td>*.js</td><td>copy</td>
   </tr>
   <tr>
     <td>*.coffee</td><td>compile to js and copy</td>
