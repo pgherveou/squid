@@ -1,11 +1,11 @@
 sq_tooling
 ============
 
-sq tooling provide an executable script, that will automatically build your files saved under './src'
-and restart your main script './index.js' each time a file changed in './lib'
+sq_tooling provide an executable script, that will automatically build your files saved under **'./src'**
+and restart your main script **'./index.js'** each time a file changed in **'./lib'**
 
 To work with sq_tooling a project should have the following file oranisation
-
+<pre>
 ./
 |- index.js
 |- lib
@@ -13,10 +13,31 @@ To work with sq_tooling a project should have the following file oranisation
 |- src
   |- lib
   |- public
+</pre>
 
-the src folder is optional and only required if you are using files that need to be compiled first
-a sample project using .coffee files and stylus stylesheet should have the following organisation
+The **src** folder is only required if you are using files that need to be compiled first.
+sq_tooling performs the following operations
 
+<table>
+  <tr>
+    <th>files</th><th>operation</th>
+  </tr>
+  <tr>
+    <td>*.js</td><td>simply copy the file</td>
+  </tr>
+  <tr>
+    <td>*.coffee</td><td>compile to js and copy</td>
+  </tr>
+  <tr>
+    <td>*.styl</td><td>compile to css and copy</td>
+  </tr>
+
+</table>
+
+
+A sample project using .coffee files and stylus stylesheet should have the following organisation
+
+<pre>
 ./
 |- index.js
 |- lib
@@ -35,4 +56,4 @@ a sample project using .coffee files and stylus stylesheet should have the follo
       |- file1.styl
       |- file2.styl
       |- file3.styl
-
+</pre>
