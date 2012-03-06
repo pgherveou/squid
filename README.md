@@ -1,8 +1,20 @@
 sq_tooling
 ============
 
-sq_tooling provide an executable script, that will automatically build your files saved under **'./src'**
-and restart your main script **'./index.js'** each time a file changed in **'./lib'**
+sq_tooling provide two executable script, 
+
+<table>
+  <tr>
+    <th>binary</th><th>desc</th>
+  </tr>
+  <tr>
+    <td>sb</td><td>build your project src folder</td>
+  </tr>
+  <tr>
+    <td>sq</td><td>build your project, watch changes, restart when changes are made to /lib</td>
+  </tr>
+</table>
+
 
 To work with sq_tooling a project should have the following file oranisation
 <pre>
@@ -16,11 +28,12 @@ To work with sq_tooling a project should have the following file oranisation
 </pre>
 
 The **src** folder is only required if you are using files that need to be compiled first.
-sq_tooling performs the following operations
+
+sq_tooling can work with the following files
 
 <table>
   <tr>
-    <th>files</th><th>operation</th>
+    <th>file</th><th>operation</th>
   </tr>
   <tr>
     <td>*.js</td><td>simply copy the file</td>
@@ -31,8 +44,26 @@ sq_tooling performs the following operations
   <tr>
     <td>*.styl</td><td>compile to css and copy</td>
   </tr>
-
 </table>
+
+sq_tooling manage your file dependencies and only copy to the output the necessary files
+here how you define dependencies for each supported file format
+
+<table>
+  <tr>
+    <th>file</th><th>import syntax</th>
+  </tr>
+  <tr>
+    <td>*.js</td><td>//= import foo.js</td>
+  </tr>
+  <tr>
+    <td>*.coffee</td><td>#= import foo.(coffee|js)</td>
+  </tr>
+  <tr>
+    <td>*.styl</td><td>@import foo</td>
+  </tr>
+</table>
+
 
 
 A sample project using .coffee files and stylus stylesheet should have the following organisation
