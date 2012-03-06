@@ -1,6 +1,10 @@
 sq_tooling
 ============
 
+
+files
+-----
+
 sq_tooling provide two executable script, 
 
 <table>
@@ -16,18 +20,8 @@ sq_tooling provide two executable script,
 </table>
 
 
-To work with sq_tooling a project should have the following file oranisation
-<pre>
-./
-|- index.js
-|- lib
-|- public
-|- src
-  |- lib
-  |- public
-</pre>
-
-The **src** folder is only required if you are using files that need to be compiled first.
+Supported files
+---------------
 
 sq_tooling can work with the following files
 
@@ -45,6 +39,10 @@ sq_tooling can work with the following files
     <td>*.styl</td><td>compile to css and copy</td>
   </tr>
 </table>
+
+Dependencies
+------------
+
 
 sq_tooling manage your file dependencies and only copy the necessary files
 here how you define dependencies for each supported file format
@@ -64,6 +62,22 @@ here how you define dependencies for each supported file format
   </tr>
 </table>
 
+
+project structure
+-----------------
+
+To work with sq_tooling a project should have the following file organisation
+<pre>
+./
+|- index.js
+|- lib
+|- public
+|- src
+  |- lib
+  |- public
+</pre>
+
+The **src** folder is only required if you are using files that need to be compiled first.
 
 
 A sample project using .coffee files and stylus stylesheet should have the following organisation
