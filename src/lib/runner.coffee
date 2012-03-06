@@ -53,7 +53,7 @@ start = (msg = 'Starting') ->
 
   server.on 'exit', (err) ->
     return unless err
-    notifierror 'Server down', title: 'Server'
+    notifier.error 'Server down', title: 'Server'
     restart()
 
   server.stdout.on 'data', writeStdout
