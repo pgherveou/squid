@@ -5,7 +5,7 @@ sq_util
 files
 -----
 
-sq_tooling provide two executable script,
+sq_util provide two executable scripts,
 
 <table>
   <tr>
@@ -57,7 +57,7 @@ Dependencies
 ------------
 
 
-sq_tooling manage your file dependencies and only copy the necessary files.
+sq_util manage your file dependencies and only copy the necessary files.
 here is how you define dependencies for each supported file format
 
 <table>
@@ -79,7 +79,7 @@ here is how you define dependencies for each supported file format
 project structure
 -----------------
 
-To work with sq_tooling a project should have the following file organisation
+To work with sq_util a project should have the following file organisation
 <pre>
 ./
 |- index.js
