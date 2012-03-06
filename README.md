@@ -86,19 +86,21 @@ A sample project using .coffee files and stylus stylesheet should have the follo
 ./
 |- index.js
 |- lib
+  |- lib
+    |- server_file1.js
+  |- public
+    |- js
+      |- client_file1.js
+    |- css
+      |- file1.css
+
 |- public
 |- src
   |- lib
     |- server_file1.coffee
-    |- server_file2.coffee
-    |- server_file3.coffee
   |- public
     |- js
       |- client_file1.coffee
-      |- client_file2.coffee
-      |- client_file3.coffee
     |- css
       |- file1.styl
-      |- file2.styl
-      |- file3.styl
 </pre>
