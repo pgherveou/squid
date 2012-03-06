@@ -27,23 +27,45 @@ class winston.transports.Growl extends winston.Transport
     callback null, true
 
 ###
-Loggers customization
+Setup loggers container
 ###
 
-winston.loggers.add 'logger',
+winston.loggers.add 'test',
   console:
     colorize:  true
     padLevels: true
+  file:
+    filename: '../../data/log/test.log'
 
-if process.env.NODE_ENV is 'development'
-  notifierOpts =
-    growl: {}
-    console: colorize: true, padLevels: true
-else
-  notifierOpts = console: colorize: true, padLevels: true
+winston.loggers.add 'app',
+  console:
+    colorize:  true
+    padLevels: true
+  file:
+    filename: '../../data/log/app.log'
 
-winston.loggers.add 'notifier', notifierOpts
+winston.loggers.add 'landing',
+  console:
+    colorize:  true
+    padLevels: true
+  file:
+    filename: '../../data/log/landing.log'
 
 
-global.notifier = winston.loggers.get 'notifier'
-global.logger   = winston.loggers.get 'logger'
+winston.loggers.add 'proxy',
+  console:
+    colorize:  true
+    padLevels: true
+  file:
+    filename: '../../data/log/proxy.log'
+
+winston.loggers.add 'tooling',
+  console:
+    colorize:  true
+    padLevels: true
+  file:
+    filename: '../../data/log/tooling.log'
+
+winston.loggers.add 'notifier', growl: {}
+
+module.exports = winston.loggers

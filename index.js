@@ -1,2 +1,2 @@
-console.log('starting index.js ....');
-setInterval(function() {console.log('I am just a fake test server 1');}, 3500);
+module.exports.loggers = require('lib/loggers')
+module.exports.builder = require('lib/projectBuilder')
