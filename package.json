@@ -1,11 +1,11 @@
 {
   "private": true,
   "author": "squadsheet",
-  "name": "sq_tooling",
+  "name": "sq_util",
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/pgherveou/sq_tooling.git"
+    "url": "git://github.com/pgherveou/sq_util.git"
   },
   "bin": {
     "sq": "./bin/runner",

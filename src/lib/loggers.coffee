@@ -30,26 +30,28 @@ class winston.transports.Growl extends winston.Transport
 Setup loggers container
 ###
 
+logFolder = path.join __dirname, '../../data/log/'
+
 winston.loggers.add 'test',
   console:
     colorize:  true
     padLevels: true
   file:
-    filename: '../../data/log/test.log'
+    filename: path.join logFolder, 'test.log'
 
 winston.loggers.add 'app',
   console:
     colorize:  true
     padLevels: true
   file:
-    filename: '../../data/log/app.log'
+    filename: path.join logFolder, 'app.log'
 
 winston.loggers.add 'landing',
   console:
     colorize:  true
     padLevels: true
   file:
-    filename: '../../data/log/landing.log'
+    filename: path.join logFolder, 'landing.log'
 
 
 winston.loggers.add 'proxy',
@@ -57,14 +59,14 @@ winston.loggers.add 'proxy',
     colorize:  true
     padLevels: true
   file:
-    filename: '../../data/log/proxy.log'
+    filename: path.join logFolder, 'proxy.log'
 
 winston.loggers.add 'util',
   console:
     colorize:  true
     padLevels: true
   file:
-    filename: '../../data/log/util.log'
+    filename: path.join logFolder, 'util.log'
 
 winston.loggers.add 'notifier', growl: {}
 

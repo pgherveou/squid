@@ -1,11 +1,11 @@
-sq_tooling
-============
+sq_util
+=======
 
 
 files
 -----
 
-sq_tooling provide two executable script, 
+sq_tooling provide two executable script,
 
 <table>
   <tr>

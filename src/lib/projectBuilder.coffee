@@ -17,19 +17,25 @@ buildFactory =
 
 module.exports =
 
-  buildAll: (exceptFolders = [])  ->
+  buildAll: (exceptFolders = [], cb)  ->
+
+    cb or= (errors) ->
+      if errors
+        logger.error "file: #{e.file} :\n e.message" for e in errors
+      else
+        logger.info "Build done."
 
     filter = (f, stat) ->
       return false if stat.isDirectory() and path.basename(f) in exceptFolders
       return true if stat.isDirectory()
       return /\.(coffee|js|styl)$/.test(f)
 
-    walk "src", filter, (err, files) ->
-      builder.buildAll files, (errors) ->
-        if errors
-          errors.forEach (e) -> logger.error "file: " + e.file + ":\n " + e.message
-        else
-          logger.info "Build done."
+    walk "src", filter, (err, files) =>
+      return logger.error err if err
+      @liveBuildAll files, cb
+
+  removeBuild: (file, cb) ->
+    buildFactory.get(file).removeBuild file, cb
 
   liveBuild: (file, cb) ->
     buildFactory.get(file).build file, true, cb
@@ -51,7 +57,10 @@ module.exports =
       builder = buildFactory.get(file)
       return cb null unless builder
       builder.build file, false, (err) ->
+        # logger.debug 'build ' + file
         errors.push err if err
         cb null
 
-    _.each files, buildFile, -> if errors.length then cb errors else cb null
+    _.each files, buildFile, ->
+      # logger.debug 'build done'
+      if errors.length then cb errors else cb null
