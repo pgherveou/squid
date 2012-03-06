@@ -90,8 +90,6 @@ To work with sq_tooling a project should have the following file organisation
   |- public
 </pre>
 
-The **src** folder is only required if you are using files that need to be compiled first.
-
 
 A sample project using .coffee files and stylus stylesheet should have the following organisation
 
