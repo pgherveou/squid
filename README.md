@@ -19,6 +19,19 @@ sq_tooling provide two executable script,
   </tr>
 </table>
 
+installation
+------------
+
+from the root project type
+
+```
+cake build
+npm link
+```
+
+that will build the project and make **sq** and **sb** executable available in your global scope
+you can then use these two commands to build and run your own project following the recommandations below
+
 
 Supported files
 ---------------
