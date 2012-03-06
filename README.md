@@ -97,7 +97,7 @@ A sample project using .coffee files and stylus stylesheet should have the follo
   |- server_file1.js
 |- public
   |- js
-  |- client_file1.js
+    |- client_file1.js
   |- css
     |- file1.css
 
