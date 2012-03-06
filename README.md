@@ -46,7 +46,7 @@ sq_tooling can work with the following files
   </tr>
 </table>
 
-sq_tooling manage your file dependencies and only copy to the output the necessary files
+sq_tooling manage your file dependencies and only copy the necessary files
 here how you define dependencies for each supported file format
 
 <table>
