@@ -30,7 +30,6 @@ exports.walk = walk = (dir, filter, fn) ->
       _(files).each (filename) ->
         file = path.join dir, filename
 
-
         q fs.stat, file, (err, stat) ->
           return fn err if err
           return unless filter and filter filename, stat

@@ -6,7 +6,7 @@ growl   = require 'growl'
 Custom growl logger
 ###
 
-assetDir = path.join path.dirname(require.main.filename), '../assets'
+assetDir = path.join __dirname, '../assets'
 
 class winston.transports.Growl extends winston.Transport
 
