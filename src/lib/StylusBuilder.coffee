@@ -14,7 +14,6 @@ module.exports = class StylusBuilder extends Builder
   _build: (file, code, refresh, cb) ->
 
     if @deps[file].refreshs.length is 0
-      # logger.debug "compiling: #{file} #{@deps[file].refreshs.length}"
       @_compile file, code, (err, css) =>
         return cb new BuildError(file, err) if err
         @write css, @buildPath(file, '.css'), cb

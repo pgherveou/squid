@@ -50,7 +50,7 @@ srvArgs.push serverScript
 start = (msg = 'Starting') ->
   notifier.info msg, title: 'Server'
   startTime = moment()
-  logger.info "starting node process with #{srvArgs}"
+  logger.info "starting #{srvArgs}"
   server = spawn 'node', srvArgs
 
   server.on 'exit', (err) ->
