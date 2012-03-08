@@ -1,22 +1,34 @@
 path                  = require 'path'
 _                     = require 'nimble'
-stylus                = require 'stylus'
-nib                   = require 'nib'
+jade                  = require 'jade'
 {Builder, BuildError} = require './Builder'
 logger                = require('./loggers').get 'util'
 
-module.exports = class StylusBuilder extends Builder
+amdWrap = (fn) ->
+  """
+  define(['jade'], function(jade) {
+    return #{fn.toString()};
+  });
+  """
 
-  reg: /^@import "(.*)"$/gm
+module.exports = class JadeBuilder extends Builder
 
-  fileExt: ".styl"
+  reg: /^include "(.*)"$/gm
+
+  fileExt: ".jade"
+
+
 
   _build: (file, code, refresh, cb) ->
 
     if @deps[file].refreshs.length is 0
-      @_compile file, code, (err, css) =>
-        return cb new BuildError(file, err) if err
-        @write css, @buildPath(file, '.css'), cb
+
+      try
+        tplFn = jade.compile code, {filename: file, client  : true, compileDebug: false}
+      catch error
+        return cb new BuildError file, error
+
+      @write amdWrap(tplFn), @buildPath(file, '.js'), cb
 
     else if refresh
       _.each @deps[file].refreshs,
@@ -29,10 +41,4 @@ module.exports = class StylusBuilder extends Builder
     else
       cb null, file, 'nothing to build'
 
-  _compile: (file, code, cb) ->
-    stylus(code)
-      .set('fileName', file)
-      .set('paths', ['public/images', path.dirname file])
-      .use(nib())
-      .import('nib')
-      .render cb
+

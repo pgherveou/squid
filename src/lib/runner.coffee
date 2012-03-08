@@ -70,11 +70,16 @@ restart = ->
 builder stuffs
 ###
 
-srcMonitor = new Monitor 'src Monitor', path.resolve 'src'
-libMonitor = new Monitor 'lib Monitor', path.resolve 'lib'
+filter = (f, stat) ->
+  return true if stat.isDirectory()
+  return /\.(coffee|js|styl|jade)$/.test(f)
+
+srcMonitor = new Monitor 'src Monitor', path.resolve('src'), filter
+libMonitor = new Monitor 'lib Monitor', path.resolve('lib'), filter
 
 # display file relatively to the project root
-relativeName = (file) -> file?.substring __dirname.length
+root = path.resolve '.'
+relativeName = (file) -> file?.substring root.length
 
 # handle code change
 codeChange = (err, file, message) ->

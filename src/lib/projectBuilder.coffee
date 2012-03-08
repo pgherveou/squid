@@ -2,10 +2,12 @@ path          = require 'path'
 fs            = require 'fs'
 _             = require 'nimble'
 
-{walk}        = require('./finder')
+{walk}        = require './finder'
 CSBuilder     = require './CSBuilder'
 JSBuilder     = require './JSBuilder'
+JadeBuilder   = require './JadeBuilder'
 StylusBuilder = require './StylusBuilder'
+
 logger        = require('./loggers').get 'util'
 
 # builder factory
@@ -14,6 +16,7 @@ buildFactory =
   '.coffee': new CSBuilder 'src', '.'
   '.js'    : new JSBuilder 'src', '.'
   '.styl'  : new StylusBuilder 'src', '.'
+  '.jade'  : new JadeBuilder 'src', '.'
 
 module.exports =
 
@@ -28,7 +31,7 @@ module.exports =
     filter = (f, stat) ->
       return false if stat.isDirectory() and path.basename(f) in exceptFolders
       return true if stat.isDirectory()
-      return /\.(coffee|js|styl)$/.test(f)
+      return /\.(coffee|js|styl|jade)$/.test(f)
 
     walk "src", filter, (err, files) =>
       return logger.error err if err

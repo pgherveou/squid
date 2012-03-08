@@ -27,7 +27,6 @@ exports.Builder = class Builder
 
   # if new, write code in file
   write: (newCode, file, cb) ->
-    cb null, file, "Compilation succeeded"
     fs.readFile file, 'utf8', (err, oldCode) =>
       return cb null, file, "identical #{file}" if newCode is oldCode
       mkdirp path.dirname(file), 0755, (err) =>

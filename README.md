@@ -46,10 +46,13 @@ sq_tooling can work with the following files
     <td>*.js</td><td>copy</td>
   </tr>
   <tr>
-    <td>*.coffee</td><td>compile to js and copy</td>
+    <td>*.coffee</td><td>compile to js</td>
   </tr>
   <tr>
-    <td>*.styl</td><td>compile to css and copy</td>
+    <td>*.styl</td><td>compile to css</td>
+  </tr>
+  <tr>
+    <td>*.jade</td><td>compile to js</td>
   </tr>
 </table>
 
@@ -72,6 +75,9 @@ here is how you define dependencies for each supported file format
   </tr>
   <tr>
     <td>*.styl</td><td>@import foo</td>
+  </tr>
+  <tr>
+    <td>*.jade</td><td>include foo</td>
   </tr>
 </table>
 
@@ -102,6 +108,7 @@ A sample project using .coffee files and stylus stylesheet should have the follo
   |- public
     |- js
       |- client_file1.coffee
+      |- client_file1.tpl.jade
     |- css
       |- file1.styl
 |- lib
@@ -109,8 +116,7 @@ A sample project using .coffee files and stylus stylesheet should have the follo
 |- public
   |- js
     |- client_file1.js
+    |- client_file1.tpl.js
   |- css
     |- file1.css
-
-
 </pre>

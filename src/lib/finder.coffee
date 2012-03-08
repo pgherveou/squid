@@ -4,10 +4,6 @@ events = require 'events'
 _      = require 'underscore'
 {q}    = require  'sink'
 
-defaultFilter = (f, stat) ->
-  return true if stat.isDirectory()
-  return /\.(coffee|js|styl)$/.test(f)
-
 exports.walk = walk = (dir, filter, fn) ->
 
   # just to be safe
@@ -15,7 +11,7 @@ exports.walk = walk = (dir, filter, fn) ->
 
   if arguments.length is 2
     fn = filter
-    filter = defaultFilter
+    filter = null
 
   fn.files ?= {}
 
@@ -74,7 +70,7 @@ exports.watch = watch = (dir, filter, fn) ->
 
 class exports.Monitor extends events.EventEmitter
 
-  constructor: (@name, @dir, @filter = defaultFilter) ->
+  constructor: (@name, @dir, @filter) ->
     @state = 'stopped'
     @files = {}
 
