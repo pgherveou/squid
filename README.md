@@ -33,6 +33,8 @@ that will build the project and make **sq** and **sb** executable available in y
 you can then use these two commands to build and run your own project following the recommandations below
 
 
+If you want to enable growl notification, install [growl] [1] and [growlNotify] [2]
+
 Supported files
 ---------------
 
@@ -120,3 +122,6 @@ A sample project using .coffee files and stylus stylesheet should have the follo
   |- css
     |- file1.css
 </pre>
+
+[1]: http://growl.info/growlupdateavailable   "growl"
+[2]: http://growl.info/downloads              "growlNotify"
