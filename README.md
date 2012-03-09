@@ -38,7 +38,7 @@ If you want to enable growl notification, install [growl] [1] and [growlNotify] 
 Supported files
 ---------------
 
-sq_tooling can work with the following files
+sq_util can work with the following files
 
 <table>
   <tr>
@@ -62,7 +62,8 @@ Dependencies
 ------------
 
 
-sq_util manage your file dependencies and only copy the necessary files.
+sq_util manage your file dependencies and only compile the necessary files.
+when using **sq** binary it also reload the code based on file dependencies.
 here is how you define dependencies for each supported file format
 
 <table>
