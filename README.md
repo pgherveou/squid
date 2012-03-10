@@ -54,7 +54,7 @@ sq_util can work with the following files
     <td>*.styl</td><td>compile to css</td><td>nib is imported, and /public/images is added to the path</td>
   </tr>
   <tr>
-    <td>*.jade</td><td>compile to js</td><td>template zre wrapped in a define function with a dependency on jade runtime</td>
+    <td>*.jade</td><td>compile to js</td><td>template are wrapped in a define function with a dependency on jade runtime</td>
   </tr>
 </table>
 
