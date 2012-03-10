@@ -42,19 +42,19 @@ sq_util can work with the following files
 
 <table>
   <tr>
-    <th>file</th><th>operation</th>
+    <th>file</th><th>operation</th><th>note</th>
   </tr>
   <tr>
-    <td>*.js</td><td>copy</td>
+    <td>*.js</td><td>copy</td><td></td>
   </tr>
   <tr>
-    <td>*.coffee</td><td>compile to js</td>
+    <td>*.coffee</td><td>compile to js</td><td>files are compiled with bare option</td>
   </tr>
   <tr>
-    <td>*.styl</td><td>compile to css</td>
+    <td>*.styl</td><td>compile to css</td><td>nib is imported, and /public/images is added to the path</td>
   </tr>
   <tr>
-    <td>*.jade</td><td>compile to js</td>
+    <td>*.jade</td><td>compile to js</td><td>template zre wrapped in a define function with a dependency on jade runtime</td>
   </tr>
 </table>
 
@@ -144,7 +144,7 @@ Here is an example of a coffee script using a jade template
 ```javascript
 
 define(require) ->
-  
+
   template = require './template'
   user = pict: 'path/to/pict', firstname: 'Pierre', lastName: 'Herveou'
 
