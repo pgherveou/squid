@@ -126,7 +126,7 @@ A sample project using .coffee files and stylus stylesheet should have the follo
 Example
 -------
 
-Here is an example of a coffee script using a jade view
+Here is an example of a coffee script using a jade template
 
 **src/path/to/template.jade**
 
