@@ -139,14 +139,15 @@ Here is an example of a coffee script using a jade view
 
 ```
 
-**src/path/to/view.jade**
+**src/path/to/view.coffee**
 
-```coffescript
+```javascript
 
 define(require) ->
-
-  user = pict: 'path/to/pict', firstname: 'Pierre', lastName: 'Herveou'
+  
   template = require './template'
+  user = pict: 'path/to/pict', firstname: 'Pierre', lastName: 'Herveou'
+
   console.log template {user}
 
 
