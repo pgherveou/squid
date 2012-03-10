@@ -61,7 +61,6 @@ sq_util can work with the following files
 Dependencies
 ------------
 
-
 sq_util manage your file dependencies and only compile the necessary files.
 when using **sq** binary it also reload the code based on file dependencies.
 here is how you define dependencies for each supported file format
@@ -83,7 +82,6 @@ here is how you define dependencies for each supported file format
     <td>*.jade</td><td>include foo</td>
   </tr>
 </table>
-
 
 project structure
 -----------------
@@ -123,6 +121,37 @@ A sample project using .coffee files and stylus stylesheet should have the follo
   |- css
     |- file1.css
 </pre>
+
+
+Example
+-------
+
+Here is an example of a coffee script using a jade view
+
+**src/path/to/template.jade**
+
+```
+.media
+  a.img: img(src=user.picture)
+.bd
+  .first= user.firstName
+  .last= user.lastName
+
+```
+
+**src/path/to/view.jade**
+
+```coffescript
+
+define(require) ->
+
+  user = pict: 'path/to/pict', firstname: 'Pierre', lastName: 'Herveou'
+  template = require './template'
+  console.log template {user}
+
+
+```
+
 
 [1]: http://growl.info/growlupdateavailable   "growl"
 [2]: http://growl.info/downloads              "growlNotify"
