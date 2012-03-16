@@ -1,8 +1,9 @@
 fs        = require 'fs'
 path      = require 'path'
-{argv}    = require('optimist').alias 'd', 'debug'
 {spawn}   = require 'child_process'
 moment    = require 'moment'
+{argv}    = require('optimist').alias('d', 'debug').alias('b', 'break')
+
 
 builder   = require "./projectBuilder"
 {Monitor} = require "./finder"
@@ -45,6 +46,7 @@ Server stuffs
 
 srvArgs = []
 srvArgs.push '--debug' if argv.debug
+srvArgs.push '--debug-brk' if argv.break
 srvArgs.push serverScript
 
 start = (msg = 'Starting') ->
@@ -70,9 +72,8 @@ restart = ->
 builder stuffs
 ###
 
-filter = (f, stat) ->
-  return true if stat.isDirectory()
-  return /\.(coffee|js|styl|jade)$/.test(f)
+fileFilter = (f) -> /\.(coffee|js|styl|jade)$/.test(f)
+filter = (f, stat) -> stat.isDirectory() or fileFilter(f)
 
 srcMonitor = new Monitor 'src Monitor', path.resolve('src'), filter
 libMonitor = new Monitor 'lib Monitor', path.resolve('lib'), filter
@@ -87,7 +88,7 @@ codeChange = (err, file, message) ->
   notifier.info message, title: relativeName(file) or srcMonitor.name
 
 # configure and start srcMonitor
-srcMonitor.on 'created', (f) -> builder.liveBuild f, codeChange
+srcMonitor.on 'created', (f) -> builder.liveBuild(f, codeChange) if fileFilter(f)
 srcMonitor.on 'changed', (f) -> builder.liveBuild f, codeChange
 srcMonitor.on 'removed', (f) -> builder.removeBuild f, codeChange
 srcMonitor.once 'stopped',   -> notifier.info 'Stop monitor', title: srcMonitor.name
