@@ -82,7 +82,7 @@ relativeName = (file) -> file?.substring root.length
 
 # handle code change
 codeChange = (err, file, message) ->
-  return notifier.error(err.message, title: relativeName err.file) if err
+  return notifier.error(err.toString(), title: relativeName err.file) if err
   notifier.info message, title: relativeName(file) or srcMonitor.name
 
 
@@ -102,7 +102,7 @@ srcMonitor.once 'started', (files) ->
   notifier.debug "Watching", title: srcMonitor.name
   builder.liveBuildAll files, (errors) ->
     if errors
-      notifier.error(e.message, title: relativeName(e.file)) for e in errors
+      notifier.error(e.toString(), title: relativeName(e.file)) for e in errors
     else
       notifier.debug 'Build done.', title: srcMonitor.name
       buildReady = yes
