@@ -13,11 +13,9 @@ amdWrap = (fn) ->
 
 module.exports = class JadeBuilder extends Builder
 
-  reg: /^include "(.*)"$/gm
+  reg: /^include (.*)$/gm
 
   fileExt: ".jade"
-
-
 
   _build: (file, code, refresh, cb) ->
 

@@ -65,8 +65,6 @@ winston.loggers.add 'util',
   console:
     colorize:  true
     padLevels: true
-  file:
-    filename: path.join logFolder, 'util.log'
 
 winston.loggers.add 'notifier', growl: {}
 

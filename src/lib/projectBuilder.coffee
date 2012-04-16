@@ -24,7 +24,7 @@ module.exports =
 
     cb or= (errors) ->
       if errors
-        logger.error "file: #{e.file} :\n e.message" for e in errors
+        logger.error "- file: #{e.file} :\n #{e.message}" for e in errors
       else
         logger.info "Build done."
 

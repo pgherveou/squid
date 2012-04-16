@@ -4,10 +4,10 @@ mkdirp   = require 'mkdirp'
 _        = require 'nimble'
 logger   = require('./loggers').get 'util'
 
-exports.BuildError = (file, error) ->
+exports.BuildError = BuildError = (file, error) ->
   Error.call @
   @file = file
-  @message ?= error.message ?= error
+  @message  = error.toString()
   this.name = 'Build Error'
 
 exports.Builder = class Builder
@@ -42,7 +42,7 @@ exports.Builder = class Builder
 
   # get imports directive in code
   getImports: (file, code) ->
-    path.resolve(path.dirname(file), m[1]) + @fileExt while m = @reg.exec(code)
+    path.resolve(path.dirname(file), m[1]) + (if path.extname(m[1]) then '' else @fileExt) while m = @reg.exec(code)
 
   # scan files and set dependencies
   scan: (file, code) ->

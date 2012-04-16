@@ -4,13 +4,11 @@ path      = require 'path'
 moment    = require 'moment'
 {argv}    = require('optimist').alias('d', 'debug').alias('b', 'break')
 
-
 builder   = require "./projectBuilder"
 {Monitor} = require "./finder"
 
 logger    = require('./loggers').get 'util'
 notifier  = require('./loggers').get 'notifier'
-
 
 serverScript  = argv._[0] or 'index.js'
 server        = null
@@ -87,6 +85,13 @@ codeChange = (err, file, message) ->
   return notifier.error(err.message, title: relativeName err.file) if err
   notifier.info message, title: relativeName(file) or srcMonitor.name
 
+
+# configure libMonitor
+libMonitor.once 'started', -> notifier.debug "Watching", title: libMonitor.name
+libMonitor.on   'changed', -> restart() if buildReady
+libMonitor.on   'created', -> restart() if buildReady
+libMonitor.once 'stopped', -> notifier.info 'Stop monitor', title: libMonitor.name
+
 # configure and start srcMonitor
 srcMonitor.on 'created', (f) -> builder.liveBuild(f, codeChange) if fileFilter(f)
 srcMonitor.on 'changed', (f) -> builder.liveBuild f, codeChange
@@ -102,17 +107,9 @@ srcMonitor.once 'started', (files) ->
       notifier.debug 'Build done.', title: srcMonitor.name
       buildReady = yes
       start()
+      libMonitor.start()
 
 srcMonitor.start()
-
-# configure and start libMonitor
-libMonitor.once 'started', (files) ->
-  notifier.debug "Watching", title: libMonitor.name
-
-libMonitor.on 'changed', -> restart() if buildReady
-libMonitor.on 'created', -> restart() if buildReady
-libMonitor.once 'stopped', -> notifier.info 'Stop monitor', title: libMonitor.name
-libMonitor.start()
 
 ###
 process stuff
