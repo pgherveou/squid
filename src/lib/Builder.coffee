@@ -29,7 +29,7 @@ exports.Builder = class Builder
   write: (newCode, file, cb) ->
     fs.readFile file, 'utf8', (err, oldCode) =>
       return cb null, file, "identical #{file}" if newCode is oldCode
-      mkdirp path.dirname(file), 0755, (err) =>
+      mkdirp path.dirname(file), 0o0755, (err) =>
         return cb new BuildError file, err if err
         fs.writeFile file, newCode, (err) =>
           return cb new BuildError file, err if err
