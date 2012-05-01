@@ -19,7 +19,6 @@ module.exports =
   class Publisher
 
     constructor: (config) ->
-      console.log "init with ", config
       @client = knox.createClient config
 
     publishDir: ({origin, dest, filter}, cb)  ->

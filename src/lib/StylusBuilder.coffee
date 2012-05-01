@@ -19,7 +19,7 @@ module.exports = class StylusBuilder extends Builder
         @write css, @buildPath(file, '.css'), cb
 
     else if refresh
-      async.each @deps[file].refreshs,
+      async.forEach @deps[file].refreshs,
         (f, cb) =>
           @build f,refresh, cb
         (err) ->
@@ -33,6 +33,7 @@ module.exports = class StylusBuilder extends Builder
     stylus(code)
       .set('fileName', file)
       .set('compress', on)
+      .define('env', process.env.NODE_ENV or 'development')
       .set('paths', ['public/images', path.dirname file])
       .define('url', stylus.url({ paths: ['public'] }))
       .use(nib())
