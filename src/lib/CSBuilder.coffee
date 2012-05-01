@@ -1,6 +1,6 @@
 fs                    = require 'fs'
 path                  = require 'path'
-_                     = require 'nimble'
+async                 = require 'async'
 cs                    = require 'coffee-script'
 {Builder, BuildError} = require './Builder'
 logger                = require('./loggers').get 'util'
@@ -12,11 +12,11 @@ module.exports = class CoffeeBuilder extends Builder
 
   _build: (file, code, refresh, cb) ->
     if refresh and @deps[file].refreshs.length
-      _.each @deps[file].refreshs,
+      async.forEach @deps[file].refreshs,
         (f, cb) =>  @build f, refresh, cb
         (err) -> if err then cb new BuildError file, err else cb null
     else
-      _.map @deps[file].imports,
+      async.map @deps[file].imports,
         (importFile, cb) ->
           fs.readFile importFile, 'utf8', (err, data) ->
             return cb err if err

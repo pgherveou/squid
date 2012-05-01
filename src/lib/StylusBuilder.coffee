@@ -1,5 +1,5 @@
 path                  = require 'path'
-_                     = require 'nimble'
+async                 = require 'async'
 stylus                = require 'stylus'
 nib                   = require 'nib'
 {Builder, BuildError} = require './Builder'
@@ -19,7 +19,7 @@ module.exports = class StylusBuilder extends Builder
         @write css, @buildPath(file, '.css'), cb
 
     else if refresh
-      _.each @deps[file].refreshs,
+      async.each @deps[file].refreshs,
         (f, cb) =>
           @build f,refresh, cb
         (err) ->
@@ -32,7 +32,9 @@ module.exports = class StylusBuilder extends Builder
   _compile: (file, code, cb) ->
     stylus(code)
       .set('fileName', file)
+      .set('compress', on)
       .set('paths', ['public/images', path.dirname file])
+      .define('url', stylus.url({ paths: ['public'] }))
       .use(nib())
       .import('nib')
       .render cb

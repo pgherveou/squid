@@ -1,5 +1,5 @@
 path                  = require 'path'
-_                     = require 'nimble'
+async                 = require 'async'
 jade                  = require 'jade'
 {Builder, BuildError} = require './Builder'
 logger                = require('./loggers').get 'util'
@@ -29,7 +29,7 @@ module.exports = class JadeBuilder extends Builder
       @write amdWrap(tplFn), @buildPath(file, '.js'), cb
 
     else if refresh
-      _.each @deps[file].refreshs,
+      async.forEach @deps[file].refreshs,
         (f, cb) =>
           @build f,refresh, cb
         (err) ->

@@ -1,6 +1,7 @@
 path          = require 'path'
 fs            = require 'fs'
-_             = require 'nimble'
+util          = require 'util'
+async         = require 'async'
 
 {walk}        = require './finder'
 CSBuilder     = require './CSBuilder'
@@ -24,7 +25,7 @@ module.exports =
 
     cb or= (errors) ->
       if errors
-        logger.error "- file: #{e.file} :\n #{e.toString()}" for e in errors
+        logger.error e.toString() for e in errors
       else
         logger.info "Build done."
 
@@ -64,6 +65,6 @@ module.exports =
         errors.push err if err
         cb null
 
-    _.each files, buildFile, ->
+    async.forEach files, buildFile, ->
       # logger.debug 'build done'
       if errors.length then cb errors else cb null

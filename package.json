@@ -14,7 +14,7 @@
   "dependencies": {
     "mkdirp"       : "*",
     "growl"        : "*",
-    "nimble"       : "*",
+    "async"        : "*",
     "moment"       : "*",
     "nib"          : "*",
     "optimist"     : "*",
@@ -23,6 +23,8 @@
     "underscore"   : "*",
     "winston"      : "*",
     "coffee-script": "*",
+    "knox"         : "*",
+    "mime"         : "*",
     "jade"         : "git://github.com/pgherveou/jade.git#master"
   }
 }

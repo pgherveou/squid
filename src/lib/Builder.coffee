@@ -1,14 +1,24 @@
 path     = require 'path'
 fs       = require 'fs'
 mkdirp   = require 'mkdirp'
-_        = require 'nimble'
+_        = require 'async'
 logger   = require('./loggers').get 'util'
 
-exports.BuildError = BuildError = (file, error) ->
-  Error.call @
-  @file = file
-  @message  = error.toString()
-  this.name = 'Build Error'
+exports.BuildError = class BuildError extends Error
+
+  name: 'Build Error'
+
+  constructor: (@file, @error) ->
+
+  toString: ->
+    """
+    Build Error on #{@file}
+
+    #{@error.toString()}
+
+    --
+
+    """
 
 exports.Builder = class Builder
 

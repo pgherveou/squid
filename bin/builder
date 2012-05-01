@@ -1,8 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env coffee
 
-var path = require('path')
-  , fs = require('fs')
-  , lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib')
-  , builder = require(lib + '/projectBuilder');
-
-builder.buildAll();
+builder = require '../lib/projectBuilder'
+builder.buildAll()
