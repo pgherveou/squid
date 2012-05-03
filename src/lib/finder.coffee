@@ -2,7 +2,6 @@ fs     = require 'fs'
 path   = require 'path'
 events = require 'events'
 _      = require 'underscore'
-{q}    = require  'sink'
 
 exports.walk = walk = (dir, filter, fn) ->
 
@@ -11,30 +10,22 @@ exports.walk = walk = (dir, filter, fn) ->
 
   if arguments.length is 2
     fn = filter
-    filter = null
+    filter = -> true
 
   fn.files ?= {}
-
-  q fs.stat, dir, (err, stat) ->
-    fn err if err
-    fn.files[dir] = stat
+  try fn.files[dir] = fs.statSync(dir) catch err then fn err
 
   traverse = (dir) ->
-    q fs.readdir, dir, (err, files) ->
-      fn err if err
-
-      _(files).each (filename) ->
+      try files = fs.readdirSync(dir) catch err then fn err
+      files.forEach (filename) ->
         file = path.join dir, filename
-
-        q fs.stat, file, (err, stat) ->
-          return fn err if err
-          return unless filter and filter filename, stat
-
-          fn.files[file] = stat
-          if stat.isDirectory() then traverse file
+        try stat = fs.statSync(file) catch err then fn err
+        return unless filter and filter filename, stat
+        fn.files[file] = stat
+        traverse file if stat.isDirectory()
 
   traverse dir
-  q -> fn null, fn.files
+  fn null, fn.files
 
 exports.watch = watch = (dir, filter, fn) ->
 

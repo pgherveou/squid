@@ -19,7 +19,6 @@
     "nib"          : "*",
     "optimist"     : "*",
     "stylus"       : "*",
-    "sink"         : "*",
     "underscore"   : "*",
     "winston"      : "*",
     "coffee-script": "*",
