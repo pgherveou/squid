@@ -1,7 +1,6 @@
 var fs = require('fs')
   , util = require('util');
 
-
 module.exports.loggers   = require('./lib/loggers');
 module.exports.builder   = require('./lib/projectBuilder');
 module.exports.Publisher = require('./lib/Publisher');
