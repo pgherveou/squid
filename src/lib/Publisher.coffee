@@ -51,7 +51,7 @@ module.exports =
 
     publish: ({file, filename}, cb) =>
 
-      logger.debug "publising #{file} to #{filename}"
+
       async.waterfall [
 
         # readfile
@@ -78,8 +78,8 @@ module.exports =
           @client.headFile filename, (err, res) =>
             return cb err if err
             md5 = '"' + crypto.createHash('md5').update(buf).digest('hex') + '"'
-            console.log  "compare #{md5} and #{res.headers.etag} => #{md5 is res.headers.etag}"
             return cb null, 'files are identical' if md5 is res.headers.etag
+            logger.debug "#{if res.headers.etag then [UPDATE] else [NEW]} publising #{file} to #{filename}"
 
             req  = @client.put filename, headers
             req.on 'response', (res) ->
