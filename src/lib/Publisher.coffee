@@ -43,11 +43,9 @@ module.exports =
 
         files.forEach (file) =>
           filename = file.replace origin, dest
-          #logger.info "upload #{file} to #{filename}"
-          q.push {file, filename}, (err) ->
-            return logger.debug "#{file} was uploaded" unless err
-            cb err
-            q.drain = ->
+          q.push {file, filename}, cb
+
+
 
     publish: ({file, filename}, cb) =>
 
@@ -79,7 +77,7 @@ module.exports =
             return cb err if err
             md5 = '"' + crypto.createHash('md5').update(buf).digest('hex') + '"'
             return cb null, 'files are identical' if md5 is res.headers.etag
-            logger.debug "#{if res.headers.etag then [UPDATE] else [NEW]} publising #{file} to #{filename}"
+            logger.debug "#{if res.headers.etag then "UPDATE" else "NEW"} publising #{file} to #{filename}"
 
             req  = @client.put filename, headers
             req.on 'response', (res) ->
