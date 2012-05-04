@@ -34,37 +34,23 @@ logFolder = path.join __dirname, '../../data/log/'
 
 winston.loggers.add 'test',
   console:
-    colorize:  true
-    padLevels: true
+    colorize:  on
+    padLevels: on
   file:
     filename: path.join logFolder, 'test.log'
 
 winston.loggers.add 'app',
   console:
-    colorize:  true
-    padLevels: true
+    colorize:  on
+    padLevels: on
+    timestamp: on
   file:
     filename: path.join logFolder, 'app.log'
 
-winston.loggers.add 'landing',
-  console:
-    colorize:  true
-    padLevels: true
-  file:
-    filename: path.join logFolder, 'landing.log'
-
-
-winston.loggers.add 'proxy',
-  console:
-    colorize:  true
-    padLevels: true
-  file:
-    filename: path.join logFolder, 'proxy.log'
-
 winston.loggers.add 'util',
   console:
-    colorize:  true
-    padLevels: true
+    colorize:  on
+    padLevels: on
 
 winston.loggers.add 'notifier', growl: {}
 

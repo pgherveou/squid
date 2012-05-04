@@ -28,7 +28,7 @@ module.exports =
 
       # convert origin folder to absolute
       origin = path.join path.resolve(origin)
-      logger.info "uploading new files origin #{origin} to #{dest}"
+      logger.info "uploading new files from '#{origin}' to '/#{dest}'"
 
 
       walk origin, filter, (err, fileItems) =>
