@@ -36,7 +36,7 @@ module.exports =
         files = (file for file, stat of fileItems when stat.isFile())
 
         # create a task queue to upload file
-        q = async.queue @publish, 10
+        q = async.queue @publish, 2
         q.drain =  ->
           logger.debug "All files were uploaded"
           cb()
@@ -77,17 +77,14 @@ module.exports =
             return cb err if err
             md5 = '"' + crypto.createHash('md5').update(buf).digest('hex') + '"'
             if md5 is res.headers.etag
-              logger.debug 'files are identical'
-              cb null
+              logger.debug "[skip]    #{filename}"
+              return cb null
             else if res.headers.etag
-              logger.debug "[UPDATE] publising #{file} to #{filename}"
+              logger.debug "[UPDATE]  #{filename}"
             else
-              logger.debug "[ADD] publising #{file} to #{filename}"
+              logger.debug "[ADD]     #{filename}"
 
             req  = @client.put filename, headers
-            req.on 'response', (res) ->
-              console.log res.statusCode
-              console.log req.url
-              cb res.statusCode isnt 200
+            req.on 'response', (res) -> cb res.statusCode isnt 200
             req.end(buf)
       ], cb
