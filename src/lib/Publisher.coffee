@@ -43,7 +43,7 @@ module.exports =
 
         files.forEach (file) =>
           filename = file.replace origin, dest
-          q.push {file, filename}, cb
+          q.push {file, filename}, ->
 
 
 
