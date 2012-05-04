@@ -76,8 +76,13 @@ module.exports =
           @client.headFile filename, (err, res) =>
             return cb err if err
             md5 = '"' + crypto.createHash('md5').update(buf).digest('hex') + '"'
-            return cb null, 'files are identical' if md5 is res.headers.etag
-            logger.debug "#{if res.headers.etag then "UPDATE" else "NEW"} publising #{file} to #{filename}"
+            if md5 is res.headers.etag
+              logger.debug 'files are identical'
+              cb null
+            else if res.headers.etag
+              logger.debug "[UPDATE] publising #{file} to #{filename}"
+            else
+              logger.debug "[ADD] publising #{file} to #{filename}"
 
             req  = @client.put filename, headers
             req.on 'response', (res) ->
