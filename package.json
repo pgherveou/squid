@@ -24,6 +24,6 @@
     "coffee-script": "*",
     "knox"         : "*",
     "mime"         : "*",
-    "jade"         : "git://github.com/pgherveou/jade.git#master"
+    "jade"         : "*"
   }
 }
