@@ -1,9 +1,17 @@
 Squid
 =====
 
+squid is a toolbox to build your node projects.
+Squid take cares of the compilation of your coffee, jade and stylus files. You put all your files inside your
+src folder and it will compile them to the output directory as soon as it detect a file change.
 
-Commands
--------
+Squid also export a publisher class to let you publish your file to amazon s3
+
+Squid 
+
+
+executables
+-----------
 
 squid provide two executable commands,
 
@@ -15,15 +23,15 @@ squid provide two executable commands,
     <td>sb</td><td>build your project src folder</td>
   </tr>
   <tr>
-    <td>sq</td><td>build your project, watch changes, restart when changes are made to /lib</td>
+    <td>sq</td><td>build your project, run your main script (node index.js) watch changes, auto-restart your app when changes are made to files in **/lib**</td>
   </tr>
 </table>
 
 Squid use growl to notify after each compilation
 If you want to enable growl notification, install [growl] [1] and [growlNotify] [2]
 
-Supported files
----------------
+Supported files for compilation
+-------------------------------
 
 squid can work with the following files
 
@@ -45,8 +53,8 @@ squid can work with the following files
   </tr>
 </table>
 
-Dependencies
-------------
+files Dependencies
+-------------------
 
 squid manage your file dependencies and only compile the necessary files.
 when using **sq** binary it also reload the code based on file dependencies.
@@ -139,6 +147,27 @@ define(require) ->
 
 
 ```
+
+
+Here is an example of cake task that let you publish your file to s3
+
+```javascript
+
+task 'publish', 'optimize and upload to s3', publish = (opts, cb = noop) ->
+
+  # create s3 publisher
+  publisher = new Publisher bucket: 'your bucket name',  key: 'xxx', secret: 'xxx'
+
+  # define filter closure that will only select js png and css file
+  filter = (f, stat) ->
+    return true if stat.isDirectory() or /\.(js|png|css)$/.test f
+    false
+
+  # publish public dir to root of assets bucket
+  publisher.publishDir {origin: 'public', dest: '', filter}, cb
+
+```
+
 
 
 [1]: http://growl.info/growlupdateavailable   "growl"
