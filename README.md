@@ -9,7 +9,7 @@ src folder and it will compile them to the output directory as soon as it detect
 Install
 -------
 
-install the package globally to use the two commands provied by the project (see desc below)
+install the package globally to use the two commands provided by the project (see desc below)
 
 ```
 $ npm install -g squid
