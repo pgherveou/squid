@@ -29,7 +29,8 @@ this will
 - start your server
 - recompile your files as soon as they change and emit a growl notification*
 - restart your server when file change inside /lib
-- you can also combine it to a tool like livereload to auto refresh your browser when a client file has been recompiled 
+
+You can also combine it to a tool like live-reload to auto refresh your browser
 
 * If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
 
