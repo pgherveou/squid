@@ -2,10 +2,10 @@ Squid
 =======
 
 
-files
+Commands
 -----
 
-squid provide two executable scripts,
+squid provide two executable commands,
 
 <table>
   <tr>
