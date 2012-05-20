@@ -3,8 +3,7 @@ Squid
 
 squid is a build tool inspired from [connect-assets] [1]
 
-Squid take cares of the compilation of your coffee, jade and stylus files. You put all your files inside your
-src folder and it will compile them to the output directory as soon as it detect a file change. 
+Squid compiles your coffee, jade and stylus files, and can publish all your assets to amazon s3
 
 
 Install
