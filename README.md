@@ -27,9 +27,11 @@ $ sq
 this will
 
 - start your server
-- recompile your files as soon as they change and emit a growl notification
+- recompile your files as soon as they change and emit a growl notification*
 - restart your server when file change inside /lib
 - you can also combine it to a tool like livereload to auto refresh your browser when a client file has been recompiled 
+
+* If you want to enable growl notification, install [growl] [1] and [growlNotify] [2]
 
 sb command
 ----------
@@ -45,16 +47,14 @@ You can also require squid to build your project inside your own script
 ```coffee
 {builder} = require 'squid'
 task 'build', 'Build project', (opts) ->
-  builder.buildAll opts.exceptFolders, (err) ->
+  builder.buildAll opts.exceptFolders, (errors) ->
     if err
       console.error 'Error building the project'
-      console.error "file: #{e.file} :\n #{e.toString()}" for e in err
+      console.error "file: #{e.file} :\n #{e.toString()}" for e in errors
     else
       console.log 'build sucessful!'
 ```
 
---
-If you want to enable growl notification, install [growl] [1] and [growlNotify] [2]
 
 Supported files for compilation
 -------------------------------
