@@ -87,7 +87,7 @@ squid can compile the following files
     <th>file</th><th>operation</th><th>note</th>
   </tr>
   <tr>
-    <td>*.js</td><td>copy</td><td>simple copy to the output folder</td>
+    <td>*.js</td><td>copy</td><td>concat dependency and copy to the output folder</td>
   </tr>
   <tr>
     <td>*.coffee</td><td>compile to js</td><td>files are compiled with bare option</td>
