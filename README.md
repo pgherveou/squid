@@ -1,9 +1,9 @@
 Squid
-=======
+=====
 
 
 Commands
------
+-------
 
 squid provide two executable commands,
 
