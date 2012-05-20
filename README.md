@@ -3,9 +3,12 @@ Squid
 
 squid is a toolbox to build your node projects.
 Squid take cares of the compilation of your coffee, jade and stylus files. You put all your files inside your
-src folder and it will compile them to the output directory as soon as it detect a file change.
+src folder and it will compile them to the output directory as soon as it detect a file change. It use growl to notify
+you when a compilation failed or succeeded
 
-Squid also export a publisher class to let you publish your file to amazon s3
+
+Squid also export a publisher class to let you publish your file to amazon s3. You can control what files you want to publish
+and squid will only upload new or updated files (see example below)
 
 Squid 
 
