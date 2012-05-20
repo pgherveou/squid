@@ -154,7 +154,7 @@ define(require) ->
 
 Here is an example of cake task that let you publish your file to s3
 
-```javascript
+```coffee
 
 task 'publish', 'optimize and upload to s3', publish = (opts, cb = noop) ->
 
