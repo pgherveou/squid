@@ -1,8 +1,6 @@
 Squid
 =====
 
-squid is a build tool inspired from [connect-assets] [1]
-
 Squid compiles your coffee, jade and stylus files, and can publish all your assets to amazon s3
 
 
