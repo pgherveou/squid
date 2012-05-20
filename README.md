@@ -9,7 +9,7 @@ Squid compiles your coffee, jade and stylus files, and can publish all your asse
 Install
 -------
 
-install the package globally to use the two commands provided by the project (see desc below)
+install the package globally to use the commands provided by the project (see desc below)
 
 ```
 $ npm install -g squid
