@@ -5,7 +5,7 @@ sq_util
 files
 -----
 
-sq_util provide two executable scripts,
+squid provide two executable scripts,
 
 <table>
   <tr>
@@ -19,26 +19,13 @@ sq_util provide two executable scripts,
   </tr>
 </table>
 
-installation
-------------
-
-from the root folder of this project type
-
-```
-cake build
-npm link
-```
-
-that will build the project and make **sq** and **sb** executable available in your global scope
-you can then use these two commands to build and run your own project following the recommandations below
-
-
+Squid use growl to notify after each compilation
 If you want to enable growl notification, install [growl] [1] and [growlNotify] [2]
 
 Supported files
 ---------------
 
-sq_util can work with the following files
+squid can work with the following files
 
 <table>
   <tr>
@@ -61,7 +48,7 @@ sq_util can work with the following files
 Dependencies
 ------------
 
-sq_util manage your file dependencies and only compile the necessary files.
+squid manage your file dependencies and only compile the necessary files.
 when using **sq** binary it also reload the code based on file dependencies.
 here is how you define dependencies for each supported file format
 
@@ -86,7 +73,7 @@ here is how you define dependencies for each supported file format
 project structure
 -----------------
 
-To work with sq_util a project should have the following file organisation
+To work with squid a project should have the following file organisation
 <pre>
 ./
 |- index.js
@@ -98,7 +85,7 @@ To work with sq_util a project should have the following file organisation
 </pre>
 
 
-A sample project using .coffee files and stylus stylesheet should have the following organisation
+A sample project using coffee, stylus and jade should have the following organisation
 
 <pre>
 ./
