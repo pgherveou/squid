@@ -1,7 +1,7 @@
 Squid
 =====
 
-Squid compiles your coffee, jade and stylus files, and can publish all your assets to amazon s3
+Squid compiles your coffee, jade and stylus files, and publish  your assets to amazon s3
 
 
 Install
