@@ -55,18 +55,40 @@ task 'build', 'Build project', (opts) ->
       console.log 'build sucessful!'
 ```
 
+s3 publication
+--------------
+
+Squid publisher let you upload files within a directory to your amazon s3 bucket. 
+squid will only upload  new or modified files to your bucket.
+squid will upload files with a far expiry date and will zip text files
+
+```coffee
+{Publisher} = require 'squid'
+task 'publish', 'optimize and upload to s3', publish = (opts, cb = noop) ->
+
+  # create s3 publisher
+  publisher = new Publisher bucket: 'your bucket name',  key: 'xxx', secret: 'xxx'
+
+  # define filter closure that will only select js, png, and css file
+  filter = (f, stat) -> true if stat.isDirectory() or /\.(js|png|css)$/.test f
+
+  # publish 'public' dir to root folder '' of the  bucket
+  publisher.publishDir {origin: 'public', dest: '', filter}, cb
+
+```
+
 
 Supported files for compilation
 -------------------------------
 
-squid can work with the following files
+squid can compile the following files
 
 <table>
   <tr>
     <th>file</th><th>operation</th><th>note</th>
   </tr>
   <tr>
-    <td>*.js</td><td>copy</td><td></td>
+    <td>*.js</td><td> squid simply copy js from your src folder to the output folder</td><td></td>
   </tr>
   <tr>
     <td>*.coffee</td><td>compile to js</td><td>files are compiled with bare option</td>
@@ -75,7 +97,7 @@ squid can work with the following files
     <td>*.styl</td><td>compile to css</td><td>nib is imported, and /public/images is added to the path</td>
   </tr>
   <tr>
-    <td>*.jade</td><td>compile to js</td><td>template are wrapped in a define function with a dependency on jade runtime</td>
+    <td>*.jade</td><td>compile to js</td><td>template are compiled into js and wrapped in a requirejs define function</td>
   </tr>
 </table>
 
@@ -83,7 +105,6 @@ files Dependencies
 -------------------
 
 squid manage your file dependencies and only compile the necessary files.
-when using **sq** binary it also reload the code based on file dependencies.
 here is how you define dependencies for each supported file format
 
 <table>
@@ -142,55 +163,6 @@ A sample project using coffee, stylus and jade should have the following organis
   |- css
     |- file1.css
 </pre>
-
-
-Example
--------
-
-Here is an example of a coffee script using a jade template
-
-**src/path/to/template.jade**
-
-```
-.media
-  a.img: img(src=user.picture)
-.bd
-  .first= user.firstName
-  .last= user.lastName
-
-```
-
-**src/path/to/view.coffee**
-
-```coffee
-
-define(require) ->
-
-  template = require './template'
-  user = pict: 'path/to/pict', firstname: 'Pierre', lastName: 'Herveou'
-
-  console.log template {user}
-
-
-```
-
-
-Here is an example of cake task that let you publish project files to s3
-
-```coffee
-
-task 'publish', 'optimize and upload to s3', publish = (opts, cb = noop) ->
-
-  # create s3 publisher
-  publisher = new Publisher bucket: 'your bucket name',  key: 'xxx', secret: 'xxx'
-
-  # define filter closure that will only select js, png, and css file
-  filter = (f, stat) -> true if stat.isDirectory() or /\.(js|png|css)$/.test f
-
-  # publish 'public' dir to root folder '' of the  bucket
-  publisher.publishDir {origin: 'public', dest: '', filter}, cb
-
-```
 
 
 
