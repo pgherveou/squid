@@ -139,7 +139,7 @@ Here is an example of a coffee script using a jade template
 
 **src/path/to/view.coffee**
 
-```javascript
+```coffee
 
 define(require) ->
 
