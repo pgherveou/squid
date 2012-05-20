@@ -45,10 +45,7 @@ module.exports =
           filename = file.replace origin, dest
           q.push {file, filename}, ->
 
-
-
     publish: ({file, filename}, cb) =>
-
 
       async.waterfall [
 

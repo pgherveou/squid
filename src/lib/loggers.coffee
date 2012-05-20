@@ -1,6 +1,5 @@
 path    = require 'path'
 winston = require 'winston'
-growl   = require 'growl'
 require 'winston-growl'
 
 ###
