@@ -5,18 +5,55 @@ squid is a toolbox to build your node projects.
 Squid take cares of the compilation of your coffee, jade and stylus files. You put all your files inside your
 src folder and it will compile them to the output directory as soon as it detect a file change. 
 
-**sq** command will 
+
+Install
+-------
+
+install the package globally to use the two commands provied by the project (see desc below)
+
+```
+$ npm install -g squid
+```
+
+
+sq command
+----------
+
+at the root of your project directory execute: 
+
+```
+$ sq
+```
+this will
+
 - start your server
 - recompile your files as soon as they change and emit a growl notification
 - restart your server when file change inside /lib
 - you can also combine it to a tool like livereload to auto refresh your browser when a client file has been recompiled 
 
-there is also a **sb** that you can use if you just want to build the project. YOu can alternatively use the module exports to 
-build your project yourself using squid inside your own script
+sb command
+----------
+if you just want to build the project source files. use the sb command 
+at the root of your project directory execute:
 
-Squid also export a publisher class to let you publish your file to amazon s3. You can control what files you want to publish
-and squid will only upload new or updated files (see example below)
+```
+$ sb
+```
 
+You can also require squid to build your project inside your own script
+
+```coffee
+{builder} = require 'squid'
+task 'build', 'Build project', (opts) ->
+  builder.buildAll opts.exceptFolders, (err) ->
+    if err
+      console.error 'Error building the project'
+      console.error "file: #{e.file} :\n #{e.toString()}" for e in err
+    else
+      console.log 'build sucessful!'
+```
+
+--
 If you want to enable growl notification, install [growl] [1] and [growlNotify] [2]
 
 Supported files for compilation
