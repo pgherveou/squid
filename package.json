@@ -1,8 +1,7 @@
 {
-  "private": true,
-  "author": "squadsheet",
+  "author": "Pierre-Guillaume Herveou <pgherveou@gmail.com>",
   "name": "sq_util",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/pgherveou/sq_util.git"
@@ -21,9 +20,12 @@
     "stylus"       : "*",
     "underscore"   : "*",
     "winston"      : "*",
+    "winston-growl": "*",
     "coffee-script": "*",
     "knox"         : "*",
     "mime"         : "*",
     "jade"         : "*"
   }
 }
+
+
