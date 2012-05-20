@@ -152,7 +152,7 @@ define(require) ->
 ```
 
 
-Here is an example of cake task that let you publish your file to s3
+Here is an example of cake task that let you publish project files to s3
 
 ```coffee
 
@@ -161,12 +161,10 @@ task 'publish', 'optimize and upload to s3', publish = (opts, cb = noop) ->
   # create s3 publisher
   publisher = new Publisher bucket: 'your bucket name',  key: 'xxx', secret: 'xxx'
 
-  # define filter closure that will only select js png and css file
-  filter = (f, stat) ->
-    return true if stat.isDirectory() or /\.(js|png|css)$/.test f
-    false
+  # define filter closure that will only select js, png, and css file
+  filter = (f, stat) -> true if stat.isDirectory() or /\.(js|png|css)$/.test f
 
-  # publish public dir to root of assets bucket
+  # publish 'public' dir to root folder '' of the  bucket
   publisher.publishDir {origin: 'public', dest: '', filter}, cb
 
 ```
