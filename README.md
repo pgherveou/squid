@@ -1,7 +1,7 @@
 Squid
 =====
 
-squid is a toolbox to build your node projects.
+squid is a build tool inspired from [connect-assets] [1]
 Squid take cares of the compilation of your coffee, jade and stylus files. You put all your files inside your
 src folder and it will compile them to the output directory as soon as it detect a file change. 
 
@@ -31,7 +31,7 @@ this will
 - restart your server when file change inside /lib
 - you can also combine it to a tool like livereload to auto refresh your browser when a client file has been recompiled 
 
-* If you want to enable growl notification, install [growl] [1] and [growlNotify] [2]
+* If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
 
 sb command
 ----------
@@ -166,5 +166,6 @@ A sample project using coffee, stylus and jade should have the following organis
 
 
 
-[1]: http://growl.info/growlupdateavailable   "growl"
-[2]: http://growl.info/downloads              "growlNotify"
+[1]: https://github.com/TrevorBurnham/connect-assets        "connect-assets"
+[2]: http://growl.info/growlupdateavailable                 "growl"
+[3]: http://growl.info/downloads                            "growlNotify"
