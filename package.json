@@ -28,7 +28,7 @@
   },
  "scripts": {
     "prepublish": "cake build"
-  },
+  }
 }
 
 
