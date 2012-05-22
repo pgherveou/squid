@@ -127,17 +127,8 @@ here is how you define dependencies for each supported file format
 project structure
 -----------------
 
-To work with squid a project should have the following file organisation
-<pre>
-./
-|- index.js
-|- src
-  |- lib
-  |- public
-</pre>
+To work with squid a project you should organize your files as follow:
 
-
-A sample project using coffee, stylus and jade should have the following organisation
 <pre>
 ./
 |- index.js
