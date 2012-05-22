@@ -31,6 +31,8 @@ You can also combine it to a tool like live-reload to auto refresh your browser 
 
 **If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
 
+![growl screenshot](https://github.com/pgherveou/squid/raw/gh-pages/images/growl.screenshot.png)
+
 sb command
 ----------
 if you just want to build the project source files. use the sb command 
