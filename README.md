@@ -164,7 +164,7 @@ Todo
 ----
 
 - add tests
-- add compilation options for coffee, jade and stylus
+- remove hardcoded compilation settings and add configuration for coffee, jade and stylus compilers
 
 
 [1]: https://github.com/TrevorBurnham/connect-assets        "connect-assets"
