@@ -28,9 +28,9 @@ this will
 - recompile your files as soon as they change and emit a growl notification*
 - restart your server when file change inside /lib
 
-You can also combine it to a tool like live-reload to auto refresh your browser
+You can also combine it to a tool like live-reload to auto refresh your browser when browser files are updated
 
-* If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
+**If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
 
 sb command
 ----------
@@ -41,7 +41,7 @@ at the root of your project directory execute:
 $ sb
 ```
 
-You can also require squid to build your project inside your own script
+You can also use squid to build your project inside your own build script
 
 ```coffee
 {builder} = require 'squid'
