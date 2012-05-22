@@ -46,13 +46,15 @@ You can also use squid to build your project inside your own build script
 
 ```coffee
 {builder} = require 'squid'
-task 'build', 'Build project', (opts) ->
-  builder.buildAll opts.exceptFolders, (errors) ->
-    if err
-      console.error 'Error building the project'
-      console.error "file: #{e.file} :\n #{e.toString()}" for e in errors
-    else
-      console.log 'build sucessful!'
+
+# build all files in src except your css folder
+except = ['css']                     
+builder.buildAll except, (errs) ->
+  if errs
+    console.error 'Error building the project'
+    console.error "#{e.file}: #{e.toString()}" for e in errs
+  else
+    console.log 'build sucessful!'
 ```
 
 s3 publication
@@ -64,16 +66,15 @@ squid will upload files with a far expiry date and will zip text files
 
 ```coffee
 {Publisher} = require 'squid'
-task 'publish', 'optimize and upload to s3', publish = (opts, cb = noop) ->
 
-  # create s3 publisher
-  publisher = new Publisher bucket: 'your bucket name',  key: 'xxx', secret: 'xxx'
+# create s3 publisher
+publisher = new Publisher bucket: 'name',  key: 'xx', secret: 'xx'
 
-  # define filter closure that will only select js, png, and css file
-  filter = (f, stat) -> true if stat.isDirectory() or /\.(js|png|css)$/.test f
+# define filter closure that will only select js, png, and css file
+filter = (f, stat) -> true if stat.isDirectory() or /\.(js|png|css)$/.test f
 
-  # publish 'public' dir to root folder '' of the  bucket
-  publisher.publishDir {origin: 'public', dest: '', filter}, cb
+# publish 'public' dir to root folder '' of the  bucket
+publisher.publishDir {origin: 'public', dest: '', filter}, cb
 
 ```
 
