@@ -71,7 +71,7 @@ squid will upload files with a far expiry date and will zip text files
 publisher = new Publisher bucket: 'name',  key: 'xx', secret: 'xx'
 
 # define filter closure that will only select js, png, and css file
-filter = (f, stat) -> true if stat.isDirectory() or /\.(js|png|css)$/.test f
+filter = (f, stat) -> stat.isDirectory() or /\.(js|png|css)$/.test f
 
 # publish 'public' dir to root folder '' of the  bucket
 publisher.publishDir {origin: 'public', dest: '', filter}, cb
