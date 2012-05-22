@@ -1,12 +1,9 @@
-path    = require 'path'
 winston = require 'winston'
 require 'winston-growl'
 
 ###
 Setup loggers container
 ###
-
-logFolder = path.join __dirname, '../../data/log/'
 
 
 winston.loggers.add 'util',
