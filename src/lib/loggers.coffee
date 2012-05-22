@@ -1,11 +1,6 @@
 winston = require 'winston'
 require 'winston-growl'
 
-###
-Setup loggers container
-###
-
-
 winston.loggers.add 'util',
   console:
     colorize:  on
