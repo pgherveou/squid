@@ -166,6 +166,5 @@ Todo
 - remove hardcoded compilation settings and add configuration for coffee, jade and stylus compilers
 
 
-[1]: https://github.com/TrevorBurnham/connect-assets        "connect-assets"
 [2]: http://growl.info/growlupdateavailable                 "growl"
 [3]: http://growl.info/downloads                            "growlNotify"
