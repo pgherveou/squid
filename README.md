@@ -160,6 +160,12 @@ after running **sb** or **sq**, this will generate the following files
     |- file1.css
 </pre>
 
+Todo
+----
+
+- add tests
+- add compilation options for coffee, jade and stylus
+
 
 [1]: https://github.com/TrevorBurnham/connect-assets        "connect-assets"
 [2]: http://growl.info/growlupdateavailable                 "growl"
