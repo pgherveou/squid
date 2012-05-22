@@ -161,7 +161,6 @@ after running **sb** or **sq**, this will generate the following files
 </pre>
 
 
-
 [1]: https://github.com/TrevorBurnham/connect-assets        "connect-assets"
 [2]: http://growl.info/growlupdateavailable                 "growl"
 [3]: http://growl.info/downloads                            "growlNotify"
