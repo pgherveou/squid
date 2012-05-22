@@ -150,14 +150,6 @@ A sample project using coffee, stylus and jade should have the following organis
       |- client_file1.tpl.jade
     |- css
       |- file1.styl
-|- lib
-  |- server_file1.js 
-|- public
-  |- js 
-    |- client_file1.js
-    |- client_file1.tpl.js
-  |- css
-    |- file1.css
 </pre>
 
 after running **sb** or **sq**, this will generate the following files
