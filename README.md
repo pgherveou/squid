@@ -131,8 +131,6 @@ To work with squid a project should have the following file organisation
 <pre>
 ./
 |- index.js
-|- lib
-|- public
 |- src
   |- lib
   |- public
@@ -140,7 +138,6 @@ To work with squid a project should have the following file organisation
 
 
 A sample project using coffee, stylus and jade should have the following organisation
-
 <pre>
 ./
 |- index.js
@@ -154,9 +151,26 @@ A sample project using coffee, stylus and jade should have the following organis
     |- css
       |- file1.styl
 |- lib
-  |- server_file1.js
+  |- server_file1.js 
 |- public
-  |- js
+  |- js 
+    |- client_file1.js
+    |- client_file1.tpl.js
+  |- css
+    |- file1.css
+</pre>
+
+after running **sb** or **sq**, this will generate the following files
+
+<pre>
+./
+|- index.js
+|- src
+  |- ...
+|- lib
+  |- server_file1.js 
+|- public
+  |- js 
     |- client_file1.js
     |- client_file1.tpl.js
   |- css
