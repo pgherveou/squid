@@ -13,7 +13,6 @@ install the package globally to use the commands provided by the project (see de
 $ npm install -g squid
 ```
 
-
 sq command
 ----------
 
@@ -127,7 +126,7 @@ here is how you define dependencies for each supported file format
 project structure
 -----------------
 
-To work with squid a project you should organize your files as follow:
+To work with squid, your project should follow this file architecture:
 
 <pre>
 ./
