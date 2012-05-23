@@ -21,6 +21,15 @@ at the root of your project directory execute:
 ```
 $ sq
 ```
+
+or if your main script isn't index.js
+
+```
+$ sq my-script.js
+```
+
+
+
 this will
 
 - start your server
@@ -32,6 +41,7 @@ You can also combine it to a tool like live-reload to auto refresh your browser 
 **If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
 
 ![growl screenshot](https://github.com/pgherveou/squid/raw/gh-pages/images/growl.screenshot.png)
+
 
 sb command
 ----------
