@@ -28,6 +28,13 @@ or if your main script isn't index.js
 $ sq my-script.js
 ```
 
+to start node in debug mode
+
+```
+$ sq -d
+```
+
+
 
 
 this will
