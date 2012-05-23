@@ -47,9 +47,8 @@ You can also use squid to build your project inside your own build script
 ```coffee
 {builder} = require 'squid'
 
-# build all files in src except your css folder
-except = ['css']                     
-builder.buildAll except, (errs) ->
+# build all files in src except your css folder                     
+builder.buildAll ['css'], (errs) ->
   if errs
     console.error 'Error building the project'
     console.error "#{e.file}: #{e.toString()}" for e in errs
