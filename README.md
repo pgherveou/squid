@@ -13,7 +13,6 @@ install the package globally to use the commands provided by the project (see de
 $ npm install -g squid
 ```
 
-
 sq command
 ----------
 
@@ -22,6 +21,22 @@ at the root of your project directory execute:
 ```
 $ sq
 ```
+
+or if your main script isn't index.js
+
+```
+$ sq my-script.js
+```
+
+to start node in debug mode
+
+```
+$ sq -d
+```
+
+
+
+
 this will
 
 - start your server
@@ -31,6 +46,9 @@ this will
 You can also combine it to a tool like live-reload to auto refresh your browser when client files are updated
 
 **If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
+
+![growl screenshot](https://github.com/pgherveou/squid/raw/gh-pages/images/growl.screenshot.png)
+
 
 sb command
 ----------
@@ -45,13 +63,14 @@ You can also use squid to build your project inside your own build script
 
 ```coffee
 {builder} = require 'squid'
-task 'build', 'Build project', (opts) ->
-  builder.buildAll opts.exceptFolders, (errors) ->
-    if err
-      console.error 'Error building the project'
-      console.error "file: #{e.file} :\n #{e.toString()}" for e in errors
-    else
-      console.log 'build sucessful!'
+
+# build all files in src except your css folder                     
+builder.buildAll ['css'], (errs) ->
+  if errs
+    console.error 'Error building the project'
+    console.error "#{e.file}: #{e.toString()}" for e in errs
+  else
+    console.log 'build sucessful!'
 ```
 
 s3 publication
@@ -63,16 +82,15 @@ squid will upload files with a far expiry date and will zip text files
 
 ```coffee
 {Publisher} = require 'squid'
-task 'publish', 'optimize and upload to s3', publish = (opts, cb = noop) ->
 
-  # create s3 publisher
-  publisher = new Publisher bucket: 'your bucket name',  key: 'xxx', secret: 'xxx'
+# create s3 publisher
+publisher = new Publisher bucket: 'name',  key: 'xx', secret: 'xx'
 
-  # define filter closure that will only select js, png, and css file
-  filter = (f, stat) -> true if stat.isDirectory() or /\.(js|png|css)$/.test f
+# define filter closure that will only select js, png, and css file
+filter = (f, stat) -> stat.isDirectory() or /\.(js|png|css)$/.test f
 
-  # publish 'public' dir to root folder '' of the  bucket
-  publisher.publishDir {origin: 'public', dest: '', filter}, cb
+# publish 'public' dir to root folder '' of the  bucket
+publisher.publishDir {origin: 'public', dest: '', filter}, cb
 
 ```
 
@@ -127,7 +145,7 @@ here is how you define dependencies for each supported file format
 project structure
 -----------------
 
-To work with squid a project you should organize your files as follow:
+To work with squid, your project should follow this file architecture:
 
 <pre>
 ./
@@ -167,6 +185,5 @@ Todo
 - remove hardcoded compilation settings and add configuration for coffee, jade and stylus compilers
 
 
-[1]: https://github.com/TrevorBurnham/connect-assets        "connect-assets"
 [2]: http://growl.info/growlupdateavailable                 "growl"
 [3]: http://growl.info/downloads                            "growlNotify"
