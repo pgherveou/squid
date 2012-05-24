@@ -52,12 +52,12 @@ srvArgs.push serverScript
 start = (msg = 'Starting') ->
   notifier.info msg, title: 'Server'
   startTime = moment()
-  logger.info "starting #{srvArgs}"
+  logger.info "starting #{serverScript}"
   server = spawn 'node', srvArgs
 
   server.on 'exit', (err) ->
     return unless err
-    notifier.error 'Server down', title: 'Server'
+    notifier.error 'Server down', title: serverScript
     restart()
 
   server.stdout.on 'data', writeStdout
