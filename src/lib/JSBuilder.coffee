@@ -11,7 +11,7 @@ module.exports = class JSBuilder extends Builder
 
   _build: (file, code, refresh, cb) ->
     if refresh and @deps[file].refreshs.length
-      async.each @deps[file].refreshs,
+      async.forEach @deps[file].refreshs,
         (f, cb) =>  @build f, refresh, cb
         (err) -> if err then cb new BuildError file, err else cb null
     else
