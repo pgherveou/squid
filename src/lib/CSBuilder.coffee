@@ -20,9 +20,13 @@ module.exports = class CoffeeBuilder extends Builder
         (importFile, cb) ->
           fs.readFile importFile, 'utf8', (err, data) ->
             return cb err if err
-            return cb null, data if path.extname(importFile) is '.coffee'
-            return cb null, "`#{data}`" if path.extname(importFile) is '.js'
-            return cb new BuildError(importFile, 'file extension not supported')
+            if path.extname(importFile) is '.coffee'
+              cb null, data
+            else if path.extname(importFile) is '.js'
+              data = data.replace /`/g, ''
+              cb null, "`#{data}`"
+            else
+              cb new BuildError(importFile, 'file extension not supported')
 
         (err, imports) =>
           return  cb new BuildError file, err if err
