@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Squid by pgherveou</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Squid</h1>
+        <p>Squid compiles your coffee, jade and stylus files, and publish your assets to amazon s3 </p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/pgherveou/squid" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/pgherveou/squid/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/pgherveou/squid/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>Squid</h1>
+
+<p>Squid compiles your coffee, jade and stylus files, and publish  your assets to amazon s3</p>
+
+<h2>Install</h2>
+
+<p>install the package globally to use the commands provided by the project (see desc below)</p>
+
+<pre><code>$ npm install -g squid
+</code></pre>
+
+<h2>sq command</h2>
+
+<p>at the root of your project directory execute:</p>
+
+<pre><code>$ sq
+</code></pre>
+
+<p>or if your main script isn't index.js</p>
+
+<pre><code>$ sq my-script.js
+</code></pre>
+
+<p>to start node in debug mode</p>
+
+<pre><code>$ sq -d
+</code></pre>
+
+<p>this will</p>
+
+<ul>
+<li>start your server script</li>
+<li>live recompile your files and emit a growl notification**</li>
+<li>restart your server when a file change inside /lib (server script directory by convention)</li>
+</ul><p>You can also combine it to a tool like <a href="http://livereload.com/" title="liveReload">liveReload</a> to auto refresh your browser when client files are updated</p>
+
+<p>**If you want to enable growl notification, install <a href="http://growl.info/growlupdateavailable" title="growl">growl</a> and <a href="http://growl.info/downloads" title="growlNotify">growlNotify</a></p>
+
+<p><img src="https://github.com/pgherveou/squid/raw/gh-pages/images/growl.screenshot.png" alt="growl screenshot"></p>
+
+<h2>sb command</h2>
+
+<p>if you just want to build the project source files. use the sb command
+at the root of your project directory execute:</p>
+
+<pre><code>$ sb
+</code></pre>
+
+<p>You can also use squid to build your project inside your own build script</p>
+
+<div class="highlight">
+<pre><span class="p">{</span><span class="nx">builder</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
+
+<span class="c1"># build all files in src except your css folder</span>
+<span class="nx">builder</span><span class="p">.</span><span class="nx">buildAll</span> <span class="nv">except: </span><span class="p">[</span><span class="s">'css'</span><span class="p">],</span> <span class="nf">(errs) -&gt;</span>
+  <span class="k">if</span> <span class="nx">errs</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="s">'Error building the project'</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="s">"</span><span class="si">#{</span><span class="nx">e</span><span class="p">.</span><span class="nx">file</span><span class="si">}</span><span class="s">: </span><span class="si">#{</span><span class="nx">e</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="nx">e</span> <span class="k">in</span> <span class="nx">errs</span>
+  <span class="k">else</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">'build sucessful!'</span>
+</pre>
+</div>
+
+
+<h2>s3 publication</h2>
+
+<p>Squid publisher let you upload files within a directory to your amazon s3 bucket.
+squid will only upload  new or modified files to your bucket.
+squid will upload files with a far expiry date and will zip text files</p>
+
+<div class="highlight">
+<pre><span class="p">{</span><span class="nx">Publisher</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
+
+<span class="c1"># create s3 publisher</span>
+<span class="nv">publisher = </span><span class="k">new</span> <span class="nx">Publisher</span> <span class="nv">bucket: </span><span class="s">'name'</span><span class="p">,</span>  <span class="nv">key: </span><span class="s">'xx'</span><span class="p">,</span> <span class="nv">secret: </span><span class="s">'xx'</span>
+
+<span class="c1"># define filter closure that will only select js, png, and css file</span>
+<span class="nv">filter = </span><span class="nf">(f, stat) -&gt;</span> <span class="nx">stat</span><span class="p">.</span><span class="nx">isDirectory</span><span class="p">()</span> <span class="o">or</span> <span class="sr">/\.(js|png|css)$/</span><span class="p">.</span><span class="nx">test</span> <span class="nx">f</span>
+
+<span class="c1"># publish 'public' dir to root folder '' of the  bucket</span>
+<span class="nx">publisher</span><span class="p">.</span><span class="nx">publishDir</span> <span class="p">{</span><span class="nv">origin: </span><span class="s">'public'</span><span class="p">,</span> <span class="nv">dest: </span><span class="s">''</span><span class="p">,</span> <span class="nx">filter</span><span class="p">},</span> <span class="nx">cb</span>
+
+</pre>
+</div>
+
+
+<h2>Supported files for compilation</h2>
+
+<p>squid can compile the following files</p>
+
+<table>
+<tr>
+<th>file</th>
+<th>operation</th>
+<th>note</th>
+  </tr>
+<tr>
+<td>*.js</td>
+<td>copy</td>
+<td>concat dependencies and copy to the output folder</td>
+  </tr>
+<tr>
+<td>*.coffee</td>
+<td>compile to js</td>
+<td>files are compiled with bare option</td>
+  </tr>
+<tr>
+<td>*.styl</td>
+<td>compile to css</td>
+<td>nib is imported, and /public/images is added to the path</td>
+  </tr>
+<tr>
+<td>*.jade</td>
+<td>compile to js</td>
+<td>template are compiled into js and wrapped in a requirejs define function</td>
+  </tr>
+</table><h2>files Dependencies</h2>
+
+<p>squid manage your file dependencies and only compile the necessary files.
+here is how you define dependencies for each supported file format</p>
+
+<table>
+<tr>
+<th>file</th>
+<th>import syntax</th>
+  </tr>
+<tr>
+<td>*.js</td>
+<td>//= import foo.js</td>
+  </tr>
+<tr>
+<td>*.coffee</td>
+<td>#= import foo.(coffee|js)</td>
+  </tr>
+<tr>
+<td>*.styl</td>
+<td>
+<a href="https://github.com/import" class="user-mention">@import</a> foo</td>
+  </tr>
+<tr>
+<td>*.jade</td>
+<td>include foo</td>
+  </tr>
+</table><h2>project structure</h2>
+
+<p>To work with squid, your project should follow this file architecture:</p>
+
+<pre>
+./
+|- index.js
+|- src
+  |- lib
+    |- server_file1.coffee
+  |- public
+    |- js
+      |- client_file1.coffee
+      |- client_file1.tpl.jade
+    |- css
+      |- file1.styl
+</pre>
+
+<p>after running <strong>sb</strong> or <strong>sq</strong>, this will generate the following files</p>
+
+<pre>
+./
+|- index.js
+|- src
+  |- ...
+|- lib
+  |- server_file1.js
+|- public
+  |- js
+    |- client_file1.js
+    |- client_file1.tpl.js
+  |- css
+    |- file1.css
+</pre>
+
+<h2>Todo</h2>
+
+<ul>
+<li>add tests</li>
+<li>remove hardcoded compilation settings and add configuration for coffee, jade and stylus compilers</li>
+</ul>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/pgherveou">pgherveou</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
