@@ -16,7 +16,7 @@ $ npm install -g squid
 sq command
 ----------
 
-at the root of your project directory execute: 
+at the root of your project directory execute:
 
 ```
 $ sq
@@ -34,16 +34,14 @@ to start node in debug mode
 $ sq -d
 ```
 
-
-
-
 this will
 
-- start your server
-- recompile your files as soon as they change and emit a growl notification**
+- start your server script
+- live recompile your files and emit a growl notification**
 - restart your server when a file change inside /lib (server script directory by convention)
 
-You can also combine it to a tool like live-reload to auto refresh your browser when client files are updated
+You can also combine it to a tool like [liveReload] [1] to auto refresh your browser when client files are updated
+
 
 **If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
 
@@ -52,7 +50,7 @@ You can also combine it to a tool like live-reload to auto refresh your browser 
 
 sb command
 ----------
-if you just want to build the project source files. use the sb command 
+if you just want to build the project source files. use the sb command
 at the root of your project directory execute:
 
 ```
@@ -64,8 +62,8 @@ You can also use squid to build your project inside your own build script
 ```coffee
 {builder} = require 'squid'
 
-# build all files in src except your css folder                     
-builder.buildAll ['css'], (errs) ->
+# build all files in src except your css folder
+builder.buildAll except: ['css'], (errs) ->
   if errs
     console.error 'Error building the project'
     console.error "#{e.file}: #{e.toString()}" for e in errs
@@ -76,7 +74,7 @@ builder.buildAll ['css'], (errs) ->
 s3 publication
 --------------
 
-Squid publisher let you upload files within a directory to your amazon s3 bucket. 
+Squid publisher let you upload files within a directory to your amazon s3 bucket.
 squid will only upload  new or modified files to your bucket.
 squid will upload files with a far expiry date and will zip text files
 
@@ -169,9 +167,9 @@ after running **sb** or **sq**, this will generate the following files
 |- src
   |- ...
 |- lib
-  |- server_file1.js 
+  |- server_file1.js
 |- public
-  |- js 
+  |- js
     |- client_file1.js
     |- client_file1.tpl.js
   |- css
@@ -184,6 +182,6 @@ Todo
 - add tests
 - remove hardcoded compilation settings and add configuration for coffee, jade and stylus compilers
 
-
+[1]: http://livereload.com/                                 "liveReload"
 [2]: http://growl.info/growlupdateavailable                 "growl"
 [3]: http://growl.info/downloads                            "growlNotify"

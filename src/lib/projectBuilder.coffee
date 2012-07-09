@@ -21,7 +21,11 @@ buildFactory =
 
 module.exports =
 
-  buildAll: (exceptFolders = [], cb)  ->
+  buildAll: (opts = {}, cb) ->
+
+    if typeof opts is 'function'
+      cb = opts
+      opts = {}
 
     cb or= (errors) ->
       if errors
@@ -30,7 +34,7 @@ module.exports =
         logger.info "Build done."
 
     filter = (f, stat) ->
-      return false if stat.isDirectory() and path.basename(f) in exceptFolders
+      return false if stat.isDirectory() and path.basename(f) in opts.except
       return true if stat.isDirectory()
       return /\.(coffee|js|styl|jade)$/.test(f)
 
