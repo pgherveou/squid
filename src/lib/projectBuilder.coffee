@@ -34,7 +34,7 @@ module.exports =
         logger.info "Build done."
 
     filter = (f, stat) ->
-      return false if stat.isDirectory() and path.basename(f) in opts.except
+      return false if stat.isDirectory() and (opts.except and path.basename(f) in opts.except)
       return true if stat.isDirectory()
       return /\.(coffee|js|styl|jade)$/.test(f)
 
