@@ -2,7 +2,7 @@
   "name": "squid",
   "description": "toolbox for compiling coffee, stylus, jade files",
   "author": "Pierre-Guillaume Herveou <pgherveou@gmail.com>",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "http://pgherveou.github.com/squid/",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "moment"       : "*",
     "nib"          : "*",
     "optimist"     : "*",
-    "stylus"       : "0.27.x",
+    "stylus"       : "*",
     "underscore"   : "*",
     "winston"      : "*",
     "winston-growl": "*",
