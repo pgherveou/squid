@@ -2,7 +2,7 @@
   "name": "squid",
   "description": "toolbox for compiling coffee, stylus, jade files",
   "author": "Pierre-Guillaume Herveou <pgherveou@gmail.com>",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "homepage": "http://pgherveou.github.com/squid/",
   "repository": {
     "type": "git",
@@ -13,19 +13,19 @@
     "sb": "./bin/builder"
   },
   "dependencies": {
-    "mkdirp"       : "*",
     "async"        : "*",
+    "coffee-script": "*",
+    "jade"         : "*",
+    "knox"         : "*",
+    "mkdirp"       : "*",
+    "mime"         : "*",
     "moment"       : "*",
     "nib"          : "*",
     "optimist"     : "*",
     "stylus"       : "*",
     "underscore"   : "*",
     "winston"      : "*",
-    "winston-growl": "*",
-    "coffee-script": "*",
-    "knox"         : "*",
-    "mime"         : "*",
-    "jade"         : "*"
+    "winston-growl": "*"
   },
  "scripts": {
     "prepublish": "cake build"

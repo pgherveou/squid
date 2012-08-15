@@ -1,4 +1,5 @@
 path                  = require 'path'
+os                    = require 'os'
 async                 = require 'async'
 stylus                = require 'stylus'
 nib                   = require 'nib'
@@ -34,6 +35,7 @@ module.exports = class StylusBuilder extends Builder
       .set('fileName', file)
       .set('compress', on)
       .define('env', process.env.NODE_ENV or 'development')
+      .define('host', os.hostName())
       .set('paths', ['public/images', path.dirname file])
       .define('url', stylus.url({ paths: ['public'] }))
       .use(nib())
