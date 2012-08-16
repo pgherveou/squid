@@ -5,7 +5,7 @@ crypto = require 'crypto'
 knox   = require 'knox'
 mime   = require 'mime'
 async  = require 'async'
-_      = require 'underscore'
+_      = require 'lodash'
 moment = require 'moment'
 
 logger = require('./loggers').get 'util'
@@ -23,12 +23,15 @@ module.exports =
 
     publishDir: ({origin, dest, filter}, cb)  ->
 
+      # add slash
+      dest = "/#{dest}" unless dest[0] is '/'
+
       # set default filter
       filter or= -> true
 
       # convert origin folder to absolute
       origin = path.join path.resolve(origin)
-      logger.info "uploading new files from '#{origin}' to '/#{dest}'"
+      logger.info "uploading new files from '#{origin}' to '#{dest}'"
 
 
       walk origin, filter, (err, fileItems) =>

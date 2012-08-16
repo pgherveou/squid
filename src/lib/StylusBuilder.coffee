@@ -35,7 +35,7 @@ module.exports = class StylusBuilder extends Builder
       .set('fileName', file)
       .set('compress', on)
       .define('env', process.env.NODE_ENV or 'development')
-      .define('host', os.hostName())
+      .define('host', os.hostname())
       .set('paths', ['public/images', path.dirname file])
       .define('url', stylus.url({ paths: ['public'] }))
       .use(nib())

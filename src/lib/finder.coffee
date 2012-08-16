@@ -1,7 +1,7 @@
 fs     = require 'fs'
 path   = require 'path'
 events = require 'events'
-_      = require 'underscore'
+_      = require 'lodash'
 
 exports.walk = walk = (dir, filter, fn) ->
 
