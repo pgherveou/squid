@@ -24,7 +24,7 @@ module.exports =
     publishDir: ({origin, dest, filter}, cb)  ->
 
       # add slash
-      dest = "/#{dest}" unless dest[0] is '/'
+      dest = "/#{dest}" if dest and dest[0] isnt '/'
 
       # set default filter
       filter or= -> true
