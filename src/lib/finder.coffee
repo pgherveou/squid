@@ -20,7 +20,7 @@ exports.walk = walk = (dir, filter, fn) ->
       files.forEach (filename) ->
         file = path.join dir, filename
         try stat = fs.statSync(file) catch err then fn err
-        return unless filter filename, stat
+        return unless filter file, stat
         fn.files[file] = stat
         traverse file if stat.isDirectory()
 
