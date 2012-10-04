@@ -72,6 +72,7 @@ module.exports =
             'Expires'       : expireDate
             'Content-Type'  : mime.lookup file
             'Content-Length': buf.length
+            'x-amz-acl'     : 'public-read'
 
           @client.headFile filename, (err, res) =>
             return cb err if err
