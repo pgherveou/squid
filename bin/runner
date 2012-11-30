@@ -49,7 +49,7 @@ srvArgs.push '--debug' if argv.debug
 srvArgs.push '--debug-brk' if argv.break
 srvArgs.push serverScript
 
-if (fs.existsSync serverScript)
+if (not fs.existsSync serverScript)
   start = restart = ->
 else
   start = (msg = 'Starting') ->
