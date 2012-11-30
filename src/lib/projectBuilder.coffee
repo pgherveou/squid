@@ -11,13 +11,23 @@ StylusBuilder = require './StylusBuilder'
 
 logger        = require('./loggers').get 'util'
 
+if fs.exists 'squid.json'
+  config = JSON.parse fs.readFileSync 'squid.json'
+
+else
+  config =
+    src: 'src'
+    build: '.'
+    mapping: []
+
+
 # builder factory
 buildFactory =
   get: (file) -> @[path.extname file]
-  '.coffee': new CSBuilder 'src', '.'
-  '.js'    : new JSBuilder 'src', '.'
-  '.styl'  : new StylusBuilder 'src', '.'
-  '.jade'  : new JadeBuilder 'src', '.'
+  '.coffee': new CSBuilder config
+  '.js'    : new JSBuilder config
+  '.styl'  : new StylusBuilder config
+  '.jade'  : new JadeBuilder config
 
 module.exports =
 
