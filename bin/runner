@@ -49,24 +49,27 @@ srvArgs.push '--debug' if argv.debug
 srvArgs.push '--debug-brk' if argv.break
 srvArgs.push serverScript
 
-start = (msg = 'Starting') ->
-  notifier.info msg, title: 'Server'
-  startTime = moment()
-  logger.info "starting #{serverScript}"
-  server = spawn 'node', srvArgs
+if (fs.existsSync serverScript)
+  start = restart = ->
+else
+  start = (msg = 'Starting') ->
+    notifier.info msg, title: 'Server'
+    startTime = moment()
+    logger.info "starting #{serverScript}"
+    server = spawn 'node', srvArgs
 
-  server.on 'exit', (err) ->
-    return unless err
-    notifier.error 'Server down', title: serverScript
-    restart()
+    server.on 'exit', (err) ->
+      return unless err
+      notifier.error 'Server down', title: serverScript
+      restart err
 
-  server.stdout.on 'data', writeStdout
-  server.stderr.on 'data', writeStderr
+    server.stdout.on 'data', writeStdout
+    server.stderr.on 'data', writeStderr
 
-restart = ->
-  return unless server
-  server.kill('SIGHUP')
-  start 'Restarting' unless moment().diff(startTime, 'seconds') < 2
+  restart = (err) ->
+    return unless server
+    server.kill('SIGHUP')
+    start 'Restarting' unless err and moment().diff(startTime, 'seconds') < 2
 
 ###
 builder stuffs
