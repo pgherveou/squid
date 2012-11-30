@@ -1,8 +1,12 @@
-path     = require 'path'
-fs       = require 'fs'
-mkdirp   = require 'mkdirp'
-_        = require 'async'
-logger   = require('./loggers').get 'util'
+path   = require 'path'
+fs     = require 'fs'
+mkdirp = require 'mkdirp'
+_      = require 'lodash'
+logger = require('./loggers').get 'util'
+
+_.mixin require('underscore.string').exports()
+
+
 
 exports.BuildError = class BuildError extends Error
 
@@ -17,14 +21,13 @@ exports.BuildError = class BuildError extends Error
     #{@error.toString()}
 
     --
-
     """
 
 exports.Builder = class Builder
 
-  constructor: (srcDir, buildDir) ->
-    @srcDir   = path.resolve srcDir
-    @buildDir = path.resolve buildDir
+  constructor: (@config) ->
+    @srcDir   = path.resolve @config.src
+    @buildDir = path.resolve @config.build
 
   # dependcy hashs
   deps: {}
@@ -32,8 +35,18 @@ exports.Builder = class Builder
   # get the build path for source
   buildPath: (source, ext='.js') ->
     fileName = path.basename(source, path.extname(source)) + ext
-    dir      = @buildDir + path.dirname(source).substring @srcDir.length
+    fileDir  = path.dirname(source)
+
+    for mapping in config.mappings
+      if _(fileDir).startWith mapping.from
+        fileDir = _(fileDir).replace mapping.from, mapping.to
+        break
+
+    dir = @buildDir + fileDir.substring @srcDir.length
     path.join dir, fileName
+    console.log "building #{source} to #{path.join dir, fileName}"
+
+
 
   # if new, write code in file
   write: (newCode, file, cb) ->

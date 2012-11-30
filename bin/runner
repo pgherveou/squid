@@ -78,9 +78,6 @@ builder stuffs
 fileFilter = (f) -> /\.(coffee|js|styl|jade)$/.test(f)
 filter = (f, stat) -> stat.isDirectory() or fileFilter(f)
 
-srcMonitor = new Monitor 'src Monitor', path.resolve('src'), filter
-libMonitor = new Monitor 'lib Monitor', path.resolve('lib'), filter
-
 # display file relatively to the project root
 root = path.resolve '.'
 relativeName = (file) -> file?.substring root.length
@@ -91,12 +88,15 @@ codeChange = (err, file, message) ->
   notifier.info message, title: relativeName(file) or srcMonitor.name
 
 # configure libMonitor
-libMonitor.once 'started', -> notifier.debug "Watching", title: libMonitor.name
-libMonitor.on   'changed', -> restart() if buildReady
-libMonitor.on   'created', -> restart() if buildReady
-libMonitor.once 'stopped', -> notifier.info 'Stop monitor', title: libMonitor.name
+if fs.existsSync 'lib'
+  libMonitor = new Monitor 'lib Monitor', path.resolve('lib'), filter
+  libMonitor.once 'started', -> notifier.debug "Watching", title: libMonitor.name
+  libMonitor.on   'changed', -> restart() if buildReady
+  libMonitor.on   'created', -> restart() if buildReady
+  libMonitor.once 'stopped', -> notifier.info 'Stop monitor', title: libMonitor.name
 
 # configure and start srcMonitor
+srcMonitor = new Monitor 'src Monitor', path.resolve('src'), filter
 srcMonitor.on 'created', (f) -> builder.liveBuild(f, codeChange) if fileFilter(f)
 srcMonitor.on 'changed', (f) -> builder.liveBuild f, codeChange
 srcMonitor.on 'removed', (f) -> builder.removeBuild f, codeChange
@@ -111,7 +111,7 @@ srcMonitor.once 'started', (files) ->
       notifier.debug 'Build done.', title: srcMonitor.name
       buildReady = yes
       start()
-      libMonitor.start()
+      libMonitor.start() if libMonitor
 
 srcMonitor.start()
 
