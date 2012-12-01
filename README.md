@@ -146,7 +146,7 @@ You can define a squid.json object to specify src and build folder, and compilat
 
 - default options if you dont add a squid.json to your project
 
-```
+```json
 {
   "src": "src",
   "build": ".",
@@ -194,7 +194,7 @@ after running **sb** or **sq**, it will generate the following files
 
 If your project structure is different you can add a custom squid.json configuration: 
 
-``` 
+```json
 
 {
   "src": "mobile", // use mobile as src folder
