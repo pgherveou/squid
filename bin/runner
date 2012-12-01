@@ -96,7 +96,12 @@ if fs.existsSync 'lib'
   libMonitor.once 'stopped', -> notifier.info 'Stop monitor', title: libMonitor.name
 
 # configure and start srcMonitor
-srcMonitor = new Monitor 'src Monitor', path.resolve('src'), filter
+if fs.existsSync 'squid.json'
+  src = JSON.parse(fs.readFileSync 'squid.json').src
+else
+  src = 'src'
+
+srcMonitor = new Monitor 'src Monitor', path.resolve(src), filter
 srcMonitor.on 'created', (f) -> builder.liveBuild(f, codeChange) if fileFilter(f)
 srcMonitor.on 'changed', (f) -> builder.liveBuild f, codeChange
 srcMonitor.on 'removed', (f) -> builder.removeBuild f, codeChange

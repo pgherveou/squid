@@ -26,7 +26,8 @@ module.exports = class JadeBuilder extends Builder
       catch error
         return cb new BuildError file, error
 
-      @write amdWrap(tplFn), @buildPath(file, '.js'), cb
+      data = if @config.jade.amd then amdWrap(tplFn) else tplFn.toString()
+      @write data, @buildPath(file, '.js'), cb
 
     else if refresh
       async.forEach @deps[file].refreshs,

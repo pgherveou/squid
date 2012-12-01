@@ -2,6 +2,7 @@ path          = require 'path'
 fs            = require 'fs'
 util          = require 'util'
 async         = require 'async'
+_             = require 'lodash'
 
 logger        = require('./loggers').get 'util'
 
@@ -11,14 +12,21 @@ JSBuilder     = require './JSBuilder'
 JadeBuilder   = require './JadeBuilder'
 StylusBuilder = require './StylusBuilder'
 
-if fs.existsSync 'squid.json'
-  config = JSON.parse fs.readFileSync 'squid.json'
+config =
+  src: 'src'
+  build: '.'
+  mappings: []
+  coffee: {}
+  jade:
+    amd: yes
+  stylus:
+    url: ['public']
+    paths: ['public/images']
 
-else
-  config =
-    src: 'src'
-    build: '.'
-    mappings: []
+
+if fs.existsSync 'squid.json'
+  fileConfig = JSON.parse(fs.readFileSync 'squid.json')
+  _(config).extend fileConfig
 
 
 # builder factory

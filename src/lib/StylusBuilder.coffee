@@ -30,14 +30,15 @@ module.exports = class StylusBuilder extends Builder
     else
       cb null, file, 'nothing to build'
 
-  _compile: (file, code, cb) ->
+  _compile: (file, code, cb) =>
+    paths = @config.stylus.paths
     stylus(code)
       .set('fileName', file)
       .set('compress', on)
       .define('env', process.env.NODE_ENV or 'development')
       .define('host', os.hostname())
-      .set('paths', ['public/images', path.dirname file])
-      .define('url', stylus.url({ paths: ['public'] }))
+      .set('paths', paths.concat(path.dirname file))
+      .define('url', stylus.url({ paths: @config.stylus.url }))
       .use(nib())
       .import('nib')
       .render cb
