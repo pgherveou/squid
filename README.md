@@ -195,29 +195,32 @@ after running **sb** or **sq**, it will generate the following files
 If your project structure is different you can add a custom squid.json configuration: 
 
 ``` 
-// use mobile as src folder
-// compile mobile/js/* to app/assets/javascripts/mobile
-// compile mobile/stylesheets/* to app/assets/stylesheets/mobile
-// config stylus to lookup images in app/assets/images/mobile
-// does not wrap jade templates with an amd wrapper
 
 {
-  "src": "mobile",
+  "src": "mobile", // use mobile as src folder
 	"build": ".", 
 	"mappings": [
-		{"from": "js", "to": "app/assets/javascripts/mobile"},
+		// compile mobile/js/* to app/assets/javascripts/mobile
+		{"from": "js", "to": "app/assets/javascripts/mobile"}, 
+		// compile mobile/stylesheets/* to app/assets/stylesheets/mobile
 		{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"}
 	],
+	// config stylus to lookup images in app/assets/images/mobile
 	"stylus": {
 		"paths": ["app/assets/images/mobile"],
 		"url": ["app/assets/"]
 	}, 
-  "jade": {
-    "amd": false
-  }
+	// does not wrap jade templates with an amd wrapper
+  	"jade": {
+    		"amd": false
+	}
 }
 ```
 
+TODO
+----
+- Add more compiler options for compiler (PR are welcome)
+- Write some tests !!!
 
 
 [1]: http://livereload.com/                                 "liveReload"
