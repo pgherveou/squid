@@ -7,7 +7,6 @@ logger = require('./loggers').get 'util'
 _.mixin require('underscore.string').exports()
 
 
-
 exports.BuildError = class BuildError extends Error
 
   name: 'Build Error'
@@ -33,19 +32,20 @@ exports.Builder = class Builder
   deps: {}
 
   # get the build path for source
-  buildPath: (source, ext='.js') ->
+  buildPath: (source, ext='.js') =>
     fileName = path.basename(source, path.extname(source)) + ext
     fileDir  = path.dirname(source)
 
-    for mapping in config.mappings
-      if _(fileDir).startWith mapping.from
-        fileDir = _(fileDir).replace mapping.from, mapping.to
+    relative = fileDir.substring @srcDir.length
+    relative = relative[1..] if relative[0] is path.sep
+
+    for mapping in @config.mappings
+      if _(relative).startsWith mapping.from
+        fileDir = fileDir.replace(mapping.from, mapping.to)
         break
 
     dir = @buildDir + fileDir.substring @srcDir.length
     path.join dir, fileName
-    console.log "building #{source} to #{path.join dir, fileName}"
-
 
 
   # if new, write code in file

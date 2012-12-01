@@ -3,22 +3,22 @@ fs            = require 'fs'
 util          = require 'util'
 async         = require 'async'
 
+logger        = require('./loggers').get 'util'
+
 {walk}        = require './finder'
 CSBuilder     = require './CSBuilder'
 JSBuilder     = require './JSBuilder'
 JadeBuilder   = require './JadeBuilder'
 StylusBuilder = require './StylusBuilder'
 
-logger        = require('./loggers').get 'util'
-
-if fs.exists 'squid.json'
+if fs.existsSync 'squid.json'
   config = JSON.parse fs.readFileSync 'squid.json'
 
 else
   config =
     src: 'src'
     build: '.'
-    mapping: []
+    mappings: []
 
 
 # builder factory
@@ -48,7 +48,7 @@ module.exports =
       return true if stat.isDirectory()
       return /\.(coffee|js|styl|jade)$/.test(f)
 
-    walk "src", filter, (err, files) =>
+    walk config.src, filter, (err, files) =>
       return logger.error err if err
       @liveBuildAll files, cb
 
