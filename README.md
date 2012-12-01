@@ -159,14 +159,14 @@ You can define a squid.json object to specify src and build folder, and compilat
 }
 ```
 
-```
+custom squid.json configuration example: 
 
-// custom squid.json configuration
+``` 
 // use mobile as src folder
 // compile mobile/js/* to app/assets/javascripts/mobile
 // compile mobile/stylesheets/* to app/assets/stylesheets/mobile
-// config stylus to looup images in app/assets/images/mobile
-// does not add amdWrap around jade templates
+// config stylus to lookup images in app/assets/images/mobile
+// does not wrap jade templates with an amd wrapper
 
 {
   "src": "mobile",
