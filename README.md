@@ -153,9 +153,9 @@ You can define a squid.json object to specify src and build folder, and compilat
   "jade": {
     "amd": true
   },
-  stylus: {
-    url: ["public"],
-    paths: ["public/images"]
+  "stylus": {
+    "url": ["public"],
+    "paths": ["public/images"]
   }
 }
 ```
@@ -197,21 +197,17 @@ If your project structure is different you can add a custom squid.json configura
 ```json
 
 {
-  "src": "mobile", // use mobile as src folder
+  "src": "mobile", /* use mobile as src folder */
 	"build": ".", 
-	"mappings": [
-		// compile mobile/js/* to app/assets/javascripts/mobile
-		{"from": "js", "to": "app/assets/javascripts/mobile"}, 
-		// compile mobile/stylesheets/* to app/assets/stylesheets/mobile
-		{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"}
+	"mappings": [		
+		{"from": "js", "to": "app/assets/javascripts/mobile"}, // compile mobile/js/* to app/assets/javascripts/mobile		
+		{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"} // compile mobile/stylesheets/* to app/assets/stylesheets/mobile
 	],
-	// config stylus to lookup images in app/assets/images/mobile
-	"stylus": {
+	"stylus": { // config stylus to lookup images in app/assets/images/mobile
 		"paths": ["app/assets/images/mobile"],
 		"url": ["app/assets/"]
-	}, 
-	// does not wrap jade templates with an amd wrapper
-  	"jade": {
+	}, 	
+  	"jade": { // does not wrap jade templates with an amd wrapper
     		"amd": false
 	}
 }
