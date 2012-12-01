@@ -194,20 +194,27 @@ after running **sb** or **sq**, it will generate the following files
 
 If your project structure is different you can add a custom squid.json configuration: 
 
+The following config 
+- use mobile as src folder
+- compile mobile/js/* to app/assets/javascripts/mobile		
+- compile mobile/stylesheets/* to app/assets/stylesheets/mobile
+- config stylus to lookup images in app/assets/images/mobile
+- does not wrap jade templates with an amd wrapper
+
 ```json
 
 {
-  "src": "mobile", /* use mobile as src folder */
+  "src": "mobile",
 	"build": ".", 
 	"mappings": [		
-		{"from": "js", "to": "app/assets/javascripts/mobile"}, // compile mobile/js/* to app/assets/javascripts/mobile		
-		{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"} // compile mobile/stylesheets/* to app/assets/stylesheets/mobile
+		{"from": "js", "to": "app/assets/javascripts/mobile"}, 
+		{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"}
 	],
-	"stylus": { // config stylus to lookup images in app/assets/images/mobile
+	"stylus": { 
 		"paths": ["app/assets/images/mobile"],
 		"url": ["app/assets/"]
 	}, 	
-  	"jade": { // does not wrap jade templates with an amd wrapper
+  	"jade": { 
     		"amd": false
 	}
 }
