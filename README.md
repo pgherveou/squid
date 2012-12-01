@@ -140,6 +140,52 @@ here is how you define dependencies for each supported file format
   </tr>
 </table>
 
+Configuration
+-------------
+You can define a squid.json object to specify src and build folder, and compilation options
+
+```
+// default options if you dont add a squid.json to your project
+{
+  "src": "src",
+  "build": ".",
+  "jade": {
+    "amd": true
+  },
+  stylus: {
+    url: ["public"],
+    paths: ["public/images"]
+  }
+}
+```
+
+```
+
+// custom squid.json configuration
+// use mobile as root folder
+// compile mobile/js/* to app/assets/javascripts/mobile
+// compile mobile/stylesheets/* to app/assets/stylesheets/mobile
+// config stylus to looup images in app/assets/images/mobile
+// does not add amdWrap around jade templates
+
+{
+  "src": "mobile",
+	"build": ".", 
+	"mappings": [
+		{"from": "js", "to": "app/assets/javascripts/mobile"},
+		{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"}
+	],
+	"stylus": {
+		"paths": ["app/assets/images/mobile"],
+		"url": ["app/assets/"]
+	}, 
+  "jade": {
+    "amd": false
+  }
+}
+```
+
+
 project structure
 -----------------
 
@@ -176,11 +222,6 @@ after running **sb** or **sq**, this will generate the following files
     |- file1.css
 </pre>
 
-Todo
-----
-
-- add tests
-- remove hardcoded compilation settings and add configuration for coffee, jade and stylus compilers
 
 [1]: http://livereload.com/                                 "liveReload"
 [2]: http://growl.info/growlupdateavailable                 "growl"
