@@ -144,8 +144,9 @@ Configuration
 -------------
 You can define a squid.json object to specify src and build folder, and compilation options
 
+- default options if you dont add a squid.json to your project
+
 ```
-// default options if you dont add a squid.json to your project
 {
   "src": "src",
   "build": ".",
@@ -158,8 +159,40 @@ You can define a squid.json object to specify src and build folder, and compilat
   }
 }
 ```
+So if you have the following project
+<pre>
+./
+|- index.js
+|- src
+  |- lib
+    |- server_file1.coffee
+  |- public
+    |- js
+      |- client_file1.coffee
+      |- client_file1.tpl.jade
+    |- css
+      |- file1.styl
+</pre>
 
-custom squid.json configuration example: 
+after running **sb** or **sq**, it will generate the following files
+
+<pre>
+./
+|- index.js
+|- src
+  |- ...
+|- lib
+  |- server_file1.js
+|- public
+  |- js
+    |- client_file1.js
+    |- client_file1.tpl.js
+  |- css
+    |- file1.css
+</pre>
+
+
+If your project structure is different you can add a custom squid.json configuration: 
 
 ``` 
 // use mobile as src folder
@@ -185,42 +218,6 @@ custom squid.json configuration example:
 }
 ```
 
-
-project structure
------------------
-
-To work with squid, your project should follow this file architecture:
-
-<pre>
-./
-|- index.js
-|- src
-  |- lib
-    |- server_file1.coffee
-  |- public
-    |- js
-      |- client_file1.coffee
-      |- client_file1.tpl.jade
-    |- css
-      |- file1.styl
-</pre>
-
-after running **sb** or **sq**, this will generate the following files
-
-<pre>
-./
-|- index.js
-|- src
-  |- ...
-|- lib
-  |- server_file1.js
-|- public
-  |- js
-    |- client_file1.js
-    |- client_file1.tpl.js
-  |- css
-    |- file1.css
-</pre>
 
 
 [1]: http://livereload.com/                                 "liveReload"
