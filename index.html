@@ -89,8 +89,7 @@ at the root of your project directory execute:</p>
 
 <p>You can also use squid to build your project inside your own build script</p>
 
-<div class="highlight">
-<pre><span class="p">{</span><span class="nx">builder</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
+<div class="highlight"><pre><span class="p">{</span><span class="nx">builder</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
 
 <span class="c1"># build all files in src except your css folder</span>
 <span class="nx">builder</span><span class="p">.</span><span class="nx">buildAll</span> <span class="nv">except: </span><span class="p">[</span><span class="s">'css'</span><span class="p">],</span> <span class="nf">(errs) -&gt;</span>
@@ -99,9 +98,7 @@ at the root of your project directory execute:</p>
     <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="s">"</span><span class="si">#{</span><span class="nx">e</span><span class="p">.</span><span class="nx">file</span><span class="si">}</span><span class="s">: </span><span class="si">#{</span><span class="nx">e</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="nx">e</span> <span class="k">in</span> <span class="nx">errs</span>
   <span class="k">else</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">'build sucessful!'</span>
-</pre>
-</div>
-
+</pre></div>
 
 <h2>s3 publication</h2>
 
@@ -109,8 +106,7 @@ at the root of your project directory execute:</p>
 squid will only upload  new or modified files to your bucket.
 squid will upload files with a far expiry date and will zip text files</p>
 
-<div class="highlight">
-<pre><span class="p">{</span><span class="nx">Publisher</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
+<div class="highlight"><pre><span class="p">{</span><span class="nx">Publisher</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
 
 <span class="c1"># create s3 publisher</span>
 <span class="nv">publisher = </span><span class="k">new</span> <span class="nx">Publisher</span> <span class="nv">bucket: </span><span class="s">'name'</span><span class="p">,</span>  <span class="nv">key: </span><span class="s">'xx'</span><span class="p">,</span> <span class="nv">secret: </span><span class="s">'xx'</span>
@@ -121,9 +117,7 @@ squid will upload files with a far expiry date and will zip text files</p>
 <span class="c1"># publish 'public' dir to root folder '' of the  bucket</span>
 <span class="nx">publisher</span><span class="p">.</span><span class="nx">publishDir</span> <span class="p">{</span><span class="nv">origin: </span><span class="s">'public'</span><span class="p">,</span> <span class="nv">dest: </span><span class="s">''</span><span class="p">,</span> <span class="nx">filter</span><span class="p">},</span> <span class="nx">cb</span>
 
-</pre>
-</div>
-
+</pre></div>
 
 <h2>Supported files for compilation</h2>
 
@@ -182,9 +176,26 @@ here is how you define dependencies for each supported file format</p>
 <td>*.jade</td>
 <td>include foo</td>
   </tr>
-</table><h2>project structure</h2>
+</table><h2>Configuration</h2>
 
-<p>To work with squid, your project should follow this file architecture:</p>
+<p>You can define a squid.json object to specify src and build folder, and compilation options</p>
+
+<ul>
+<li>default options if you dont add a squid.json to your project</li>
+</ul><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"src"</span><span class="p">:</span> <span class="s2">"src"</span><span class="p">,</span>
+  <span class="nt">"build"</span><span class="p">:</span> <span class="s2">"."</span><span class="p">,</span>
+  <span class="nt">"jade"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"amd"</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="nt">"stylus"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"url"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"public"</span><span class="p">],</span>
+    <span class="nt">"paths"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"public/images"</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>So if you have the following project</p>
 
 <pre>
 ./
@@ -200,7 +211,7 @@ here is how you define dependencies for each supported file format</p>
       |- file1.styl
 </pre>
 
-<p>after running <strong>sb</strong> or <strong>sq</strong>, this will generate the following files</p>
+<p>after running <strong>sb</strong> or <strong>sq</strong>, it will generate the following files</p>
 
 <pre>
 ./
@@ -217,11 +228,40 @@ here is how you define dependencies for each supported file format</p>
     |- file1.css
 </pre>
 
-<h2>Todo</h2>
+<p>If your project structure is different you can add a custom squid.json configuration: </p>
+
+<p>The following config </p>
 
 <ul>
-<li>add tests</li>
-<li>remove hardcoded compilation settings and add configuration for coffee, jade and stylus compilers</li>
+<li>use mobile as src folder</li>
+<li>compile mobile/js/* to app/assets/javascripts/mobile<br>
+</li>
+<li>compile mobile/stylesheets/* to app/assets/stylesheets/mobile</li>
+<li>config stylus to lookup images in app/assets/images/mobile</li>
+<li>does not wrap jade templates with an amd wrapper</li>
+</ul><div class="highlight"><pre>
+<span class="p">{</span>
+  <span class="nt">"src"</span><span class="p">:</span> <span class="s2">"mobile"</span><span class="p">,</span>
+    <span class="nt">"build"</span><span class="p">:</span> <span class="s2">"."</span><span class="p">,</span> 
+    <span class="nt">"mappings"</span><span class="p">:</span> <span class="p">[</span>       
+        <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"js"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/javascripts/mobile"</span><span class="p">},</span> 
+        <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"stylesheets"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/stylesheets/mobile"</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">"stylus"</span><span class="p">:</span> <span class="p">{</span> 
+        <span class="nt">"paths"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"app/assets/images/mobile"</span><span class="p">],</span>
+        <span class="nt">"url"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"app/assets/"</span><span class="p">]</span>
+    <span class="p">},</span>  
+    <span class="nt">"jade"</span><span class="p">:</span> <span class="p">{</span> 
+            <span class="nt">"amd"</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>TODO</h2>
+
+<ul>
+<li>Add more compiler options for compiler (PR are welcome)</li>
+<li>Write some tests !!!</li>
 </ul>
       </section>
       <footer>
@@ -229,7 +269,7 @@ here is how you define dependencies for each supported file format</p>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
