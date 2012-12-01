@@ -100,25 +100,6 @@ at the root of your project directory execute:</p>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">'build sucessful!'</span>
 </pre></div>
 
-<h2>s3 publication</h2>
-
-<p>Squid publisher let you upload files within a directory to your amazon s3 bucket.
-squid will only upload  new or modified files to your bucket.
-squid will upload files with a far expiry date and will zip text files</p>
-
-<div class="highlight"><pre><span class="p">{</span><span class="nx">Publisher</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
-
-<span class="c1"># create s3 publisher</span>
-<span class="nv">publisher = </span><span class="k">new</span> <span class="nx">Publisher</span> <span class="nv">bucket: </span><span class="s">'name'</span><span class="p">,</span>  <span class="nv">key: </span><span class="s">'xx'</span><span class="p">,</span> <span class="nv">secret: </span><span class="s">'xx'</span>
-
-<span class="c1"># define filter closure that will only select js, png, and css file</span>
-<span class="nv">filter = </span><span class="nf">(f, stat) -&gt;</span> <span class="nx">stat</span><span class="p">.</span><span class="nx">isDirectory</span><span class="p">()</span> <span class="o">or</span> <span class="sr">/\.(js|png|css)$/</span><span class="p">.</span><span class="nx">test</span> <span class="nx">f</span>
-
-<span class="c1"># publish 'public' dir to root folder '' of the  bucket</span>
-<span class="nx">publisher</span><span class="p">.</span><span class="nx">publishDir</span> <span class="p">{</span><span class="nv">origin: </span><span class="s">'public'</span><span class="p">,</span> <span class="nv">dest: </span><span class="s">''</span><span class="p">,</span> <span class="nx">filter</span><span class="p">},</span> <span class="nx">cb</span>
-
-</pre></div>
-
 <h2>Supported files for compilation</h2>
 
 <p>squid can compile the following files</p>
@@ -255,6 +236,25 @@ here is how you define dependencies for each supported file format</p>
             <span class="nt">"amd"</span><span class="p">:</span> <span class="kc">false</span>
     <span class="p">}</span>
 <span class="p">}</span>
+</pre></div>
+
+<h2>s3 publication</h2>
+
+<p>Squid publisher let you upload files within a directory to your amazon s3 bucket.
+squid will only upload  new or modified files to your bucket.
+squid will upload files with a far expiry date and will zip text files</p>
+
+<div class="highlight"><pre><span class="p">{</span><span class="nx">Publisher</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
+
+<span class="c1"># create s3 publisher</span>
+<span class="nv">publisher = </span><span class="k">new</span> <span class="nx">Publisher</span> <span class="nv">bucket: </span><span class="s">'name'</span><span class="p">,</span>  <span class="nv">key: </span><span class="s">'xx'</span><span class="p">,</span> <span class="nv">secret: </span><span class="s">'xx'</span>
+
+<span class="c1"># define filter closure that will only select js, png, and css file</span>
+<span class="nv">filter = </span><span class="nf">(f, stat) -&gt;</span> <span class="nx">stat</span><span class="p">.</span><span class="nx">isDirectory</span><span class="p">()</span> <span class="o">or</span> <span class="sr">/\.(js|png|css)$/</span><span class="p">.</span><span class="nx">test</span> <span class="nx">f</span>
+
+<span class="c1"># publish 'public' dir to root folder '' of the  bucket</span>
+<span class="nx">publisher</span><span class="p">.</span><span class="nx">publishDir</span> <span class="p">{</span><span class="nv">origin: </span><span class="s">'public'</span><span class="p">,</span> <span class="nv">dest: </span><span class="s">''</span><span class="p">,</span> <span class="nx">filter</span><span class="p">},</span> <span class="nx">cb</span>
+
 </pre></div>
 
 <h2>TODO</h2>
