@@ -46,7 +46,7 @@ module.exports =
 
         files.forEach (file) =>
           filename = file.replace origin, dest
-          q.push {file, filename}, ->
+          q.push {file, filename}, (err) -> if err then logger.error "Error uploading #{file}", err
 
     publish: ({file, filename}, cb) =>
 
