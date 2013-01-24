@@ -206,8 +206,8 @@ The following squid.json config
 ## s3 publication
 
 Squid publisher let you upload files within a directory to your amazon s3 bucket.
-squid will only upload  new or modified files to your bucket.
-squid will upload files with a far expiry date and will zip text files
+- it only uploads new or modified files to your bucket.
+- it sets a far expiry date and zip files
 
 ```coffee
 {Publisher} = require 'squid'
