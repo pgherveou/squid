@@ -46,7 +46,7 @@ module.exports =
 
         files.forEach (file) =>
           filename = file.replace origin, dest
-          q.push {file, filename}, (err) -> if err then logger.error "Error uploading #{file}", err
+          q.push {file, filename}, (err) -> if err then logger.error "Error uploading #{filename}", err.statusCode
 
     publish: ({file, filename}, cb) =>
 
@@ -86,6 +86,9 @@ module.exports =
               logger.debug "[ADD]     #{filename}"
 
             req  = @client.put filename, headers
-            req.on 'response', (res) -> cb res.statusCode isnt 200
+            req.on 'response', (res) ->
+              return cb() if 199 < res.statusCode < 299
+              cb res
+
             req.end(buf)
       ], cb

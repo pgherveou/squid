@@ -1,6 +1,7 @@
 path   = require 'path'
 fs     = require 'fs'
 mkdirp = require 'mkdirp'
+async  = require 'async'
 _      = require 'lodash'
 logger = require('./loggers').get 'util'
 
@@ -25,15 +26,12 @@ exports.BuildError = class BuildError extends Error
 exports.Builder = class Builder
 
   constructor: (@config) ->
-    @srcDir   = path.resolve @config.src
-    @buildDir = path.resolve @config.build
+    @deps = {} # dependcy hashs
+    @srcDir  = path.resolve @config.src
+    @outDir  = path.resolve @config.out
 
-  # dependcy hashs
-  deps: {}
-
-  # get the build path for source
-  buildPath: (source, ext='.js') =>
-    fileName = path.basename(source, path.extname(source)) + ext
+  buildPath: (source, outDir) =>
+    fileName = path.basename(source, path.extname(source)) + @outExt
     fileDir  = path.dirname(source)
 
     relative = fileDir.substring @srcDir.length
@@ -44,20 +42,31 @@ exports.Builder = class Builder
         fileDir = fileDir.replace(mapping.from, mapping.to)
         break
 
-    dir = @buildDir + fileDir.substring @srcDir.length
+    dir = outDir + fileDir.substring @srcDir.length
     path.join dir, fileName
 
-
   # if new, write code in file
-  write: (newCode, file, cb) ->
+  write: (newCode, src, cb) ->
+    file = @buildPath src, @outDir
     fs.readFile file, 'utf8', (err, oldCode) =>
       return cb null, file, "identical #{file}" if newCode is oldCode
+      file = @buildPath src, @outDir
       mkdirp path.dirname(file), 0o0755, (err) =>
-        return cb new BuildError file, err if err
+        return cb new BuildError(file, err) if err
         fs.writeFile file, newCode, (err) =>
-          return cb new BuildError file, err if err
-          cb null, file, "Compilation succeeded"
+          return cb new BuildError(file, err) if err
           @refreshScan file, oldCode, newCode
+          cb()
+
+          # clone stuffs
+          @config.clone.forEach (clone) =>
+            if new RegExp(clone.match).test src
+              file = @buildPath src, path.resolve(clone.to)
+              mkdirp path.dirname(file), 0o0755, (err) =>
+                return logger.error "Error cloning dir to ", file if err
+                fs.writeFile file, newCode, (err) =>
+                  return logger.error "Error cloning file to ", file if err
+
 
   # delete source build file
   removeBuild: (source, cb) ->
@@ -75,7 +84,6 @@ exports.Builder = class Builder
     @getImports(file, code).forEach (importFile) =>
       @deps[file].imports.push importFile
       @deps[importFile] ?= {imports: [], refreshs: []}
-      # console.log "add #{file} to @deps[#{importFile}].refreshs condition #{~@deps[importFile].refreshs.indexOf file}"
       @deps[importFile].refreshs.push(file) unless ~@deps[importFile].refreshs.indexOf file
 
   # update imports and refreshs reference

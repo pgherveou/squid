@@ -5,7 +5,8 @@ logger                = require('./loggers').get 'util'
 
 module.exports = class JSBuilder extends Builder
 
-  fileExt: ".js"
+  fileExt: '.js'
+  outExt : '.js'
 
   reg: /^\/\/= import (.*)$/gm
 
@@ -20,4 +21,4 @@ module.exports = class JSBuilder extends Builder
         (err, imports) =>
           return cb new BuildError file, err if err
           code += imports.join '\n'
-          @write code, @buildPath(file), cb
+          @write code, file, cb

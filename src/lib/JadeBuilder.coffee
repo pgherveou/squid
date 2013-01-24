@@ -13,9 +13,9 @@ amdWrap = (fn) ->
 
 module.exports = class JadeBuilder extends Builder
 
-  reg: /^include (.*)$/gm
-
-  fileExt: ".jade"
+  reg    : /^include (.*)$/gm
+  fileExt: '.jade'
+  outExt : '.js'
 
   _build: (file, code, refresh, cb) ->
 
@@ -27,7 +27,7 @@ module.exports = class JadeBuilder extends Builder
         return cb new BuildError file, error
 
       data = if @config.jade.amd then amdWrap(tplFn) else tplFn.toString()
-      @write data, @buildPath(file, '.js'), cb
+      @write data, file, cb
 
     else if refresh
       async.forEach @deps[file].refreshs,

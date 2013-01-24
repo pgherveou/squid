@@ -14,7 +14,8 @@ StylusBuilder = require './StylusBuilder'
 
 config =
   src: 'src'
-  build: '.'
+  out: '.'
+  clone: []
   mappings: []
   coffee: {}
   jade:
@@ -23,10 +24,9 @@ config =
     url: ['public']
     paths: ['public/images']
 
-
 if fs.existsSync 'squid.json'
   fileConfig = JSON.parse(fs.readFileSync 'squid.json')
-  _(config).extend fileConfig
+  config = _(fileConfig).defaults(config)
 
 
 # builder factory

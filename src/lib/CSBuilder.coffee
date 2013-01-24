@@ -8,7 +8,8 @@ logger                = require('./loggers').get 'util'
 module.exports = class CoffeeBuilder extends Builder
 
   fileExt: ".coffee"
-  reg: /^#= import (.*)$/gm
+  outExt : ".js"
+  reg    : /^#= import (.*)$/gm
 
   _build: (file, code, refresh, cb) ->
     if refresh and @deps[file].refreshs.length
@@ -33,6 +34,6 @@ module.exports = class CoffeeBuilder extends Builder
           code = imports.join('\n') + code
           try
             js = cs.compile code, bare: true
-            @write js, @buildPath(file), cb
+            @write js, file, cb
           catch err
             cb new BuildError file, err
