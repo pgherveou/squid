@@ -1,7 +1,0 @@
-*.coffee
-*.html
-.DS_Store
-.git*
-Cakefile
-src/
-test/

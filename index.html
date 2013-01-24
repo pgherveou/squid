@@ -159,19 +159,19 @@ here is how you define dependencies for each supported file format</p>
   </tr>
 </table><h2>Configuration</h2>
 
-<p>You can define a squid.json object to specify src and build folder, and compilation options</p>
+<p>You can define a squid.json object to specify folder mappings, and compilation options</p>
 
 <ul>
 <li>default options if you dont add a squid.json to your project</li>
 </ul><div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"src"</span><span class="p">:</span> <span class="s2">"src"</span><span class="p">,</span>
-  <span class="nt">"build"</span><span class="p">:</span> <span class="s2">"."</span><span class="p">,</span>
-  <span class="nt">"jade"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">"amd"</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="nt">"src"</span><span class="p">:</span> <span class="s2">"src"</span><span class="p">,</span> <span class="err">/*</span> <span class="err">source</span> <span class="err">folder</span> <span class="err">*/</span>
+  <span class="nt">"out"</span><span class="p">:</span> <span class="s2">"."</span><span class="p">,</span> <span class="err">/*</span> <span class="err">build</span>  <span class="err">folder</span> <span class="err">*/</span>
+  <span class="nt">"jade"</span><span class="p">:</span> <span class="p">{</span> <span class="err">/*</span> <span class="err">jade</span> <span class="err">default</span> <span class="err">options</span> <span class="err">*/</span>
+    <span class="nt">"amd"</span><span class="p">:</span> <span class="kc">true</span> <span class="err">/*</span> <span class="err">wrap</span> <span class="err">jade</span> <span class="err">template</span> <span class="err">inside</span> <span class="err">a</span> <span class="err">requirejs</span> <span class="err">define</span> <span class="err">block</span> <span class="err">*/</span>    
   <span class="p">},</span>
-  <span class="nt">"stylus"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">"url"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"public"</span><span class="p">],</span>
-    <span class="nt">"paths"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"public/images"</span><span class="p">]</span>
+  <span class="nt">"stylus"</span><span class="p">:</span> <span class="p">{</span> <span class="err">/*</span> <span class="err">stylus</span> <span class="err">default</span> <span class="err">options</span> <span class="err">*/</span>
+    <span class="nt">"url"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"public"</span><span class="p">],</span> <span class="err">/*</span> <span class="err">root</span> <span class="err">public</span> <span class="err">files</span> <span class="err">folder</span>  <span class="err">*/</span>
+    <span class="nt">"paths"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"public/images"</span><span class="p">]</span> <span class="err">/*</span> <span class="err">image</span> <span class="err">lookup</span> <span class="err">path</span>  <span class="err">*/</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -209,42 +209,54 @@ here is how you define dependencies for each supported file format</p>
     |- file1.css
 </pre>
 
+<h3>Optional configuration</h3>
+
 <p>If your project structure is different you can add a custom squid.json configuration: </p>
 
-<p>The following config </p>
+<h4>mappings</h4>
+
+<p>You can define mappings rules to output your files into different folders</p>
+
+<p>The following squid.json config </p>
 
 <ul>
 <li>use mobile as src folder</li>
 <li>compile mobile/js/* to app/assets/javascripts/mobile<br>
 </li>
 <li>compile mobile/stylesheets/* to app/assets/stylesheets/mobile</li>
-<li>config stylus to lookup images in app/assets/images/mobile</li>
-<li>does not wrap jade templates with an amd wrapper</li>
-</ul><div class="highlight"><pre>
-<span class="p">{</span>
-  <span class="nt">"src"</span><span class="p">:</span> <span class="s2">"mobile"</span><span class="p">,</span>
-    <span class="nt">"build"</span><span class="p">:</span> <span class="s2">"."</span><span class="p">,</span> 
-    <span class="nt">"mappings"</span><span class="p">:</span> <span class="p">[</span>       
-        <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"js"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/javascripts/mobile"</span><span class="p">},</span> 
-        <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"stylesheets"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/stylesheets/mobile"</span><span class="p">}</span>
-    <span class="p">],</span>
-    <span class="nt">"stylus"</span><span class="p">:</span> <span class="p">{</span> 
-        <span class="nt">"paths"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"app/assets/images/mobile"</span><span class="p">],</span>
-        <span class="nt">"url"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"app/assets/"</span><span class="p">]</span>
-    <span class="p">},</span>  
-    <span class="nt">"jade"</span><span class="p">:</span> <span class="p">{</span> 
-            <span class="nt">"amd"</span><span class="p">:</span> <span class="kc">false</span>
-    <span class="p">}</span>
+</ul><div class="highlight"><pre><span class="p">{</span>
+<span class="nt">"src"</span><span class="p">:</span> <span class="s2">"mobile"</span><span class="p">,</span>
+<span class="nt">"mappings"</span><span class="p">:</span> <span class="p">[</span>       
+    <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"js"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/javascripts/mobile"</span><span class="p">},</span> 
+    <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"stylesheets"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/stylesheets/mobile"</span><span class="p">}</span>  
+<span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>clone</h3>
+
+<p>You can specify different clone rules to output your files in one or more output destinations</p>
+
+<p>The following squid.json config </p>
+
+<ul>
+<li>compile your files to the default output folder (project root)</li>
+<li>clones everything under src/public to phonegap/js</li>
+</ul><div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"clone"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="nt">"match"</span><span class="p">:</span> <span class="s2">"src/public"</span><span class="p">,</span> <span class="nt">"to"</span> <span class="p">:</span> <span class="s2">"phonegap/js"</span><span class="p">}</span>
+  <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 
 <h2>s3 publication</h2>
 
-<p>Squid publisher let you upload files within a directory to your amazon s3 bucket.
-squid will only upload  new or modified files to your bucket.
-squid will upload files with a far expiry date and will zip text files</p>
+<p>Squid publisher let you upload files within a directory to your amazon s3 bucket.</p>
 
-<div class="highlight"><pre><span class="p">{</span><span class="nx">Publisher</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
+<ul>
+<li>it only uploads new or modified files to your bucket.</li>
+<li>it sets a far expiry date and zip files</li>
+</ul><div class="highlight"><pre><span class="p">{</span><span class="nx">Publisher</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">'squid'</span>
 
 <span class="c1"># create s3 publisher</span>
 <span class="nv">publisher = </span><span class="k">new</span> <span class="nx">Publisher</span> <span class="nv">bucket: </span><span class="s">'name'</span><span class="p">,</span>  <span class="nv">key: </span><span class="s">'xx'</span><span class="p">,</span> <span class="nv">secret: </span><span class="s">'xx'</span>
