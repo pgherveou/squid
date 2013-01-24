@@ -120,20 +120,21 @@ here is how you define dependencies for each supported file format
 
 Configuration
 -------------
-You can define a squid.json object to specify src and build folder, and compilation options
+You can define a squid.json object to specify folder mappings, and compilation options
 
 - default options if you dont add a squid.json to your project
 
 ```json
 {
-  "src": "src",
-  "build": ".",
-  "jade": {
-    "amd": true
+  "src": "src", 		/* source folder */
+  "out": ".",   		/* build  folder */
+  clone: []			/* clone output files to other destinations (see options belows) */	
+  "jade": {     		/* jade default options */
+    "amd": true			/* wrap jade template inside a requirejs define block */	
   },
-  "stylus": {
-    "url": ["public"],
-    "paths": ["public/images"]
+  "stylus": {			/* stylus default options */
+    "url": ["public"],		/* root public files folder  */
+    "paths": ["public/images"]  /* image lookup path  */
   }
 }
 ```
