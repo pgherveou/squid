@@ -124,7 +124,6 @@ You can define a squid.json object to specify folder mappings, and compilation o
 {
   "src": "src", /* source folder */
   "out": ".", /* build  folder */
-  clone: [] /* clone output files to other destinations (see options belows) */	
   "jade": { /* jade default options */
     "amd": true /* wrap jade template inside a requirejs define block */	
   },
