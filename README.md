@@ -1,11 +1,10 @@
-Squid
-=====
+# Squid
+
 
 Squid compiles your coffee, jade and stylus files, and publish  your assets to amazon s3
 
 
-Install
--------
+## Install
 
 install the package globally to use the commands provided by the project (see desc below)
 
@@ -13,8 +12,7 @@ install the package globally to use the commands provided by the project (see de
 $ npm install -g squid
 ```
 
-sq command
-----------
+## sq command
 
 at the root of your project directory execute:
 
@@ -48,8 +46,8 @@ You can also combine it to a tool like [liveReload] [1] to auto refresh your bro
 ![growl screenshot](https://github.com/pgherveou/squid/raw/gh-pages/images/growl.screenshot.png)
 
 
-sb command
-----------
+## sb command
+
 if you just want to build the project source files. use the sb command
 at the root of your project directory execute:
 
@@ -71,8 +69,7 @@ builder.buildAll except: ['css'], (errs) ->
     console.log 'build sucessful!'
 ```
 
-Supported files for compilation
--------------------------------
+## Supported files for compilation
 
 squid can compile the following files
 
@@ -94,8 +91,7 @@ squid can compile the following files
   </tr>
 </table>
 
-files Dependencies
--------------------
+## files Dependencies
 
 squid manage your file dependencies and only compile the necessary files.
 here is how you define dependencies for each supported file format
@@ -118,23 +114,23 @@ here is how you define dependencies for each supported file format
   </tr>
 </table>
 
-Configuration
--------------
+## Configuration
+
 You can define a squid.json object to specify folder mappings, and compilation options
 
 - default options if you dont add a squid.json to your project
 
 ```json
 {
-  "src": "src", 		/* source folder */
-  "out": ".",   		/* build  folder */
-  clone: []			/* clone output files to other destinations (see options belows) */	
-  "jade": {     		/* jade default options */
-    "amd": true			/* wrap jade template inside a requirejs define block */	
+  "src": "src", /* source folder */
+  "out": ".", /* build  folder */
+  clone: [] /* clone output files to other destinations (see options belows) */	
+  "jade": { /* jade default options */
+    "amd": true /* wrap jade template inside a requirejs define block */	
   },
-  "stylus": {			/* stylus default options */
-    "url": ["public"],		/* root public files folder  */
-    "paths": ["public/images"]  /* image lookup path  */
+  "stylus": { /* stylus default options */
+    "url": ["public"], /* root public files folder  */
+    "paths": ["public/images"] /* image lookup path  */
   }
 }
 ```
@@ -170,7 +166,7 @@ after running **sb** or **sq**, it will generate the following files
     |- file1.css
 </pre>
 
-
+### Optional configuration
 If your project structure is different you can add a custom squid.json configuration: 
 
 The following config 
@@ -199,8 +195,7 @@ The following config
 }
 ```
 
-s3 publication
---------------
+## s3 publication
 
 Squid publisher let you upload files within a directory to your amazon s3 bucket.
 squid will only upload  new or modified files to your bucket.
@@ -221,8 +216,8 @@ publisher.publishDir {origin: 'public', dest: '', filter}, cb
 ```
 
 
-TODO
-----
+## TODO
+
 - Add more compiler options for compiler (PR are welcome)
 - Write some tests !!!
 
