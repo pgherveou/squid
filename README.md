@@ -169,29 +169,38 @@ after running **sb** or **sq**, it will generate the following files
 ### Optional configuration
 If your project structure is different you can add a custom squid.json configuration: 
 
-The following config 
+#### mappings
+
+You can define mappings rules to output your files into different folders
+
+The following squid.json config 
 - use mobile as src folder
 - compile mobile/js/* to app/assets/javascripts/mobile		
 - compile mobile/stylesheets/* to app/assets/stylesheets/mobile
-- config stylus to lookup images in app/assets/images/mobile
-- does not wrap jade templates with an amd wrapper
 
 ```json
-
 {
-  "src": "mobile",
-	"build": ".", 
-	"mappings": [		
-		{"from": "js", "to": "app/assets/javascripts/mobile"}, 
-		{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"}
-	],
-	"stylus": { 
-		"paths": ["app/assets/images/mobile"],
-		"url": ["app/assets/"]
-	}, 	
-  	"jade": { 
-    		"amd": false
-	}
+"src": "mobile",
+"mappings": [		
+	{"from": "js", "to": "app/assets/javascripts/mobile"}, 
+	{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"}	
+]
+}
+```
+
+### clone
+
+You can specify different clone rules to output your files in one or more output destinations
+
+The following squid.json config 
+- compile your files to the default output folder (project root)
+- clones everything under src/public to phonegap/js
+
+```json
+{
+  "clone": [
+    { "match": "src/public", "to" : "phonegap/js"}
+  ]
 }
 ```
 
