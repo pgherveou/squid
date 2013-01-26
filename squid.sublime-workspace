@@ -4,16 +4,20 @@
 		"selected_items":
 		[
 			[
-				"ou",
-				"outDir"
+				"con",
+				"config"
 			],
 			[
-				"con",
-				"console"
+				"cl",
+				"clone"
 			],
 			[
 				"fi",
-				"fileConfig"
+				"file"
+			],
+			[
+				"ou",
+				"outDir"
 			],
 			[
 				"out",
@@ -510,19 +514,19 @@
 			[
 				"touc",
 				"touchend"
-			],
-			[
-				"ta",
-				"translateY"
 			]
 		]
 	},
 	"build_system": "Packages/CoffeeScript/CoffeeScript.sublime-build",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 107.0,
 		"selected_items":
 		[
+			[
+				"upp",
+				"Convert Case: Upper Case"
+			],
 			[
 				"bro",
 				"Preferences: Browse Packages"
@@ -578,10 +582,6 @@
 			[
 				"js",
 				"Pretty JSON: Reformat (Pretty Print) JSON"
-			],
-			[
-				"upp",
-				"Convert Case: Upper Case"
 			],
 			[
 				"user",
@@ -820,7 +820,7 @@
 				"Preferences: Alignment File Settings – Default"
 			]
 		],
-		"width": 476.0
+		"width": 593.0
 	},
 	"console":
 	{
@@ -837,13 +837,15 @@
 	},
 	"file_history":
 	[
-		"/Users/pg/SQ/squid/Cakefile",
+		"/Users/pg/SQ/squid/src/lib/Builder.coffee",
+		"/Users/pg/Jogabo/jogabov2/joga_app/.gitignore",
+		"/Users/pg/SQ/squid/bin/runner",
 		"/Users/pg/SQ/squid/src/lib/projectBuilder.coffee",
+		"/Users/pg/SQ/squid/Cakefile",
+		"/Users/pg/SQ/squid/src/lib/JadeBuilder.coffee",
 		"/Users/pg/SQ/squid/src/lib/CSBuilder.coffee",
 		"/Users/pg/SQ/squid/src/lib/StylusBuilder.coffee",
 		"/Users/pg/SQ/squid/src/lib/JSBuilder.coffee",
-		"/Users/pg/SQ/squid/src/lib/JadeBuilder.coffee",
-		"/Users/pg/SQ/squid/src/lib/Builder.coffee",
 		"/Users/pg/SQ/squid/squid.sublime-project",
 		"/Users/pg/SQ/squid/src/lib/squid.sublime-project",
 		"/Users/pg/SQ/squid/package.json",
@@ -962,9 +964,7 @@
 		"/Users/pg/Jogabo/jogabov2/joga_app/src/public/js/views/game/create/Intro.coffee",
 		"/Users/pg/Jogabo/jogabov2/joga_app/src/public/css/ui/form.styl",
 		"/Users/pg/Jogabo/jogabov2/joga_app/src/public/css/page/game-create-advanced.styl",
-		"/Users/pg/Jogabo/jogabov2/joga_app/src/public/css/page/game-create.styl",
-		"/Users/pg/Jogabo/jogabov2/joga_app/src/public/js/components/overlay/main.coffee",
-		"/Users/pg/Jogabo/jogabov2/joga_app/src/public/js/views/game/create/Privacy.coffee"
+		"/Users/pg/Jogabo/jogabov2/joga_app/src/public/css/page/game-create.styl"
 	],
 	"find":
 	{
@@ -1110,6 +1110,13 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"_build",
+			"liveBuild",
+			"console.log",
+			"fileFilter",
+			"liveBu",
+			"liveBuild",
+			"mappings",
 			"@outDir",
 			"write ",
 			"BUILDING to",
@@ -1230,14 +1237,7 @@
 			"6",
 			"4",
 			"burger",
-			".ext",
-			"left",
-			"right",
-			"direction: 'right',",
-			"ctx.titleBar",
-			"modal",
-			"'",
-			"a-male"
+			".ext"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1437,12 +1437,36 @@
 		"selected_items":
 		[
 			[
-				"pro",
+				"cak",
+				"Cakefile"
+			],
+			[
+				"rn",
+				"bin/runner"
+			],
+			[
+				"bui",
+				"src/lib/Builder.coffee"
+			],
+			[
+				"bu",
+				"src/lib/Builder.coffee"
+			],
+			[
+				"build",
+				"src/lib/Builder.coffee"
+			],
+			[
+				"runn",
+				"bin/runner"
+			],
+			[
+				"proje",
 				"src/lib/projectBuilder.coffee"
 			],
 			[
-				"cak",
-				"Cakefile"
+				"pro",
+				"src/lib/projectBuilder.coffee"
 			],
 			[
 				"buil",
@@ -1451,10 +1475,6 @@
 			[
 				"proj",
 				"src/lib/projectBuilder.coffee"
-			],
-			[
-				"build",
-				"src/lib/Builder.coffee"
 			],
 			[
 				"squi",
@@ -1926,26 +1946,6 @@
 			],
 			[
 				"gamecraco",
-				"client/views/game/create/Create.coffee"
-			],
-			[
-				"gamecco",
-				"client/views/game/create/Create.coffee"
-			],
-			[
-				"bar",
-				"css/ui/bar.styl"
-			],
-			[
-				"title",
-				"client/views/common/TitleBar.coffee"
-			],
-			[
-				"rsvpt",
-				"client/views/game/RSVP.tpl.jade"
-			],
-			[
-				"gamecreco",
 				"client/views/game/create/Create.coffee"
 			]
 		],

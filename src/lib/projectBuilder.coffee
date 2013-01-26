@@ -1,8 +1,9 @@
-path          = require 'path'
-fs            = require 'fs'
-util          = require 'util'
-async         = require 'async'
-_             = require 'lodash'
+path   = require 'path'
+fs     = require 'fs'
+util   = require 'util'
+async  = require 'async'
+_      = require 'lodash'
+{exec} = require 'child_process'
 
 logger        = require('./loggers').get 'util'
 
@@ -24,10 +25,17 @@ config =
     url: ['public']
     paths: ['public/images']
 
+# setup config
 if fs.existsSync 'squid.json'
   fileConfig = JSON.parse(fs.readFileSync 'squid.json')
   config = _(fileConfig).defaults(config)
 
+# setup post script if any
+if config.post_build
+  config.post_build.match = new RegExp config.post_build.match
+
+# setup clone if any
+config.clone.forEach (clone) -> clone.match = new RegExp(clone.match)
 
 # builder factory
 buildFactory =
@@ -63,8 +71,13 @@ module.exports =
   removeBuild: (file, cb) ->
     buildFactory.get(file).removeBuild file, cb
 
-  liveBuild: (file, cb) ->
-    buildFactory.get(file).build file, true, cb
+  liveBuild: (src, cb) ->
+    buildFactory.get(src).build src, true, (err, file, message) ->
+      cb err, file, message
+      if not err and not /identical/.test(message) and config.post_build and config.post_build.match.test(src)
+        console.log "post-build..."
+        p.kill() if p = config.post_build.process
+        config.post_build.process = exec config.post_build.cmd, -> config.post_build.process = null
 
   liveBuildAll: (fileItems, cb) ->
     files = (file for file of fileItems)
@@ -83,7 +96,6 @@ module.exports =
       builder = buildFactory.get(file)
       return cb null unless builder
       builder.build file, false, (err) ->
-        # logger.debug 'build ' + file
         errors.push err if err
         cb null
 

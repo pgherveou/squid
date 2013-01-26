@@ -49,19 +49,20 @@ exports.Builder = class Builder
   write: (newCode, src, cb) ->
     file = @buildPath src, @outDir
     fs.readFile file, 'utf8', (err, oldCode) =>
-      return cb null, file, "identical #{file}" if newCode is oldCode
+      return cb null, file, "identical files" if newCode is oldCode
       file = @buildPath src, @outDir
       mkdirp path.dirname(file), 0o0755, (err) =>
         return cb new BuildError(file, err) if err
         fs.writeFile file, newCode, (err) =>
           return cb new BuildError(file, err) if err
           @refreshScan file, oldCode, newCode
-          cb()
+          cb null, file, "file compiled successfully"
 
           # clone stuffs
           @config.clone.forEach (clone) =>
-            if new RegExp(clone.match).test src
+            if clone.match.test src
               file = @buildPath src, path.resolve(clone.to)
+              file = file.replace map.from, map.to if map = clone.map
               mkdirp path.dirname(file), 0o0755, (err) =>
                 return logger.error "Error cloning dir to ", file if err
                 fs.writeFile file, newCode, (err) =>
