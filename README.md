@@ -120,7 +120,7 @@ You can define a squid.json object to specify folder mappings, and compilation o
 
 - default options if you dont add a squid.json to your project
 
-```json
+```js
 {
   "src": "src", /* source folder */
   "out": ".", /* build  folder */
@@ -187,9 +187,22 @@ The following squid.json config
 }
 ```
 
+### post build
+
+You can specify a script to launch after each successful file build
+
+The following squid.json config will trigger **make bundle-app**  each time a file is successfully 
+built in src/public
+
+```json
+{
+  "post_build": {"match": "src/public", "cmd": "make bundle-app" }
+}
+```
+
 ### clone
 
-You can specify different clone rules to output your files in one or more output destinations
+You can specify multiple output folders for your build
 
 The following squid.json config 
 - compile your files to the default output folder (project root)
@@ -202,6 +215,7 @@ The following squid.json config
   ]
 }
 ```
+
 
 ## s3 publication
 
