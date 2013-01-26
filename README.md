@@ -71,7 +71,8 @@ builder.buildAll except: ['css'], (errs) ->
 
 ## Supported files for compilation
 
-squid can compile the following files
+squid can compile the following files. 
+Want to add support for other file types? New builder can easily be implemented using the base Builder classe
 
 <table>
   <tr>
