@@ -118,8 +118,7 @@ here is how you define dependencies for each supported file format
 ## Configuration
 
 You can define a squid.json object to specify folder mappings, and compilation options
-
-- default options if you dont add a squid.json to your project
+Here are the default options if you dont add a squid.json to your project
 
 ```js
 {
@@ -149,7 +148,7 @@ So if you have the following project
       |- file1.styl
 </pre>
 
-after running **sb** or **sq**, it will generate the following files
+after running **sb** or **sq**, squid will generate the following files
 
 <pre>
 ./
