@@ -102,7 +102,7 @@ at the root of your project directory execute:</p>
 
 <h2>Supported files for compilation</h2>
 
-<p>squid can compile the following files. 
+<p>squid can compile the following files.
 Want to add support for other file types? New builder can easily be implemented using the base Builder classe</p>
 
 <table>
@@ -167,7 +167,7 @@ Here are the default options if you dont add a squid.json to your project</p>
   <span class="s2">"src"</span><span class="o">:</span> <span class="s2">"src"</span><span class="p">,</span> <span class="cm">/* source folder */</span>
   <span class="s2">"out"</span><span class="o">:</span> <span class="s2">"."</span><span class="p">,</span> <span class="cm">/* build  folder */</span>
   <span class="s2">"jade"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* jade default options */</span>
-    <span class="s2">"amd"</span><span class="o">:</span> <span class="kc">true</span> <span class="cm">/* wrap jade template inside a requirejs define block */</span>    
+    <span class="s2">"amd"</span><span class="o">:</span> <span class="kc">true</span> <span class="cm">/* wrap jade template inside a requirejs define block */</span>
   <span class="p">},</span>
   <span class="s2">"stylus"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* stylus default options */</span>
     <span class="s2">"url"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"public"</span><span class="p">],</span> <span class="cm">/* root public files folder  */</span>
@@ -211,7 +211,7 @@ Here are the default options if you dont add a squid.json to your project</p>
 
 <h3>Optional configuration</h3>
 
-<p>If your project structure is different you can add a custom squid.json configuration: </p>
+<p>You can add a squid.json configuration file to your project to specify additional options</p>
 
 <h4>mappings</h4>
 
@@ -226,9 +226,9 @@ Here are the default options if you dont add a squid.json to your project</p>
 <li>compile mobile/stylesheets/* to app/assets/stylesheets/mobile</li>
 </ul><div class="highlight"><pre><span class="p">{</span>
 <span class="nt">"src"</span><span class="p">:</span> <span class="s2">"mobile"</span><span class="p">,</span>
-<span class="nt">"mappings"</span><span class="p">:</span> <span class="p">[</span>       
-    <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"js"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/javascripts/mobile"</span><span class="p">},</span> 
-    <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"stylesheets"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/stylesheets/mobile"</span><span class="p">}</span>  
+<span class="nt">"mappings"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"js"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/javascripts/mobile"</span><span class="p">},</span>
+    <span class="p">{</span><span class="nt">"from"</span><span class="p">:</span> <span class="s2">"stylesheets"</span><span class="p">,</span> <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"app/assets/stylesheets/mobile"</span><span class="p">}</span>
 <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
@@ -237,7 +237,7 @@ Here are the default options if you dont add a squid.json to your project</p>
 
 <p>You can specify a script to launch after each successful file build</p>
 
-<p>The following squid.json config will trigger <strong>make bundle-app</strong>  each time a file is successfully 
+<p>The following squid.json config will trigger <strong>make bundle-app</strong>  each time a file is successfully
 built in src/public</p>
 
 <div class="highlight"><pre><span class="p">{</span>
@@ -294,6 +294,6 @@ built in src/public</p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+
   </body>
 </html>
