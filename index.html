@@ -102,7 +102,8 @@ at the root of your project directory execute:</p>
 
 <h2>Supported files for compilation</h2>
 
-<p>squid can compile the following files</p>
+<p>squid can compile the following files. 
+Want to add support for other file types? New builder can easily be implemented using the base Builder classe</p>
 
 <table>
 <tr>
@@ -159,19 +160,18 @@ here is how you define dependencies for each supported file format</p>
   </tr>
 </table><h2>Configuration</h2>
 
-<p>You can define a squid.json object to specify folder mappings, and compilation options</p>
+<p>You can define a squid.json object to specify folder mappings, and compilation options
+Here are the default options if you dont add a squid.json to your project</p>
 
-<ul>
-<li>default options if you dont add a squid.json to your project</li>
-</ul><div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"src"</span><span class="p">:</span> <span class="s2">"src"</span><span class="p">,</span> <span class="err">/*</span> <span class="err">source</span> <span class="err">folder</span> <span class="err">*/</span>
-  <span class="nt">"out"</span><span class="p">:</span> <span class="s2">"."</span><span class="p">,</span> <span class="err">/*</span> <span class="err">build</span>  <span class="err">folder</span> <span class="err">*/</span>
-  <span class="nt">"jade"</span><span class="p">:</span> <span class="p">{</span> <span class="err">/*</span> <span class="err">jade</span> <span class="err">default</span> <span class="err">options</span> <span class="err">*/</span>
-    <span class="nt">"amd"</span><span class="p">:</span> <span class="kc">true</span> <span class="err">/*</span> <span class="err">wrap</span> <span class="err">jade</span> <span class="err">template</span> <span class="err">inside</span> <span class="err">a</span> <span class="err">requirejs</span> <span class="err">define</span> <span class="err">block</span> <span class="err">*/</span>    
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">"src"</span><span class="o">:</span> <span class="s2">"src"</span><span class="p">,</span> <span class="cm">/* source folder */</span>
+  <span class="s2">"out"</span><span class="o">:</span> <span class="s2">"."</span><span class="p">,</span> <span class="cm">/* build  folder */</span>
+  <span class="s2">"jade"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* jade default options */</span>
+    <span class="s2">"amd"</span><span class="o">:</span> <span class="kc">true</span> <span class="cm">/* wrap jade template inside a requirejs define block */</span>    
   <span class="p">},</span>
-  <span class="nt">"stylus"</span><span class="p">:</span> <span class="p">{</span> <span class="err">/*</span> <span class="err">stylus</span> <span class="err">default</span> <span class="err">options</span> <span class="err">*/</span>
-    <span class="nt">"url"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"public"</span><span class="p">],</span> <span class="err">/*</span> <span class="err">root</span> <span class="err">public</span> <span class="err">files</span> <span class="err">folder</span>  <span class="err">*/</span>
-    <span class="nt">"paths"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"public/images"</span><span class="p">]</span> <span class="err">/*</span> <span class="err">image</span> <span class="err">lookup</span> <span class="err">path</span>  <span class="err">*/</span>
+  <span class="s2">"stylus"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* stylus default options */</span>
+    <span class="s2">"url"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"public"</span><span class="p">],</span> <span class="cm">/* root public files folder  */</span>
+    <span class="s2">"paths"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"public/images"</span><span class="p">]</span> <span class="cm">/* image lookup path  */</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -192,7 +192,7 @@ here is how you define dependencies for each supported file format</p>
       |- file1.styl
 </pre>
 
-<p>after running <strong>sb</strong> or <strong>sq</strong>, it will generate the following files</p>
+<p>after running <strong>sb</strong> or <strong>sq</strong>, squid will generate the following files</p>
 
 <pre>
 ./
@@ -233,9 +233,21 @@ here is how you define dependencies for each supported file format</p>
 <span class="p">}</span>
 </pre></div>
 
+<h3>post build</h3>
+
+<p>You can specify a script to launch after each successful file build</p>
+
+<p>The following squid.json config will trigger <strong>make bundle-app</strong>  each time a file is successfully 
+built in src/public</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"post_build"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"match"</span><span class="p">:</span> <span class="s2">"src/public"</span><span class="p">,</span> <span class="nt">"cmd"</span><span class="p">:</span> <span class="s2">"make bundle-app"</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
 <h3>clone</h3>
 
-<p>You can specify different clone rules to output your files in one or more output destinations</p>
+<p>You can specify multiple output folders for your build</p>
 
 <p>The following squid.json config </p>
 
