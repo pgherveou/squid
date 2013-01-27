@@ -170,7 +170,7 @@ Here are the default options if you dont add a squid.json to your project</p>
     <span class="s2">"amd"</span><span class="o">:</span> <span class="kc">true</span> <span class="cm">/* wrap jade template inside a requirejs define block */</span>
   <span class="p">},</span>
   <span class="s2">"stylus"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* stylus default options */</span>
-    <span class="s2">"url"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"public"</span><span class="p">],</span> <span class="cm">/* root public files folder  */</span>
+    <span class="s2">"url"</span><span class="o">:</span> <span class="p">{</span><span class="nx">paths</span><span class="o">:</span> <span class="p">[</span><span class="s2">"public"</span><span class="p">]},</span> <span class="cm">/* url options  */</span>
     <span class="s2">"paths"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"public/images"</span><span class="p">]</span> <span class="cm">/* image lookup path  */</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -211,18 +211,17 @@ Here are the default options if you dont add a squid.json to your project</p>
 
 <h3>Optional configuration</h3>
 
-<p>You can add a squid.json configuration file to your project to specify additional options</p>
+<p>If your project structure is different you can add a custom squid.json configuration:</p>
 
 <h4>mappings</h4>
 
 <p>You can define mappings rules to output your files into different folders</p>
 
-<p>The following squid.json config </p>
+<p>The following squid.json config</p>
 
 <ul>
 <li>use mobile as src folder</li>
-<li>compile mobile/js/* to app/assets/javascripts/mobile<br>
-</li>
+<li>compile mobile/js/* to app/assets/javascripts/mobile</li>
 <li>compile mobile/stylesheets/* to app/assets/stylesheets/mobile</li>
 </ul><div class="highlight"><pre><span class="p">{</span>
 <span class="nt">"src"</span><span class="p">:</span> <span class="s2">"mobile"</span><span class="p">,</span>
@@ -249,7 +248,7 @@ built in src/public</p>
 
 <p>You can specify multiple output folders for your build</p>
 
-<p>The following squid.json config </p>
+<p>The following squid.json config</p>
 
 <ul>
 <li>compile your files to the default output folder (project root)</li>
@@ -294,6 +293,6 @@ built in src/public</p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-
+    
   </body>
 </html>
