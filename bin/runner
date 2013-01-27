@@ -90,7 +90,7 @@ codeChange = (err, file, message) ->
 # configure libMonitor
 if fs.existsSync 'lib'
   libMonitor = new Monitor 'lib Monitor', path.resolve('lib'), filter
-  libMonitor.once 'started', -> notifier.debug "Watching", title: libMonitor.name
+  libMonitor.once 'started', -> notifier.info "Watching", title: libMonitor.name
   libMonitor.on   'changed', -> restart() if buildReady
   libMonitor.on   'created', -> restart() if buildReady
   libMonitor.once 'stopped', -> notifier.info 'Stop monitor', title: libMonitor.name
@@ -106,12 +106,12 @@ srcMonitor.on 'removed', (f) -> builder.removeBuild f, codeChange
 srcMonitor.once 'stopped',   -> notifier.info 'Stop monitor', title: srcMonitor.name
 
 srcMonitor.once 'started', (files) ->
-  notifier.debug "Watching", title: srcMonitor.name
+  notifier.info "Watching", title: srcMonitor.name
   builder.liveBuildAll files, (errors) ->
     if errors
       notifier.error(e.toString(), title: relativeName(e.file)) for e in errors
     else
-      notifier.debug 'Build done.', title: srcMonitor.name
+      notifier.info 'Build done.', title: srcMonitor.name
       buildReady = yes
       start()
       libMonitor.start() if libMonitor

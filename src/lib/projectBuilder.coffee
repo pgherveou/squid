@@ -45,6 +45,12 @@ buildFactory =
   '.styl'  : new StylusBuilder config
   '.jade'  : new JadeBuilder config
 
+# post build
+postBuild = ->
+  postBuild.process?.kill()
+  postBuild.process = exec config.post_build.cmd, -> postBuild.process = null
+
+
 module.exports =
 
   buildAll: (opts = {}, cb) ->
@@ -74,10 +80,9 @@ module.exports =
   liveBuild: (src, cb) ->
     buildFactory.get(src).build src, true, (err, file, message) ->
       cb err, file, message
-      if not err and not /identical/.test(message) and config.post_build and config.post_build.match.test(src)
-        console.log "post-build..."
-        p.kill() if p = config.post_build.process
-        config.post_build.process = exec config.post_build.cmd, -> config.post_build.process = null
+      return if err or /identical/.test message
+      postBuild() if config.post_build and config.post_build.match.test(src)
+
 
   liveBuildAll: (fileItems, cb) ->
     files = (file for file of fileItems)
@@ -100,5 +105,8 @@ module.exports =
         cb null
 
     async.forEach files, buildFile, ->
-      # logger.debug 'build done'
-      if errors.length then cb errors else cb null
+      return cb errors if errors.length
+      cb()
+      postBuild() if config.post_build
+
+
