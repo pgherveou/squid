@@ -71,7 +71,7 @@ builder.buildAll except: ['css'], (errs) ->
 
 ## Supported files for compilation
 
-squid can compile the following files. 
+squid can compile the following files.
 Want to add support for other file types? New builder can easily be implemented using the base Builder classe
 
 <table>
@@ -125,10 +125,10 @@ Here are the default options if you dont add a squid.json to your project
   "src": "src", /* source folder */
   "out": ".", /* build  folder */
   "jade": { /* jade default options */
-    "amd": true /* wrap jade template inside a requirejs define block */	
+    "amd": true /* wrap jade template inside a requirejs define block */
   },
   "stylus": { /* stylus default options */
-    "url": ["public"], /* root public files folder  */
+    "url": {paths: ["public"]}, /* url options  */
     "paths": ["public/images"] /* image lookup path  */
   }
 }
@@ -166,23 +166,23 @@ after running **sb** or **sq**, squid will generate the following files
 </pre>
 
 ### Optional configuration
-If your project structure is different you can add a custom squid.json configuration: 
+If your project structure is different you can add a custom squid.json configuration:
 
 #### mappings
 
 You can define mappings rules to output your files into different folders
 
-The following squid.json config 
+The following squid.json config
 - use mobile as src folder
-- compile mobile/js/* to app/assets/javascripts/mobile		
+- compile mobile/js/* to app/assets/javascripts/mobile
 - compile mobile/stylesheets/* to app/assets/stylesheets/mobile
 
 ```json
 {
 "src": "mobile",
-"mappings": [		
-	{"from": "js", "to": "app/assets/javascripts/mobile"}, 
-	{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"}	
+"mappings": [
+	{"from": "js", "to": "app/assets/javascripts/mobile"},
+	{"from": "stylesheets", "to": "app/assets/stylesheets/mobile"}
 ]
 }
 ```
@@ -191,7 +191,7 @@ The following squid.json config
 
 You can specify a script to launch after each successful file build
 
-The following squid.json config will trigger **make bundle-app**  each time a file is successfully 
+The following squid.json config will trigger **make bundle-app**  each time a file is successfully
 built in src/public
 
 ```json
@@ -204,7 +204,7 @@ built in src/public
 
 You can specify multiple output folders for your build
 
-The following squid.json config 
+The following squid.json config
 - compile your files to the default output folder (project root)
 - clones everything under src/public to phonegap/js
 

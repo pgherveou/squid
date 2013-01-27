@@ -39,7 +39,7 @@ module.exports = class StylusBuilder extends Builder
       .define('env', process.env.NODE_ENV or 'development')
       .define('host', os.hostname())
       .set('paths', paths.concat(path.dirname file))
-      .define('url', stylus.url({ paths: @config.stylus.url }))
+      .define('url', stylus.url @config.url)
       .use(nib())
       .import('nib')
       .render cb

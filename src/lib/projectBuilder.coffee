@@ -22,7 +22,7 @@ config =
   jade:
     amd: yes
   stylus:
-    url: ['public']
+    url: paths: ['public']
     paths: ['public/images']
 
 # setup config
