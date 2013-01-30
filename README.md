@@ -38,7 +38,7 @@ you can specify a different script
 $ sq my-script.js
 ```
 
-to start node in debug mode
+to launch node in debug mode use -d option
 
 ```
 $ sq -d
