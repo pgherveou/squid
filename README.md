@@ -1,8 +1,7 @@
 # Squid
 
-
-Squid compiles your coffee, jade and stylus files, and publish  your assets to amazon s3
-
+Squid is a command line tool that monitor changes in the file system and compiles your files automatically each time you save.
+It supports coffeescript, stylus and Jade, but can easily be extended to other file types.
 
 ## Install
 
