@@ -19,7 +19,20 @@ at the root of your project directory execute:
 $ sq
 ```
 
-or if your main script isn't index.js
+this will
+
+- start your server script
+- live recompile your files and emit a growl notification**
+- auto-restart your node server when a file change inside /lib
+
+You can also combine it to a tool like [liveReload] [1] to auto refresh your browser when client files are updated
+
+**If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
+
+![growl screenshot](https://github.com/pgherveou/squid/raw/gh-pages/images/growl.screenshot.png)
+
+By default squid will relaunch index.js each time a change occurs in /lib if your main script isn't index.js
+you can specify a different script
 
 ```
 $ sq my-script.js
@@ -31,18 +44,6 @@ to start node in debug mode
 $ sq -d
 ```
 
-this will
-
-- start your server script
-- live recompile your files and emit a growl notification**
-- restart your server when a file change inside /lib (server script directory by convention)
-
-You can also combine it to a tool like [liveReload] [1] to auto refresh your browser when client files are updated
-
-
-**If you want to enable growl notification, install [growl] [2] and [growlNotify] [3]
-
-![growl screenshot](https://github.com/pgherveou/squid/raw/gh-pages/images/growl.screenshot.png)
 
 
 ## sb command
