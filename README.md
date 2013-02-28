@@ -121,6 +121,7 @@ Here are the default options if you dont add a squid.json to your project
 ```js
 {
   "src": "src", /* source folder */
+  "script": "index.js", /* server script to execute */
   "out": ".", /* build  folder */
   "jade": { /* jade default options */
     "amd": true /* wrap jade template inside a requirejs define block */
