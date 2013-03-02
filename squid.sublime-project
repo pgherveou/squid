@@ -3,7 +3,7 @@
 	[
 		{
 			"path": ".",
-      "file_exclude_patterns": ["*-workspace", ".cake*", "*.js"],
+      "file_exclude_patterns": ["*-workspace", ".cake*"],
       "folder_exclude_patterns": [ "node_modules"]
 		}
 	]

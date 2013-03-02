@@ -7,8 +7,17 @@ logger                = require('./loggers').get 'util'
 amdWrap = (fn) ->
   """
   define(['jade'], function(jade) {
-    return #{fn.toString()};
+    return #{fn};
   });
+  """
+
+fnWrap = (fn) ->
+  """
+    function (locals) {
+      if (locals == null) {locals = {};}
+      jade.merge(locals, jade.helpers || {});
+      return #{fn}(locals)
+    }
   """
 
 module.exports = class JadeBuilder extends Builder
@@ -20,14 +29,15 @@ module.exports = class JadeBuilder extends Builder
   _build: (file, code, refresh, cb) ->
 
     if @deps[file].refreshs.length is 0
-
       try
-        tplFn = jade.compile code, {filename: file, client  : true, compileDebug: false}
+        compileOpts = filename: file, client: true, compileDebug: false
+        tplFn = jade.compile(code, compileOpts).toString()
       catch error
         return cb new BuildError file, error
 
-      data = if @config.jade.amd then amdWrap(tplFn) else tplFn.toString()
-      @write data, file, cb
+      tplFn = fnWrap(tplFn) if @config.jade.helpers
+      tplFn = amdWrap(tplFn) if @config.jade.amd
+      @write tplFn, file, cb
 
     else if refresh
       async.forEach @deps[file].refreshs,

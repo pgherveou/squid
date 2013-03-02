@@ -31,6 +31,7 @@ exports.Builder = class Builder
     @outDir  = path.resolve @config.out
 
   buildPath: (source, outDir) =>
+    ext      = @outExt or path.extname(source)
     fileName = path.basename(source, path.extname(source)) + @outExt
     fileDir  = path.dirname(source)
 
@@ -68,13 +69,13 @@ exports.Builder = class Builder
                 fs.writeFile file, newCode, (err) =>
                   return logger.error "Error cloning file to ", file if err
 
-
   # delete source build file
   removeBuild: (source, cb) ->
     fs.unlink @buildPath(source), (err) -> cb err, source, ""
 
   # get imports directive in code
   getImports: (file, code) ->
+    return [] unless @reg
     path.resolve(path.dirname(file), m[1]) + (if path.extname(m[1]) then '' else @fileExt) while m = @reg.exec(code)
 
   # scan files and set dependencies

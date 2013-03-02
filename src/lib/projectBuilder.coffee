@@ -12,10 +12,15 @@ CSBuilder     = require './CSBuilder'
 JSBuilder     = require './JSBuilder'
 JadeBuilder   = require './JadeBuilder'
 StylusBuilder = require './StylusBuilder'
+JSONBuilder   = require './JSONBuilder'
+CopyBuilder   = require './CopyBuilder'
 
 config =
   src: 'src'
   out: '.'
+  server:
+    script: 'index.js'
+    env: {}
   clone: []
   mappings: []
   coffee: {}
@@ -32,26 +37,35 @@ if fs.existsSync 'squid.json'
 
 # setup post script if any
 if config.post_build
-  config.post_build.match = new RegExp config.post_build.match
+  config.post_build.match = new RegExp config.post_build.match or ''
 
 # setup clone if any
 config.clone.forEach (clone) -> clone.match = new RegExp(clone.match)
 
+# setup filters
+config.fileFilter = (f) -> /\.(js|coffee|styl|jade|json)$/.test(f)
+config.filter = (f, stat) -> stat.isDirectory() or config.fileFilter f
+
 # builder factory
 buildFactory =
-  get: (file) -> @[path.extname file]
-  '.coffee': new CSBuilder config
   '.js'    : new JSBuilder config
+  '.coffee': new CSBuilder config
   '.styl'  : new StylusBuilder config
   '.jade'  : new JadeBuilder config
+  '.json'  : new JSONBuilder config
+  get: (file) ->
+    @[path.extname file] or @copy
 
 # post build
 postBuild = ->
   postBuild.process?.kill()
-  postBuild.process = exec config.post_build.cmd, -> postBuild.process = null
-
+  postBuild.process = exec config.post_build.cmd, (err, stdout, stderr) ->
+    console.log stdout + stderr
+    postBuild.process = null
 
 module.exports =
+
+  config: config
 
   buildAll: (opts = {}, cb) ->
 
@@ -67,8 +81,7 @@ module.exports =
 
     filter = (f, stat) ->
       return false if stat.isDirectory() and (opts.except and path.basename(f) in opts.except)
-      return true if stat.isDirectory()
-      return /\.(coffee|js|styl|jade)$/.test(f)
+      config.filter f, stat
 
     walk config.src, filter, (err, files) =>
       return logger.error err if err
@@ -82,7 +95,6 @@ module.exports =
       cb err, file, message
       return if err or /identical/.test message
       postBuild() if config.post_build and config.post_build.match.test(src)
-
 
   liveBuildAll: (fileItems, cb) ->
     files = (file for file of fileItems)

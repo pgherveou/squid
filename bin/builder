@@ -1,4 +1,0 @@
-#!/usr/bin/env coffee
-
-builder = require '../lib/projectBuilder'
-builder.buildAll()
