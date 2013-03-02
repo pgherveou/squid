@@ -15,9 +15,10 @@
 
   </head>
   <body>
+
       <header>
         <h1>Squid</h1>
-        <p>Automatically compile your frontend assets (CoffeeScript, Jade, Stylus, ...)</p>
+        <p>Squid compiles your coffee, jade and stylus files, and publish your assets to amazon s3 </p>
       </header>
 
       <div id="banner">
@@ -35,20 +36,20 @@
 
     <div class="wrapper">
       <nav>
-        <ul><li class="tag-h2 active"><a href="#install">Install</a></li><li class="tag-h2"><a href="#sq-command">sq command</a></li><li class="tag-h2"><a href="#sb-command">sb command</a></li><li class="tag-h2"><a href="#supported-files-for-compilation">Supported files for compilation</a></li><li class="tag-h2"><a href="#files-dependencies">files Dependencies</a></li><li class="tag-h2"><a href="#configuration">Configuration</a></li><li class="tag-h2"><a href="#s3-publication">s3 publication</a></li><li class="tag-h2"><a href="#todo">TODO</a></li></ul>
+        <ul></ul>
       </nav>
-      <section style="height: ">
+      <section>
         <p>Squid is a command line tool that monitor changes in the file system and compiles your files automatically each time you save.
 It supports coffeescript, stylus and Jade, but can easily be extended to other file types.</p>
 
-<h2 id="install">Install</h2>
+<h2>Install</h2>
 
 <p>install the package globally to use the commands provided by the project (see desc below)</p>
 
 <pre><code>$ npm install -g squid
 </code></pre>
 
-<h2 id="sq-command">sq command</h2>
+<h2>sq command</h2>
 
 <p>at the root of your project directory execute:</p>
 
@@ -60,7 +61,7 @@ It supports coffeescript, stylus and Jade, but can easily be extended to other f
 <ul>
 <li>start your server script</li>
 <li>live recompile your files and emit a growl notification**</li>
-<li>auto-restart your node server when a file change inside /lib</li>
+<li>auto-restart your node server when a file loaded by your server script changes</li>
 </ul><p>You can also combine it to a tool like <a href="http://livereload.com/" title="liveReload">liveReload</a> to auto refresh your browser when client files are updated</p>
 
 <p>**If you want to enable growl notification, install <a href="http://growl.info/growlupdateavailable" title="growl">growl</a> and <a href="http://growl.info/downloads" title="growlNotify">growlNotify</a></p>
@@ -78,7 +79,7 @@ you can specify a different script</p>
 <pre><code>$ sq -d
 </code></pre>
 
-<h2 id="sb-command">sb command</h2>
+<h2>sb command</h2>
 
 <p>if you just want to build the project source files. use the sb command
 at the root of your project directory execute:</p>
@@ -99,13 +100,13 @@ at the root of your project directory execute:</p>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">'build sucessful!'</span>
 </pre></div>
 
-<h2 id="supported-files-for-compilation">Supported files for compilation</h2>
+<h2>Supported files for compilation</h2>
 
 <p>squid can compile the following files.
 Want to add support for other file types? New builder can easily be implemented using the base Builder classe</p>
 
 <table>
-<tbody><tr>
+<tr>
 <th>file</th>
 <th>operation</th>
 <th>note</th>
@@ -114,6 +115,11 @@ Want to add support for other file types? New builder can easily be implemented 
 <td>*.js</td>
 <td>copy</td>
 <td>concat dependencies and copy to the output folder</td>
+  </tr>
+<tr>
+<td>*.json</td>
+<td>copy</td>
+<td>validate and copy to the output folder</td>
   </tr>
 <tr>
 <td>*.coffee</td>
@@ -130,13 +136,13 @@ Want to add support for other file types? New builder can easily be implemented 
 <td>compile to js</td>
 <td>template are compiled into js and wrapped in a requirejs define function</td>
   </tr>
-</tbody></table><h2 id="files-dependencies">files Dependencies</h2>
+</table><h2>files Dependencies</h2>
 
 <p>squid manage your file dependencies and only compile the necessary files.
-here is how you define dependencies for each supported file format</p>
+here is how you define dependencies</p>
 
 <table>
-<tbody><tr>
+<tr>
 <th>file</th>
 <th>import syntax</th>
   </tr>
@@ -157,13 +163,17 @@ here is how you define dependencies for each supported file format</p>
 <td>*.jade</td>
 <td>include foo</td>
   </tr>
-</tbody></table><h2 id="configuration">Configuration</h2>
+</table><h2>Configuration</h2>
 
 <p>You can define a squid.json object to specify folder mappings, and compilation options
 Here are the default options if you dont add a squid.json to your project</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="s2">"src"</span><span class="o">:</span> <span class="s2">"src"</span><span class="p">,</span> <span class="cm">/* source folder */</span>
+   <span class="s2">"server"</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">"script"</span><span class="o">:</span> <span class="s2">"index.js"</span><span class="p">,</span> <span class="cm">/* server script to execute */</span>
+       <span class="nx">env</span><span class="o">:</span> <span class="p">{}</span>  <span class="p">,</span> <span class="cm">/*additional ennvironment variables to load*/</span>
+   <span class="p">},</span>
   <span class="s2">"out"</span><span class="o">:</span> <span class="s2">"."</span><span class="p">,</span> <span class="cm">/* build  folder */</span>
   <span class="s2">"jade"</span><span class="o">:</span> <span class="p">{</span> <span class="cm">/* jade default options */</span>
     <span class="s2">"amd"</span><span class="o">:</span> <span class="kc">true</span> <span class="cm">/* wrap jade template inside a requirejs define block */</span>
@@ -177,7 +187,8 @@ Here are the default options if you dont add a squid.json to your project</p>
 
 <p>So if you have the following project</p>
 
-<pre>./
+<pre>
+./
 |- index.js
 |- src
   |- lib
@@ -192,7 +203,8 @@ Here are the default options if you dont add a squid.json to your project</p>
 
 <p>after running <strong>sb</strong> or <strong>sq</strong>, squid will generate the following files</p>
 
-<pre>./
+<pre>
+./
 |- index.js
 |- src
   |- ...
@@ -257,7 +269,7 @@ built in src/public</p>
 <span class="p">}</span>
 </pre></div>
 
-<h2 id="s3-publication">s3 publication</h2>
+<h2>s3 publication</h2>
 
 <p>Squid publisher let you upload files within a directory to your amazon s3 bucket.</p>
 
@@ -277,7 +289,7 @@ built in src/public</p>
 
 </pre></div>
 
-<h2 id="todo">TODO</h2>
+<h2>TODO</h2>
 
 <ul>
 <li>Add more compiler options for compiler (PR are welcome)</li>
@@ -286,12 +298,10 @@ built in src/public</p>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/pgherveou">pgherveou</a></p>
-        <p><small>Hosted on GitHub Pages — Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-  
-</body>    
-
+  </body>
 </html>
