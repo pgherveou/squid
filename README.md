@@ -21,7 +21,7 @@ this will
 
 - start your server script
 - live recompile your files and emit a growl notification**
-- auto-restart your node server when a file change inside /lib
+- auto-restart your node server when a file loaded by your server script changes
 
 You can also combine it to a tool like [liveReload] [1] to auto refresh your browser when client files are updated
 
@@ -80,6 +80,9 @@ Want to add support for other file types? New builder can easily be implemented 
     <td>*.js</td><td>copy</td><td>concat dependencies and copy to the output folder</td>
   </tr>
   <tr>
+    <td>*.json</td><td>copy</td><td>validate and copy to the output folder</td>
+  </tr>
+  <tr>
     <td>*.coffee</td><td>compile to js</td><td>files are compiled with bare option</td>
   </tr>
   <tr>
@@ -93,7 +96,7 @@ Want to add support for other file types? New builder can easily be implemented 
 ## files Dependencies
 
 squid manage your file dependencies and only compile the necessary files.
-here is how you define dependencies for each supported file format
+here is how you define dependencies
 
 <table>
   <tr>
@@ -121,7 +124,10 @@ Here are the default options if you dont add a squid.json to your project
 ```js
 {
   "src": "src", /* source folder */
-  "script": "index.js", /* server script to execute */
+   "server": {
+      "script": "index.js", /* server script to execute */
+       env: {}	, /*additional ennvironment variables to load*/
+   },
   "out": ".", /* build  folder */
   "jade": { /* jade default options */
     "amd": true /* wrap jade template inside a requirejs define block */
