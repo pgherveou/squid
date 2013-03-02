@@ -7,7 +7,7 @@ _      = require 'lodash'
 
 logger        = require('./loggers').get 'util'
 
-{walk}        = require './finder'
+{walk}        = require 'findr'
 CSBuilder     = require './CSBuilder'
 JSBuilder     = require './JSBuilder'
 JadeBuilder   = require './JadeBuilder'

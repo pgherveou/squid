@@ -1,5 +1,8 @@
 build:
 	@coffee  -b --output "." --compile "src"
 
-link: build
+clean:
+	@rm -f -r lib/*
+
+link: clean build
 	@npm link

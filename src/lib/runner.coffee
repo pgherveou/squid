@@ -3,12 +3,12 @@ path      = require 'path'
 {spawn}   = require 'child_process'
 moment    = require 'moment'
 _         = require 'lodash'
+{Monitor} = require 'findr'
 {argv}    = require('optimist').alias('d', 'debug').alias('b', 'break')
 
 logger    = require('./loggers').get 'util'
 notifier  = require('./loggers').get 'notifier'
 builder   = require './projectBuilder'
-{Monitor} = require './finder'
 
 server  = null
 hrLogId = null

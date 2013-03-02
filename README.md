@@ -42,8 +42,6 @@ to launch node in debug mode use -d option
 $ sq -d
 ```
 
-
-
 ## sb command
 
 if you just want to build the project source files. use the sb command
@@ -56,7 +54,7 @@ $ sb
 You can also use squid to build your project inside your own build script
 
 ```coffee
-{builder} = require 'squid'
+builder = require 'squid'
 
 # build all files in src except your css folder
 builder.buildAll except: ['css'], (errs) ->
@@ -215,32 +213,9 @@ The following squid.json config
 }
 ```
 
-
-## s3 publication
-
-Squid publisher let you upload files within a directory to your amazon s3 bucket.
-- it only uploads new or modified files to your bucket.
-- it sets a far expiry date and zip files
-
-```coffee
-{Publisher} = require 'squid'
-
-# create s3 publisher
-publisher = new Publisher bucket: 'name',  key: 'xx', secret: 'xx'
-
-# define filter closure that will only select js, png, and css file
-filter = (f, stat) -> stat.isDirectory() or /\.(js|png|css)$/.test f
-
-# publish 'public' dir to root folder '' of the  bucket
-publisher.publishDir {origin: 'public', dest: '', filter}, cb
-
-```
-
-
 ## TODO
 
 - Add more compiler options for compiler (PR are welcome)
-- Write some tests !!!
 
 
 [1]: http://livereload.com/                                 "liveReload"
