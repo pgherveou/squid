@@ -2,7 +2,6 @@ path                  = require 'path'
 async                 = require 'async'
 jade                  = require 'jade'
 {Builder, BuildError} = require './Builder'
-logger                = require('./loggers').get 'util'
 
 amdWrap = (fn) ->
   """
@@ -26,6 +25,11 @@ module.exports = class JadeBuilder extends Builder
   fileExt: '.jade'
   outExt : '.js'
 
+  constructor: ->
+    super
+    @jadeConfig = @config.builders.jade
+
+
   _build: (file, code, refresh, cb) ->
 
     if @deps[file].refreshs.length is 0
@@ -35,8 +39,8 @@ module.exports = class JadeBuilder extends Builder
       catch error
         return cb new BuildError file, error
 
-      tplFn = fnWrap(tplFn) if @config.jade.helpers
-      tplFn = amdWrap(tplFn) if @config.jade.amd
+      tplFn = fnWrap(tplFn) if @jadeConfig.helpers
+      tplFn = amdWrap(tplFn) if @jadeConfig.amd
       @write tplFn, file, cb
 
     else if refresh

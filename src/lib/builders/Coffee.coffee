@@ -3,7 +3,6 @@ path                  = require 'path'
 async                 = require 'async'
 cs                    = require 'coffee-script'
 {Builder, BuildError} = require './Builder'
-logger                = require('./loggers').get 'util'
 
 module.exports = class CoffeeBuilder extends Builder
 

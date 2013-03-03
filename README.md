@@ -168,14 +168,12 @@ after running **sb** or **sq**, squid will generate the following files
     |- file1.css
 </pre>
 
-### Optional configuration
-If your project structure is different you can add a custom squid.json configuration:
 
 #### mappings
 
 You can define mappings rules to output your files into different folders
 
-The following squid.json config
+The following squid.json config will
 - use mobile as src folder
 - compile mobile/js/* to app/assets/javascripts/mobile
 - compile mobile/stylesheets/* to app/assets/stylesheets/mobile
@@ -189,6 +187,8 @@ The following squid.json config
 ]
 }
 ```
+
+## Middlewares
 
 ### post build
 

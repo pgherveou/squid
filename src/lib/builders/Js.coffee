@@ -1,7 +1,6 @@
 fs                    = require 'fs'
 async                 = require 'async'
 {Builder, BuildError} = require './Builder'
-logger                = require('./loggers').get 'util'
 
 module.exports = class JSBuilder extends Builder
 

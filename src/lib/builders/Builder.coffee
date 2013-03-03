@@ -2,12 +2,14 @@ path   = require 'path'
 fs     = require 'fs'
 mkdirp = require 'mkdirp'
 async  = require 'async'
-_      = require 'lodash'
-logger = require('./loggers').get 'util'
 
-_.mixin require('underscore.string').exports()
+# dirty string startWith method
+String::startsWith = (starts) ->
+  return true if starts is ''
+  return false unless starts
+  return @length >= starts.length and @[...starts.length] is starts
 
-
+# Default build Error
 exports.BuildError = class BuildError extends Error
 
   name: 'Build Error'
@@ -16,13 +18,14 @@ exports.BuildError = class BuildError extends Error
 
   toString: ->
     """
-    Build Error on #{@file}
+    Build Error file: #{@file}
 
     #{@error.toString()}
 
     --
     """
 
+# Builder base class
 exports.Builder = class Builder
 
   constructor: (@config) ->
@@ -39,7 +42,7 @@ exports.Builder = class Builder
     relative = relative[1..] if relative[0] is path.sep
 
     for mapping in @config.mappings
-      if _(relative).startsWith mapping.from
+      if relative.startsWith mapping.from
         fileDir = fileDir.replace(mapping.from, mapping.to)
         break
 
@@ -50,24 +53,14 @@ exports.Builder = class Builder
   write: (newCode, src, cb) ->
     file = @buildPath src, @outDir
     fs.readFile file, 'utf8', (err, oldCode) =>
-      return cb null, file, "identical files" if newCode is oldCode
+      return cb null, file, null if newCode is oldCode
       file = @buildPath src, @outDir
       mkdirp path.dirname(file), 0o0755, (err) =>
         return cb new BuildError(file, err) if err
         fs.writeFile file, newCode, (err) =>
           return cb new BuildError(file, err) if err
           @refreshScan file, oldCode, newCode
-          cb null, file, "file compiled successfully"
-
-          # clone stuffs
-          @config.clone.forEach (clone) =>
-            if clone.match.test src
-              file = @buildPath src, path.resolve(clone.to)
-              file = file.replace map.from, map.to if map = clone.map
-              mkdirp path.dirname(file), 0o0755, (err) =>
-                return logger.error "Error cloning dir to ", file if err
-                fs.writeFile file, newCode, (err) =>
-                  return logger.error "Error cloning file to ", file if err
+          cb null, file, newCode
 
   # delete source build file
   removeBuild: (source, cb) ->
@@ -97,7 +90,6 @@ exports.Builder = class Builder
 
   # build file
   build: (file, refresh, cb) ->
-    # logger.debug "build #{file}"
     fs.readFile file, 'utf8', (err, code) =>
       return cb new BuildError file, err if err
       @scan file, code

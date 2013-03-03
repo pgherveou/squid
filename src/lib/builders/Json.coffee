@@ -1,6 +1,6 @@
 {Builder, BuildError} = require './Builder'
 
-module.exports = class JSONBuilder extends Builder
+module.exports = class JsonBuilder extends Builder
 
   fileExt: '.json'
   outExt : '.json'

@@ -1,1 +1,1 @@
-module.exports = require('./lib/projectBuilder');
+module.exports = require('./lib/project');

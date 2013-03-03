@@ -1,7 +1,7 @@
 winston = require 'winston'
 require 'winston-growl'
 
-winston.loggers.add 'util',
+winston.loggers.add 'console',
   console:
     colorize:  on
     padLevels: on

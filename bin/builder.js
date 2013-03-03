@@ -1,4 +1,3 @@
 #!/usr/bin/env node
-
-builder = require('../lib/projectBuilder');
-builder.buildAll();
+project = require('../lib/project');
+project.buildAll();

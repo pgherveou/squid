@@ -9,7 +9,7 @@
     "url": "https://github.com/pgherveou/squid"
   },
   "bin": {
-    "sq": "./bin/runner.js",
+    "sq": "./bin/watch.js",
     "sb": "./bin/builder.js"
   },
   "dependencies": {

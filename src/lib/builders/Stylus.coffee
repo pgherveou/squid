@@ -4,7 +4,6 @@ async                 = require 'async'
 stylus                = require 'stylus'
 nib                   = require 'nib'
 {Builder, BuildError} = require './Builder'
-logger                = require('./loggers').get 'util'
 
 module.exports = class StylusBuilder extends Builder
 
@@ -12,6 +11,10 @@ module.exports = class StylusBuilder extends Builder
 
   fileExt: '.styl'
   outExt : '.css'
+
+  constructor: ->
+    super
+    @stylusConfig = @config.builders.stylus
 
   _build: (file, code, refresh, cb) ->
 
@@ -32,14 +35,13 @@ module.exports = class StylusBuilder extends Builder
       cb null, file, 'nothing to build'
 
   _compile: (file, code, cb) =>
-    paths = @config.stylus.paths
     stylus(code)
       .set('fileName', file)
       .set('compress', on)
       .define('env', process.env.NODE_ENV or 'development')
       .define('host', os.hostname())
-      .set('paths', paths.concat(path.dirname file))
-      .define('url', stylus.url(@config.stylus.url))
+      .set('paths', @stylusConfig.paths.concat(path.dirname file))
+      .define('url', stylus.url(@stylusConfig.paths.url))
       .use(nib())
       .import('nib')
       .render cb
