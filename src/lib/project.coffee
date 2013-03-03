@@ -3,6 +3,7 @@ fs             = require 'fs'
 async          = require 'async'
 {EventEmitter} = require 'events'
 {walk}         = require 'findr'
+builders       = require './builders'
 logger         = require('./loggers').get 'console'
 
 class Project extends EventEmitter
@@ -15,13 +16,12 @@ class Project extends EventEmitter
     regStr  = builders.map((Builder) -> Builder::fileExt[1..]).join '|'
     fileReg = new RegExp "\\.(#{regStr})$"
     @fileFilter = (f) -> fileReg.test(f)
-    @filter = (f, stat) -> stat.isDirectory() or config.fileFilter f
+    @filter = (f, stat) => stat.isDirectory() or @fileFilter f
 
     # create build factory
     @buildFactory = {}
-    @buildFactory[Builder::fileExt] = new Builder config for Builder in builders
+    @buildFactory[Builder::fileExt] = new Builder @config for Builder in builders
     @buildFactory.get = (file) -> @[path.extname file]
-
 
   buildAll: (opts = {}, cb) ->
     if typeof opts is 'function'
@@ -34,23 +34,23 @@ class Project extends EventEmitter
       else
         logger.info "Build done."
 
-    filter = (f, stat) =>
+    buildFilter = (f, stat) =>
       return false if stat.isDirectory() and (opts.except and path.basename(f) in opts.except)
-      @config.filter f, stat
+      @filter f, stat
 
-    walk @config.src, filter, (err, files) =>
+    walk @config.src, buildFilter, (err, files) =>
       return logger.error err if err
       @liveBuildAll files, cb
 
-  removeBuild: (file, cb) ->
+  removeBuild: (file, cb) =>
     @buildFactory.get(file).removeBuild file, cb
 
-  liveBuild: (src, cb) ->
-    @buildFactory.get(src).build src, true, (err, file, newCode) ->
+  liveBuild: (src, cb) =>
+    @buildFactory.get(src).build src, true, (err, file, newCode) =>
       cb err, file, newCode
-      @emit 'file-build' if not err and newCode
+      @emit('build', src) if not err and newCode
 
-  liveBuildAll: (fileItems, cb) ->
+  liveBuildAll: (fileItems, cb) =>
     files = (file for file of fileItems)
     errors = []
 
@@ -61,15 +61,18 @@ class Project extends EventEmitter
         builder.scan file, code
 
     # build all
-    buildFile = (file, cb) ->
+    buildFile = (file, cb) =>
       builder = @buildFactory.get(file)
       return cb null unless builder
       builder.build file, false, (err) ->
         errors.push err if err
         cb null
 
-    async.forEach files, buildFile, ->
+    async.forEach files, buildFile, =>
       cb(errors if errors.length)
-      @emit 'project-build' unless errors.length
+      @emit 'build' unless errors.length
 
-module.exports = new Project
+project = new Project
+require('./middlewares/post-build') project
+
+module.exports = project

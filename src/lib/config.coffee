@@ -21,6 +21,7 @@ config =
     stylus:
       url: paths: ['public']
       paths: ['public/images']
+  post_build: {match: '', cmd: '' }
 
 # use squid.json config file if present
 if fs.existsSync 'squid.json'

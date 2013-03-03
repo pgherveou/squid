@@ -188,9 +188,7 @@ The following squid.json config will
 }
 ```
 
-## Middlewares
-
-### post build
+## post build
 
 You can specify a script to launch after each successful file build
 
@@ -200,22 +198,6 @@ built in src/public
 ```json
 {
   "post_build": {"match": "src/public", "cmd": "make bundle-app" }
-}
-```
-
-### clone
-
-You can specify multiple output folders for your build
-
-The following squid.json config
-- compile your files to the default output folder (project root)
-- clones everything under src/public to phonegap/js
-
-```json
-{
-  "clone": [
-    { "match": "src/public", "to" : "phonegap/js"}
-  ]
 }
 ```
 
