@@ -54,7 +54,6 @@ class Project extends EventEmitter
     files = (file for file of fileItems)
     errors = []
 
-    logger.info 'scan all ...'
     for file in files
       if builder = @buildFactory.get(file)
         code = fs.readFileSync file, 'utf8'

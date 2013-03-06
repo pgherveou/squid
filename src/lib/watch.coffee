@@ -76,16 +76,13 @@ srcMonitor.on 'changed', (f) -> project.liveBuild f, codeChange
 srcMonitor.on 'removed', (f) -> project.removeBuild f, codeChange
 
 srcMonitor.once 'started', (files) ->
-  # start server
-  start?()
-
-  # start watching
   notifier.info "Watching", title: srcMonitor.name
   project.liveBuildAll files, (errors) ->
     if errors
       notifier.error(e.toString(), title: relativeName(e.file)) for e in errors
     else
       notifier.info 'Build done.', title: srcMonitor.name
+      start?()
 srcMonitor.start()
 
 ###

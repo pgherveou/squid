@@ -16,8 +16,10 @@ config =
     js: {}
     json: {}
     coffee: {}
+    handlebars:
+      wrap: 'commonJS'
     jade:
-      amd: yes
+      wrap: 'commonJS'
     stylus:
       url: paths: ['public']
       paths: ['public/images']

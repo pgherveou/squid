@@ -10,13 +10,11 @@ amdWrap = (fn) ->
   });
   """
 
-fnWrap = (fn) ->
+commonJSWrap = (fn) ->
   """
-    function (locals) {
-      if (locals == null) {locals = {};}
-      jade.merge(locals, jade.helpers || {});
-      return #{fn}(locals)
-    }
+  jade = require('jade');
+  if (jade.runtime) {jade = jade.runtime;}
+  module.exports = #{fn};
   """
 
 module.exports = class JadeBuilder extends Builder
@@ -39,8 +37,10 @@ module.exports = class JadeBuilder extends Builder
       catch error
         return cb new BuildError file, error
 
-      tplFn = fnWrap(tplFn) if @jadeConfig.helpers
-      tplFn = amdWrap(tplFn) if @jadeConfig.amd
+      switch @jadeConfig.wrap
+        when 'amd'      then tplFn = amdWrap tplFn
+        when 'commonJS' then tplFn = commonJSWrap tplFn
+
       @write tplFn, file, cb
 
     else if refresh
