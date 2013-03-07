@@ -87,8 +87,18 @@ Want to add support for other file types? New builder can easily be implemented 
     <td>*.styl</td><td>compile to css</td><td>nib is imported, and /public/images is added to the path</td>
   </tr>
   <tr>
-    <td>*.jade</td><td>compile to js</td><td>template are compiled into js and wrapped in a requirejs define function</td>
+    <td>*.css</td><td>copy</td><td>verify with csslint and copy</td>
   </tr>
+  <tr>
+    <td>*.jade</td><td>compile to js</td><td>compile jade js template into js</td>
+  </tr>
+  <tr>
+    <td>*.hbs</td><td>compile to js</td><td>compile jade js template into js</td>
+  </tr>  
+  <tr>
+    <td>*.png</td><td>optimize and copy</td><td>optimize png with optipng</td>
+  </tr>  
+  
 </table>
 
 ## files Dependencies
