@@ -33,7 +33,7 @@ exports.Builder = class Builder
     @srcDir  = path.resolve @config.src
     @outDir  = path.resolve @config.out
 
-  buildPath: (source, outDir) =>
+  buildPath: (source, outDir = @outDir) =>
     ext      = @outExt or path.extname(source)
     fileName = path.basename(source, path.extname(source)) + @outExt
     fileDir  = path.dirname(source)
@@ -51,10 +51,10 @@ exports.Builder = class Builder
 
   # if new, write code in file
   write: (newCode, src, cb) ->
-    file = @buildPath src, @outDir
+    file = @buildPath src
     fs.readFile file, 'utf8', (err, oldCode) =>
       return cb null, file, null if newCode is oldCode
-      file = @buildPath src, @outDir
+      file = @buildPath src
       mkdirp path.dirname(file), 0o0755, (err) =>
         return cb new BuildError(file, err) if err
         fs.writeFile file, newCode, (err) =>

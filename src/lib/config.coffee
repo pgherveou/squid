@@ -16,6 +16,7 @@ config =
     js: {}
     json: {}
     coffee: {}
+    css: {}
     handlebars:
       wrap: 'commonJS'
     jade:

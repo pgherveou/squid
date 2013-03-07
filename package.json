@@ -2,7 +2,7 @@
   "name": "squid",
   "description": "build utility for compiling coffee, stylus, jade files",
   "author": "Pierre-Guillaume Herveou <pgherveou@gmail.com>",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "homepage": "http://pgherveou.github.com/squid/",
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
     "coffee-script"    : "1.x",
     "jade"             : "0.x",
     "handlebars"       : "1.x",
+    "csslint"          : "0.x",
+    "optipng"          : "0.x",
     "findr"            : "0.x",
     "mkdirp"           : "0.x",
     "moment"           : "2.x",

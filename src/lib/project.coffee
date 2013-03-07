@@ -51,21 +51,22 @@ class Project extends EventEmitter
       @emit('build', src) if not err and newCode
 
   liveBuildAll: (fileItems, cb) =>
-    files = (file for file of fileItems)
+    files = Object.keys fileItems
     errors = []
 
-    for file in files
+    files.forEach (file) =>
       if builder = @buildFactory.get(file)
         code = fs.readFileSync file, 'utf8'
         builder.scan file, code
 
     # build all
     buildFile = (file, cb) =>
-      builder = @buildFactory.get(file)
-      return cb null unless builder
-      builder.build file, false, (err) ->
-        errors.push err if err
-        cb null
+      return cb null unless builder = @buildFactory.get(file)
+      fs.stat builder.buildPath(file), (err, stat) ->
+        return cb null if not err and stat.mtime.getTime() > fileItems[file].mtime.getTime()
+        builder.build file, false, (err) ->
+          errors.push err if err
+          cb null
 
     async.forEach files, buildFile, =>
       cb(errors if errors.length)
