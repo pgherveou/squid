@@ -35,13 +35,20 @@ module.exports = class StylusBuilder extends Builder
       cb null, file, 'nothing to build'
 
   _compile: (file, code, cb) =>
-    stylus(code)
+    compiler = stylus(code)
       .set('fileName', file)
       .set('compress', on)
       .define('env', process.env.NODE_ENV or 'development')
       .define('host', os.hostname())
       .set('paths', @stylusConfig.paths.concat(path.dirname file))
-      .define('url', stylus.url(@stylusConfig.paths.url))
-      .use(nib())
-      .import('nib')
-      .render cb
+
+    if @stylusConfig.url
+      compiler.define('url', stylus.url(@stylusConfig.url))
+
+    if @stylusConfig.nib
+      compiler.use(nib()).import('nib')
+
+    if @stylusConfig.imports
+      compiler.use(nib()).import(i) for i in @stylusConfig.imports
+
+    compiler.render cb

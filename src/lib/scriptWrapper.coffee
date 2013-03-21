@@ -19,9 +19,10 @@ if fs.existsSync('lib')
   libMonitor.start()
 
 process.on 'uncaughtException', (err) ->
-  console.log err
   notifier.error err.toString(), title: "Exception"
-  if moment().diff(startTime, 'seconds') < 2
-    process.exit(0)
+  if moment().diff(startTime, 'cents') < 500
+    notifier.error "exception loop, shutting down script"
+    process.exit(1)
   else
-   process.exit(1)
+    notifier.info "restart script"
+    process.exit(0)

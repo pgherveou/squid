@@ -1,19 +1,19 @@
-path                  = require 'path'
-fs                    = require 'fs'
-mkdirp                = require 'mkdirp'
-OptiPng               = require 'optipng'
+path     = require 'path'
+fs       = require 'fs'
+mkdirp   = require 'mkdirp'
+JpegTran = require 'jpegtran'
 {Builder, BuildError} = require './Builder'
 
-optimizer = new OptiPng
+optimizer = new JpegTran
 
-module.exports = class PNGBuilder extends Builder
+module.exports = class JPEGBuilder extends Builder
 
-  fileExt: '.png'
-  outExt : '.png'
+  fileExt: '.jpg'
+  outExt : '.jpg'
 
   constructor: ->
     super
-    @pngConfig = @config.builders.png
+    @pngConfig = @config.builders.jpeg
 
   build: (src, refresh, cb) ->
     out = @buildPath src

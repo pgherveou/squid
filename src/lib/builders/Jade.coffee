@@ -14,7 +14,10 @@ commonJSWrap = (fn) ->
   """
   jade = require('jade');
   if (jade.runtime) {jade = jade.runtime;}
-  module.exports = #{fn};
+  module.exports = function (locals) {
+    if (locals && jade.helpers) {(locals || (locals = {})).__proto__ = jade.helpers;}
+    return #{fn}.apply(this, arguments);
+  }
   """
 
 module.exports = class JadeBuilder extends Builder

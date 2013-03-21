@@ -46,12 +46,13 @@ srvArgs.push '--debug-brk' if argv.break
 srvArgs.push path.resolve(__dirname, 'scriptWrapper.js')
 
 if (fs.existsSync serverScript)
-  start = (msg = 'Starting') ->
+  start = (msg) ->
+    msg or= "Starting #{serverScript}"
     notifier.info msg, title: 'Server'
     server = spawn 'node', srvArgs, {cwd: '.', env: _(process.env).extend(project.config.server.env, SQ_SCRIPT: serverScript)}
     server.stdout.on 'data', writeStdout
     server.stderr.on 'data', writeStderr
-    server.once 'exit', (err) ->  start('Restarting') unless err
+    server.once 'exit', (err) ->  start("Restarting #{serverScript}") unless err
 
 ###
 builder stuffs
