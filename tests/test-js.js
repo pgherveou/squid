@@ -1,2 +1,2 @@
 //= import test-js-1
-function f2() {}function f1() {}
+function fx() {}function f1() {}

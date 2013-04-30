@@ -29,7 +29,7 @@ config =
 # use squid.json config file if present
 if fs.existsSync 'squid.json'
   fileConfig = JSON.parse(fs.readFileSync 'squid.json')
-  config = _(fileConfig).defaults(config)
+  config = _.defaults fileConfig, config
 
 # module exports
 module.exports = config

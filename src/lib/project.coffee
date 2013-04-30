@@ -43,7 +43,8 @@ class Project extends EventEmitter
       @liveBuildAll files, cb
 
   removeBuild: (file, cb) =>
-    @buildFactory.get(file).removeBuild file, cb
+    return cb null unless builder = @buildFactory.get(file)
+    builder.removeBuild file, cb
 
   liveBuild: (src, cb) =>
     @buildFactory.get(src).build src, true, (err, file, newCode) =>

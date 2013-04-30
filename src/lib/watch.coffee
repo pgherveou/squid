@@ -49,7 +49,7 @@ if (fs.existsSync serverScript)
   start = (msg) ->
     msg or= "Starting #{serverScript}"
     notifier.info msg, title: 'Server'
-    server = spawn 'node', srvArgs, {cwd: '.', env: _(process.env).extend(project.config.server.env, SQ_SCRIPT: serverScript)}
+    server = spawn 'node', srvArgs, {cwd: '.', env: _.extend(process.env, project.config.server.env, SQ_SCRIPT: serverScript)}
     server.stdout.on 'data', writeStdout
     server.stderr.on 'data', writeStderr
     server.once 'exit', (err) ->  start("Restarting #{serverScript}") unless err

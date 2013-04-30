@@ -2,6 +2,7 @@ path   = require 'path'
 fs     = require 'fs'
 mkdirp = require 'mkdirp'
 async  = require 'async'
+logger = require('./loggers').get 'console'
 
 # dirty string startWith method
 String::startsWith = (starts) ->
@@ -59,7 +60,7 @@ exports.Builder = class Builder
         return cb new BuildError(file, err) if err
         fs.writeFile file, newCode, (err) =>
           return cb new BuildError(file, err) if err
-          @refreshScan file, oldCode, newCode
+          @refreshScan src, oldCode, newCode
           cb null, file, newCode
 
   # delete source build file
@@ -85,11 +86,12 @@ exports.Builder = class Builder
   refreshScan: (file, oldCode, newCode) ->
     @getImports(file, oldCode).forEach (importFile) =>
       refreshs = @deps[importFile].refreshs
-      delete refreshs[refreshs[indexOf file]]
+      delete refreshs[refreshs.indexOf file]
     @scan(file, newCode)
 
   # build file
   build: (file, refresh, cb) ->
+    logger.debug "building #{file}"
     fs.readFile file, 'utf8', (err, code) =>
       return cb new BuildError file, err if err
       @scan file, code
