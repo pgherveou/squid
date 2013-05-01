@@ -1,12 +1,19 @@
 winston = require 'winston'
-require 'winston-growl'
+Growl   = require 'winston-growl'
 
-winston.loggers.add 'console',
-  console:
-    colorize:  on
-    padLevels: on
-    level : if process.env.DEBUG then 'debug' else 'info'
+level = if process.env.DEBUG then 'debug' else 'info'
 
-winston.loggers.add 'notifier', growl: {}
+module.exports =
 
-module.exports = winston.loggers
+	logger: new winston.Logger
+	  transports: [
+	  	new winston.transports.Console
+	  		colorize: true
+	  		padLevels: true
+	  		level: level
+	  ]
+
+	notifier: new winston.Logger
+		transports: [new Growl]
+
+

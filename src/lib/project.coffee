@@ -4,7 +4,7 @@ async          = require 'async'
 {EventEmitter} = require 'events'
 {walk}         = require 'findr'
 builders       = require './builders'
-logger         = require('./loggers').get 'console'
+{logger}       = require './loggers'
 
 class Project extends EventEmitter
 
@@ -22,6 +22,7 @@ class Project extends EventEmitter
     @buildFactory = {}
     @buildFactory[Builder::fileExt] = new Builder @config for Builder in builders
     @buildFactory.get = (file) -> @[path.extname file]
+
 
   buildAll: (opts = {}, cb) ->
     if typeof opts is 'function'
@@ -69,7 +70,7 @@ class Project extends EventEmitter
           errors.push err if err
           cb null
 
-    async.forEach files, buildFile, =>
+    async.eachLimit files, 20, buildFile, =>
       cb(errors if errors.length)
       @emit 'build' unless errors.length
 

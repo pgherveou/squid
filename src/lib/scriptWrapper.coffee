@@ -1,10 +1,10 @@
-moment    = require 'moment'
-path      = require 'path'
-util      = require 'util'
-fs        = require 'fs'
-{Monitor} = require 'findr'
+moment     = require 'moment'
+path       = require 'path'
+util       = require 'util'
+fs         = require 'fs'
+{Monitor}  = require 'findr'
+{notifier} = require './loggers'
 
-notifier  = require('./loggers').get('notifier')
 startTime = moment()
 
 if script = process.env.SQ_SCRIPT

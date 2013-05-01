@@ -1,14 +1,12 @@
-fs        = require 'fs'
-path      = require 'path'
-{spawn}   = require 'child_process'
-moment    = require 'moment'
-_         = require 'lodash'
-{Monitor} = require 'findr'
-{argv}    = require('optimist').alias('d', 'debug').alias('b', 'break')
-
-logger    = require('./loggers').get 'console'
-notifier  = require('./loggers').get 'notifier'
-project   = require './project'
+fs                 = require 'fs'
+path               = require 'path'
+{spawn}            = require 'child_process'
+moment             = require 'moment'
+_                  = require 'lodash'
+{Monitor}          = require 'findr'
+{argv}             = require('optimist').alias('d', 'debug').alias('b', 'break')
+project            = require './project'
+{logger, notifier} = require './loggers'
 
 server  = null
 hrLogId = null

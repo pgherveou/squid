@@ -1,8 +1,8 @@
-path   = require 'path'
-fs     = require 'fs'
-mkdirp = require 'mkdirp'
-async  = require 'async'
-logger = require('./loggers').get 'console'
+path     = require 'path'
+fs       = require 'fs'
+mkdirp   = require 'mkdirp'
+async    = require 'async'
+{logger} = require '../loggers'
 
 # dirty string startWith method
 String::startsWith = (starts) ->
@@ -91,9 +91,10 @@ exports.Builder = class Builder
 
   # build file
   build: (file, refresh, cb) ->
-    logger.debug "building #{file}"
+    logger.debug "building: #{file}"
     fs.readFile file, 'utf8', (err, code) =>
       return cb new BuildError file, err if err
+      logger.debug "built: #{file}"
       @scan file, code
       @_build file, code, refresh, cb
 
