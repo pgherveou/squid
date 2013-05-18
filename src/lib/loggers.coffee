@@ -14,6 +14,12 @@ module.exports =
 	  ]
 
 	notifier: new winston.Logger
-		transports: [new Growl]
+		transports: [
+			new Growl
+	  	new winston.transports.Console
+	  		colorize: true
+	  		padLevels: true
+	  		level: 'error'
+		]
 
 
