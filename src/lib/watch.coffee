@@ -63,10 +63,13 @@ relativeName = (file) -> file?.substring root.length
 # handle code change
 codeChange = (err, file, newCode) ->
   return notifier.error(err.toString(), title: relativeName err.file) if err
-  if newCode
-    notifier.info "file compiled sucessfully", title: relativeName(file) or srcMonitor.name
-  else
-    notifier.info "file unchanged", title: relativeName(file) or srcMonitor.name
+  unless newCode
+    return notifier.info "file unchanged", title: relativeName(file) or srcMonitor.name
+
+  notifier.info "file compiled sucessfully", title: relativeName(file) or srcMonitor.name
+
+  if (serverScript and not server) or (server and server.exitCode)
+    start("Restarting #{serverScript}")
 
 # configure and start srcMonitor
 srcMonitor = new Monitor 'src Monitor', path.resolve(project.config.src), project.filter
@@ -81,7 +84,7 @@ srcMonitor.once 'started', (files) ->
       notifier.error(e.toString(), title: relativeName(e.file)) for e in errors
     else
       notifier.info 'Build done.', title: srcMonitor.name
-      start?()
+      start() if serverScript
 srcMonitor.start()
 
 ###
