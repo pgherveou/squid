@@ -12,7 +12,7 @@ amdWrap = (fn) ->
 
 commonJSWrap = (fn) ->
   """
-  jade = require('jade');
+  var jade = require('jade');
   if (jade.runtime) {jade = jade.runtime;}
   module.exports = function (locals) {
     if (locals && jade.helpers) {(locals || (locals = {})).__proto__ = jade.helpers;}

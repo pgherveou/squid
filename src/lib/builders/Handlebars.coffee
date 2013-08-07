@@ -9,7 +9,7 @@ module.exports = class HandleBarsBuilder extends Builder
 
   commonJSWrap = (fn) ->
     """
-    Handlebars = require('handlebars');
+    var Handlebars = require('handlebars');
     module.exports = Handlebars.template(#{fn});
     """
 
@@ -27,12 +27,10 @@ module.exports = class HandleBarsBuilder extends Builder
   _build: (file, code, refresh, cb) ->
     try
       tplFn = handlebars.precompile(code).toString()
-
       switch @hbsConfig.wrap
         when 'amd'      then tplFn = amdWrap tplFn
         when 'commonJS' then tplFn = commonJSWrap tplFn
       @write tplFn, file, cb
-
     catch error
       cb new BuildError file, error
 

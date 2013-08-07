@@ -10,7 +10,7 @@ startTime = moment()
 if script = process.env.SQ_SCRIPT
   md = require(path.resolve(script))
 else
-  notifier.error("can not load " + script)
+  notifier.error("no script specified")
   process.exit(1)
 
 if fs.existsSync('lib')

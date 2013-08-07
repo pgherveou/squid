@@ -8,7 +8,7 @@ _                  = require 'lodash'
 project            = require './project'
 {logger, notifier} = require './loggers'
 
-server  = null
+script  = null
 hrLogId = null
 
 ###
@@ -37,20 +37,32 @@ Server stuffs
 ###
 
 srvArgs = []
-serverScript = project.config.server.script
 
-srvArgs.push '--debug' if argv.debug
-srvArgs.push '--debug-brk' if argv.break
-srvArgs.push path.resolve(__dirname, 'scriptWrapper.js')
+unless process.env.NO_SCRIPT
+  scriptName = process.env.SQ_SCRIPT or project.config.server.script
 
-if (fs.existsSync serverScript)
+if (scriptName)
   start = (msg) ->
-    msg or= "Starting #{serverScript}"
-    notifier.info msg, title: 'Server'
-    server = spawn 'node', srvArgs, {cwd: '.', env: _.extend(process.env, project.config.server.env, SQ_SCRIPT: serverScript)}
-    server.stdout.on 'data', writeStdout
-    server.stderr.on 'data', writeStderr
-    server.once 'exit', (err) ->  start("Restarting #{serverScript}") unless err
+    msg or= "Starting script #{scriptName}"
+    notifier.info msg, title: scriptName
+
+    if (path.extname(scriptName) is '.js')
+      srvArgs.push '--debug' if argv.debug
+      srvArgs.push '--debug-brk' if argv.break
+      srvArgs.push path.resolve(__dirname, 'scriptWrapper.js')
+      script = spawn 'node', srvArgs, {cwd: '.', env: _.extend(process.env, project.config.server.env, SQ_SCRIPT: scriptName)}
+      script.once 'exit', (err) ->  start("Restarting script #{scriptName}") unless err
+    else
+      script = spawn scriptName
+
+    script.stdout.on 'data', writeStdout
+    script.stderr.on 'data', writeStderr
+
+
+
+
+else
+  start = ->
 
 ###
 builder stuffs
@@ -68,8 +80,8 @@ codeChange = (err, file, newCode) ->
 
   notifier.info "file compiled sucessfully", title: relativeName(file) or srcMonitor.name
 
-  if (serverScript and not server) or (server and server.exitCode)
-    start("Restarting #{serverScript}")
+  if (scriptName and not script) or (script and script.exitCode isnt null)
+    start("Restarting #{scriptName}")
 
 # configure and start srcMonitor
 srcMonitor = new Monitor 'src Monitor', path.resolve(project.config.src), project.filter
@@ -84,7 +96,7 @@ srcMonitor.once 'started', (files) ->
       notifier.error(e.toString(), title: relativeName(e.file)) for e in errors
     else
       notifier.info 'Build done.', title: srcMonitor.name
-      start() if serverScript
+      start() if scriptName
 srcMonitor.start()
 
 ###
@@ -92,7 +104,7 @@ process stuff
 ###
 
 process.on 'SIGINT', (err) ->
-  if server
-    notifier.error 'Killing server...'
-    server.kill 'SIGQUIT'
+  if script
+    notifier.error 'Killing script...', title: scriptName
+    script.kill 'SIGQUIT'
   process.exit()
