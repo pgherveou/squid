@@ -15,7 +15,10 @@ else
 
 if fs.existsSync('lib')
   libMonitor = new Monitor('lib Monitor', path.resolve('lib'))
-  libMonitor.on 'changed', (f) -> process.exit(0) if f in Object.keys(require.cache)
+  libMonitor.on 'changed', (f) ->
+    if (path.extname(f) is '.js') and (f in Object.keys require.cache)
+      process.exit(0)
+
   libMonitor.start()
 
 process.on 'uncaughtException', (err) ->

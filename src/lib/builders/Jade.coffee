@@ -35,7 +35,7 @@ module.exports = class JadeBuilder extends Builder
 
     if @deps[file].refreshs.length is 0
       try
-        compileOpts = filename: file, client: true, compileDebug: false
+        compileOpts = filename: file, client: true, compileDebug: @jadeConfig.debug
         tplFn = jade.compile(code, compileOpts).toString()
       catch error
         return cb new BuildError file, error
